@@ -1,16 +1,46 @@
 package au.sa.gov.rest;
 
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Set;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+
 
 @Path("/pets")
+@Produces(APPLICATION_JSON)
+@Consumes(APPLICATION_JSON)
 public class PetsResource {
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-        return "hello";
+    private Set<Pet> pets =
+            Collections.newSetFromMap(Collections.synchronizedMap(new LinkedHashMap<>()));
+
+    public PetsResource() {
+        pets.add(new Pet("Dog", "Labrador", "Max"));
+        pets.add(new Pet("Dog", "Stray", null));
+        pets.add(new Pet("Cat", "Persian Cat", "Garfield"));
     }
+
+    @GET
+    public Set<Pet> list() {
+        return pets;
+    }
+
+    @POST
+    public Set<Pet> add(Pet pet) {
+        pets.add(pet);
+        return pets;
+    }
+
+    @DELETE
+    public Set<Pet> delete(Pet pet) {
+        pets.removeIf(existingPet -> existingPet.getName().contentEquals(pet.getName()));
+        return pets;
+    }
+
 }
