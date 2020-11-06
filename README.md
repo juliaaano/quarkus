@@ -28,3 +28,12 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 You can then execute your native executable with: `./target/au-sa-gov-quarkus-1.0-SNAPSHOT-runner`
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/building-native-image.
+
+## Container images
+
+Build and push of containers images are powered by Jib: https://quarkus.io/guides/container-image#jib
+
+```
+mvn clean package -Dquarkus.container-image.build=true
+mvn clean package -Dquarkus.container-image.push=true
+```
