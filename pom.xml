@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>au.gov.sa</groupId>
   <artifactId>au-sa-gov-quarkus</artifactId>
@@ -12,10 +13,10 @@
     <maven.compiler.target>11</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <quarkus-plugin.version>1.9.2.Final</quarkus-plugin.version>
+    <quarkus-plugin.version>1.7.5.Final-redhat-00007</quarkus-plugin.version>
     <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
-    <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-    <quarkus.platform.version>1.9.2.Final</quarkus.platform.version>
+    <quarkus.platform.group-id>com.redhat.quarkus</quarkus.platform.group-id>
+    <quarkus.platform.version>1.7.5.Final-redhat-00007</quarkus.platform.version>
     <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
   </properties>
   <dependencyManagement>
@@ -53,6 +54,30 @@
       <artifactId>quarkus-container-image-jib</artifactId>
     </dependency>
   </dependencies>
+  <repositories>
+    <repository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>redhat</id>
+      <url>https://maven.repository.redhat.com/ga</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>redhat</id>
+      <url>https://maven.repository.redhat.com/ga</url>
+    </pluginRepository>
+  </pluginRepositories>
   <build>
     <plugins>
       <plugin>
