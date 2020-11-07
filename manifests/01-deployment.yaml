@@ -27,12 +27,12 @@ spec:
               mountPath: /app/sample-volume
           readinessProbe:
             httpGet:
-              path: /pets
+              path: /health/ready
               port: 8080
               scheme: HTTP
           livenessProbe:
             httpGet:
-              path: /pets
+              path: /health/live
               port: 8080
               scheme: HTTP
           resources:
