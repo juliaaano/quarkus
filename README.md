@@ -31,9 +31,33 @@ If you want to learn more about building native executables, please consult http
 
 ## Container images
 
-Build and push of containers images are powered by Jib: https://quarkus.io/guides/container-image#jib
+Build and push of containers images are powered by Jib: https://quarkus.io/guides/container-image#jib.
+
+See [application.properties](./src/main/resources/application.properties) for options.
 
 ```
 mvn clean package -Dquarkus.container-image.build=true
 mvn clean package -Dquarkus.container-image.push=true
+```
+
+For native executable, combine with the option `-Dquarkus.native.container-build=true`.
+
+Run the container:
+
+```
+docker run --rm --name quarkus -d -p 8080:8080 sagov/quarkus
+```
+
+## OpenShift
+
+These instructions are intended to be used in testing and development. A different and more comprehensive approach must be considered for CI/CD.
+
+```
+oc new-build --binary=true --docker-image=registry.redhat.io/ubi8/openjdk-11 --name=sagov-quarkus
+oc start-build sagov-quarkus --from-dir . --follow
+oc apply -f manifests/
+oc set image deployment sagov-quarkus app=$(oc get istag sagov-quarkus:latest -o jsonpath='{.image.dockerImageReference}')
+oc scale deployment sagov-quarkus --replicas 2
+oc expose service sagov-quarkus
+curl http://sagov-quarkus-jmohr-playground.apps.npe.ocp.sa.gov.au/pets
 ```

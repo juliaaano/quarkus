@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sagov-quarkus
+  labels:
+    app: sagov-quarkus
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: sagov-quarkus
+  template:
+    metadata:
+      labels:
+        app: sagov-quarkus
+    spec:
+      containers:
+        - name: app
+          image: registry/namespace/name:tag
+          env:
+            - name: MY_SAMPLE_ENV
+              value: mySampleEnv
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: sample-volume
+              mountPath: /app/sample-volume
+          readinessProbe:
+            httpGet:
+              path: /pets
+              port: 8080
+              scheme: HTTP
+          livenessProbe:
+            httpGet:
+              path: /pets
+              port: 8080
+              scheme: HTTP
+          resources:
+            requests:
+              cpu: "250m"
+              memory: 512Mi
+            limits:
+              cpu: "500m"
+              memory: 1Gi
+      volumes:
+        - name: sample-volume
+          emptyDir: {}
