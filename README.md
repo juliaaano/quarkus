@@ -1,4 +1,4 @@
-# au-sa-gov-quarkus project
+# SA Gov Quarkus Project
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
@@ -40,7 +40,7 @@ mvn clean package -Dquarkus.container-image.build=true
 mvn clean package -Dquarkus.container-image.push=true
 ```
 
-For native executable, combine with the option `-Dquarkus.native.container-build=true`.
+For native executable, combine with the options `-Pnative -Dquarkus.native.container-build=true`.
 
 Run the container:
 
@@ -52,12 +52,33 @@ docker run --rm --name quarkus -d -p 8080:8080 sagov/quarkus
 
 These instructions are intended to be used in testing and development. A different and more comprehensive approach must be considered for CI/CD.
 
+### JVM build
+
 ```
-oc new-build --binary=true --docker-image=registry.redhat.io/ubi8/openjdk-11 --name=sagov-quarkus
+oc new-build --binary=true --docker-image=registry.redhat.io/ubi8/openjdk-11 --name=sagov-quarkus --labels="app=sagov-quarkus"
 oc start-build sagov-quarkus --from-dir . --follow
+```
+
+### Native build
+
+```
+mvn clean package -Pnative -Dquarkus.native.container-build=true
+oc new-build --binary=true --docker-image=quay.io/quarkus/ubi-quarkus-native-binary-s2i:1.0 --name=sagov-quarkus --labels="app=sagov-quarkus"
+oc start-build sagov-quarkus --from-file ./target/au-sa-gov-quarkus-1.0-SNAPSHOT-runner --follow
+```
+
+### Deployment
+
+```
 oc apply -f manifests/
 oc set image deployment sagov-quarkus app=$(oc get istag sagov-quarkus:latest -o jsonpath='{.image.dockerImageReference}')
 oc scale deployment sagov-quarkus --replicas 2
 oc expose service sagov-quarkus
-curl http://sagov-quarkus-jmohr-playground.apps.npe.ocp.sa.gov.au/pets
+curl "http://$(oc get route sagov-quarkus -o jsonpath='{.spec.host}')/health"
+```
+
+### Clean up
+
+```
+oc delete all -l app=sagov-quarkus
 ```
