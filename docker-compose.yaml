@@ -8,3 +8,9 @@ services:
     environment:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
+  app:
+    image: sagov/quarkus:latest
+    ports:
+      - "8080:8080"
+    environment:
+      MP_JWT_VERIFY_PUBLICKEY_LOCATION: http://keycloak:8080/auth/realms/quarkus/protocol/openid-connect/certs

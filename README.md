@@ -33,7 +33,7 @@ If you want to learn more about building native executables, please consult http
 
 Build and push of containers images are powered by Jib: https://quarkus.io/guides/container-image#jib.
 
-See [application.properties](./src/main/resources/application.properties) for options.
+See [application.properties](./src/main/resources/application.properties) for container image options.
 
 ```
 mvn clean package -Dquarkus.container-image.build=true
