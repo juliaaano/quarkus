@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sagov-quarkus
+  labels:
+    app: sagov-quarkus
+data:
+  MP_JWT_VERIFY_PUBLICKEY_LOCATION: https://keycloak:8080/auth/realms/quarkus/protocol/openid-connect/certs
+  MP_JWT_VERIFY_ISSUER: https://keycloak:8080/auth/realms/quarkus

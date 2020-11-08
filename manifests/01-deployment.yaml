@@ -20,6 +20,9 @@ spec:
           env:
             - name: MY_SAMPLE_ENV
               value: mySampleEnv
+          envFrom:
+            - configMapRef:
+                name: sagov-quarkus
           ports:
             - containerPort: 8080
           volumeMounts:
