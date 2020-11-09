@@ -10,7 +10,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-
+import org.eclipse.microprofile.metrics.annotation.Counted;
 
 @Path("/pets")
 @Produces(APPLICATION_JSON)
@@ -27,6 +27,7 @@ public class PetsResource {
     }
 
     @GET
+    @Counted(name = "listCounter", description = "How many times pets have been listed.")
     public Set<Pet> list() {
         return pets;
     }
