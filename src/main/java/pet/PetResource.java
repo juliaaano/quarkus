@@ -1,4 +1,4 @@
-package au.sa.gov.rest;
+package pet;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import java.util.Collections;
@@ -15,12 +15,12 @@ import org.eclipse.microprofile.metrics.annotation.Counted;
 @Path("/pets")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-public class PetsResource {
+public class PetResource {
 
     private Set<Pet> pets =
             Collections.newSetFromMap(Collections.synchronizedMap(new LinkedHashMap<>()));
 
-    public PetsResource() {
+    public PetResource() {
         pets.add(new Pet("Dog", "Labrador", "Max"));
         pets.add(new Pet("Dog", "Stray", null));
         pets.add(new Pet("Cat", "Persian Cat", "Garfield"));

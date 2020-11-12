@@ -1,4 +1,4 @@
-package au.sa.gov.rest;
+package pet;
 
 public class Pet {
 

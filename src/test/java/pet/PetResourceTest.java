@@ -1,4 +1,4 @@
-package au.sa.gov.rest;
+package pet;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-public class PetsResourceTest {
+public class PetResourceTest {
 
     @Test
-    public void testHelloEndpoint() {
+    public void get_all_pets() {
         given()
         .when()
             .get("/pets")
