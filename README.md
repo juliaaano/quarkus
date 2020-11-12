@@ -45,7 +45,7 @@ For native executable, combine with the options `-Pnative -Dquarkus.native.conta
 Run the container:
 
 ```
-docker run --rm --name quarkus -d -p 8080:8080 sagov/quarkus
+docker-compose up -d
 ```
 
 ## OpenShift
@@ -90,7 +90,7 @@ From https://quarkus.io/guides/security-jwt.
 Run Keycloak as a container and manually import [quarkus-realm.json](./config/quarkus-realm.json).
 
 ```
-docker run --rm --name keycloak -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin -p 8180:8080 -d quay.io/keycloak/keycloak:11.0.3
+docker-compose up -d keycloak
 ```
 
 Retrieve JWT access tokens and use them:
