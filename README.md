@@ -82,3 +82,33 @@ curl "http://$(oc get route sagov-quarkus -o jsonpath='{.spec.host}')/health"
 ```
 oc delete all -l app=sagov-quarkus
 ```
+
+## Keycloak and JWT RBAC Security
+
+From https://quarkus.io/guides/security-jwt.
+
+Run Keycloak as a container and manually import [quarkus-realm.json](./config/quarkus-realm.json).
+
+```
+docker run --rm --name keycloak -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin -p 8180:8080 -d quay.io/keycloak/keycloak:11.0.3
+```
+
+Retrieve JWT access tokens and use them:
+
+```
+export access_token=$(\
+    curl -X POST http://localhost:8180/auth/realms/quarkus/protocol/openid-connect/token \
+    --user backend-service:secret \
+    -H 'content-type: application/x-www-form-urlencoded' \
+    -d 'username=alice&password=alice&grant_type=password' | jq --raw-output '.access_token' \
+)
+curl -v http://localhost:8080/secured/roles-allowed -H "Authorization: Bearer "$access_token
+
+export access_token=$(\
+    curl -X POST http://localhost:8180/auth/realms/quarkus/protocol/openid-connect/token \
+    --user backend-service:secret \
+    -H 'content-type: application/x-www-form-urlencoded' \
+    -d 'username=admin&password=admin&grant_type=password' | jq --raw-output '.access_token' \
+)
+curl -v http://localhost:8080/secured/roles-allowed-admin -H "Authorization: Bearer "$access_token
+```
