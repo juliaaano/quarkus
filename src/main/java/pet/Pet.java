@@ -1,11 +1,17 @@
 package pet;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+@Schema(description = "Pet details.")
 public class Pet {
 
+    @Schema(example = "Cat")
     private String species;
 
+    @Schema(example = "Tuxedo")
     private String breed;
 
+    @Schema(example = "Felix")
     private String name;
 
     public Pet() {

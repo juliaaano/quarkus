@@ -12,9 +12,11 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 @Path("/secured")
 @RequestScoped
+@Tag(name = "secured", description = "operations requiring OAuth2 JWT security.")
 public class TokenSecuredResource {
 
     @Inject
