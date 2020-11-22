@@ -1,4 +1,4 @@
-package pet.memory;
+package pet.mem;
 
 import static java.util.Collections.newSetFromMap;
 import static java.util.Collections.synchronizedMap;
@@ -6,9 +6,11 @@ import java.util.LinkedHashMap;
 import java.util.Optional;
 import java.util.Set;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Alternative;
 import pet.Pet;
 import pet.PetRepository;
 
+@Alternative
 @ApplicationScoped
 public class MemoryPetRepository implements PetRepository {
 

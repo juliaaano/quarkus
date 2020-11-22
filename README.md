@@ -42,6 +42,10 @@ mvn clean package -Dquarkus.container-image.push=true
 
 For native executable, combine with the options `-Pnative -Dquarkus.native.container-build=true`.
 
+```
+mvn clean package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true
+```
+
 Run the container:
 
 ```
