@@ -6,8 +6,8 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 @Schema(description = "Pet details.")
 public class Pet {
 
-    @Schema(example = "1f31efb8-94ae-43ca-9a40-d966881e6ed6", readOnly = true)
-    private String identifier = randomUUID().toString();
+    @Schema(example = "1a1a1a1a-2b2b-3c3c-4d4d-5e5e5e5e5e5e", readOnly = true)
+    private final String identifier;
 
     @Schema(example = "Cat")
     private String species;
@@ -22,12 +22,26 @@ public class Pet {
     private boolean sampleField;
 
     public Pet() {
+        this.identifier = randomUUID().toString();
     }
 
-    public Pet(String species, String breed, String name) {
-        this.species = species;
-        this.breed = breed;
-        this.name = name;
+    private Pet(final String identifier) {
+        this.identifier = identifier;
+    }
+
+    public static Pet pet(final String identifier, final String species, final String breed, final String name) {
+
+        final Pet pet = new Pet(identifier);
+
+        pet.species = species;
+        pet.breed = breed;
+        pet.name = name;
+
+        return pet;
+    }
+
+    public static Pet pet(final String species, final String breed, final String name) {
+        return pet(randomUUID().toString(), species, breed, name);
     }
 
     public String getIdentifier() {
@@ -38,24 +52,12 @@ public class Pet {
         return species;
     }
 
-    public void setSpecies(String species) {
-        this.species = species;
-    }
-
     public String getBreed() {
         return breed;
     }
 
-    public void setBreed(String breed) {
-        this.breed = breed;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override

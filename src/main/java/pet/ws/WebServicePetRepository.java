@@ -1,5 +1,6 @@
 package pet.ws;
 
+import static pet.Pet.pet;
 import java.util.Optional;
 import java.util.Set;
 import javax.enterprise.context.ApplicationScoped;
@@ -9,11 +10,11 @@ import pet.PetRepository;
 
 @Alternative
 @ApplicationScoped
-public class WebServicePetRepository implements PetRepository {
+class WebServicePetRepository implements PetRepository {
 
     @Override
     public Optional<Pet> find(final String identifier) {
-        return Optional.of(new Pet("ws", "ws", "ws"));
+        return Optional.of(pet("ws", "ws", "ws"));
     }
 
     @Override

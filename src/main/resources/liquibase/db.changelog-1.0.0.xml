@@ -1,0 +1,41 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+  <changeSet author="quarkus" id="1">
+
+    <comment>Create pet table</comment>
+
+    <createTable tableName="pet">
+      <column name="identifier" type="VARCHAR(180)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="species" type="VARCHAR(180)"/>
+      <column name="breed" type="VARCHAR(180)"/>
+      <column name="name" type="VARCHAR(180)"/>
+      <!-- <column name="created_date" type="BIGINT UNSIGNED"/>
+      <column name="last_modified_date" type="BIGINT UNSIGNED"/> -->
+    </createTable>
+
+    <addPrimaryKey columnNames="identifier" constraintName="pk_pet" tableName="pet"/>
+
+  </changeSet>
+
+  <changeSet author="quarkus" id="2">
+
+    <comment>Load pet data</comment>
+
+    <loadData file="pets.csv" relativeToChangelogFile="true" encoding="UTF-8" separator="," tableName="pet">
+      <column name="identifier" type="STRING"/>
+      <column name="species" type="STRING"/>
+      <column name="breed" type="STRING"/>
+      <column name="name" type="STRING"/>
+    </loadData>
+
+  </changeSet>
+
+</databaseChangeLog>

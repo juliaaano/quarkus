@@ -2,6 +2,7 @@ package pet.mem;
 
 import static java.util.Collections.newSetFromMap;
 import static java.util.Collections.synchronizedMap;
+import static pet.Pet.pet;
 import java.util.LinkedHashMap;
 import java.util.Optional;
 import java.util.Set;
@@ -12,14 +13,14 @@ import pet.PetRepository;
 
 @Alternative
 @ApplicationScoped
-public class MemoryPetRepository implements PetRepository {
+class MemoryPetRepository implements PetRepository {
 
     private Set<Pet> pets = newSetFromMap(synchronizedMap(new LinkedHashMap<>()));
 
     public MemoryPetRepository() {
-        pets.add(new Pet("Dog", "Labrador", "Max"));
-        pets.add(new Pet("Dog", "Stray", null));
-        pets.add(new Pet("Cat", "Persian Cat", "Garfield"));
+        pets.add(pet("Dog", "Labrador", "Max"));
+        pets.add(pet("Dog", "Stray", null));
+        pets.add(pet("Cat", "Persian Cat", "Garfield"));
     }
 
     @Override
@@ -42,5 +43,4 @@ public class MemoryPetRepository implements PetRepository {
     public void delete(final String identifier) {
         pets.removeIf(existingPet -> existingPet.getIdentifier().contentEquals(identifier));
     }
-
 }

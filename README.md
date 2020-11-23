@@ -91,7 +91,7 @@ oc delete all -l app=sagov-quarkus
 
 From https://quarkus.io/guides/security-jwt.
 
-Run Keycloak as a container and manually import [quarkus-realm.json](./config/quarkus-realm.json).
+Run Keycloak as a container and manually import [keycloak-realm.json](./config/keycloak-realm.json).
 
 ```
 docker-compose up -d keycloak
