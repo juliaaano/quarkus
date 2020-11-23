@@ -11,14 +11,14 @@
     <comment>Create pet table</comment>
 
     <createTable tableName="pet">
-      <column name="identifier" type="VARCHAR(180)">
+      <column name="identifier" type="char(36)">
         <constraints nullable="false"/>
       </column>
-      <column name="species" type="VARCHAR(180)"/>
-      <column name="breed" type="VARCHAR(180)"/>
-      <column name="name" type="VARCHAR(180)"/>
-      <!-- <column name="created_date" type="BIGINT UNSIGNED"/>
-      <column name="last_modified_date" type="BIGINT UNSIGNED"/> -->
+      <column name="species" type="varchar(180)"/>
+      <column name="breed" type="varchar(180)"/>
+      <column name="name" type="varchar(180)"/>
+      <column name="created_at" type="timestamp"/>
+      <column name="updated_at" type="timestamp"/>
     </createTable>
 
     <addPrimaryKey columnNames="identifier" constraintName="pk_pet" tableName="pet"/>

@@ -6,7 +6,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 @Schema(description = "Pet details.")
 public class Pet {
 
-    @Schema(example = "1a1a1a1a-2b2b-3c3c-4d4d-5e5e5e5e5e5e", readOnly = true)
+    @Schema(example = "73df7903-33b0-4203-b87e-26034e106542", readOnly = true)
     private final String identifier;
 
     @Schema(example = "Cat")
@@ -52,12 +52,24 @@ public class Pet {
         return species;
     }
 
+    public void setSpecies(String species) {
+        this.species = species;
+    }
+
     public String getBreed() {
         return breed;
     }
 
+    public void setBreed(String breed) {
+        this.breed = breed;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

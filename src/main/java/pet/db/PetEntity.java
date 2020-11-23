@@ -1,15 +1,12 @@
 package pet.db;
 
-import static pet.Pet.pet;
-import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import pet.Pet;
 
-@Entity
+@javax.persistence.Entity
 @Table(name = "pet")
-class PetEntity extends PanacheEntityBase {
+class PetEntity extends Entity {
 
     @Id
     public String identifier;
@@ -17,9 +14,6 @@ class PetEntity extends PanacheEntityBase {
     public String species;
     public String breed;
     public String name;
-
-    PetEntity() {
-    }
 
     static PetEntity petEntity(final Pet pet) {
 
@@ -34,6 +28,6 @@ class PetEntity extends PanacheEntityBase {
     }
 
     Pet map() {
-        return pet(this.identifier, this.species, this.breed, this.name);
+        return Pet.pet(this.identifier, this.species, this.breed, this.name);
     }
 }
