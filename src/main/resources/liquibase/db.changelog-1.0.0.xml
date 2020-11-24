@@ -17,8 +17,12 @@
       <column name="species" type="varchar(180)"/>
       <column name="breed" type="varchar(180)"/>
       <column name="name" type="varchar(180)"/>
-      <column name="created_at" type="timestamp"/>
-      <column name="updated_at" type="timestamp"/>
+      <column name="created_at" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="updated_at" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
     </createTable>
 
     <addPrimaryKey columnNames="identifier" constraintName="pk_pet" tableName="pet"/>

@@ -1,4 +1,6 @@
-"identifier","species","breed","name"
-"1f1518c8-0d92-4694-8dc3-118d82547e8d","Dog","Labrador","Max"
-"f6184860-a801-446e-8f43-5c39bd1a77ac","Dog","Stray",null
-"2df2973a-bf2e-4c4e-a0e4-6fdfa0d1b242","Cat","Persian Cat","Garfield"
+"identifier","species","breed","name","created_at","updated_at"
+"1f1518c8-0d92-4694-8dc3-118d82547e8d","Dog","Labrador","Max","2001-12-31 00:10:30.98500","2001-12-31 00:10:30.98500"
+"f6184860-a801-446e-8f43-5c39bd1a77ac","Dog","Stray",null,"2001-12-31 00:10:30.98500","2001-12-31 00:10:30.98500"
+"2df2973a-bf2e-4c4e-a0e4-6fdfa0d1b242","Cat","Persian Cat","Garfield","2001-12-31 00:10:30.98500","2001-12-31 00:10:30.98500"
+"e03c3727-186e-439d-a0f9-b5e6d9048c97","Pig","Mini-Pig","Baby","2001-12-31 00:10:30.98500","2001-12-31 00:10:30.98500"
+"c6451685-279a-48c7-aca2-02ebf39a2bec","Cat","Mixed","Grumpy Cat","2001-12-31 00:10:30.98500","2001-12-31 00:10:30.98500"

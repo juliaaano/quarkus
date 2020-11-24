@@ -36,6 +36,7 @@ class DatabasePetRepository implements PetRepository {
     }
 
     @Override
+    @Transactional
     public void delete(final String identifier) {
         PetEntity.deleteById(identifier);
     }

@@ -10,7 +10,7 @@ import io.quarkus.test.junit.QuarkusTest;
 public class PetResourceTest {
 
     @Test
-    public void get_all_pets() {
+    public void get_pets() {
         given()
         .when()
             .get("/pets")
