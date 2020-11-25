@@ -8,6 +8,13 @@ services:
     environment:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
+  liquibase:
+    image: registry.hub.docker.com/liquibase/liquibase:4.2.0
+    command: '--url="jdbc:postgresql://postgresql:5432/quarkusdb" --username=quarkus --password=password --changeLogFile=db.changelog-master.xml --logLevel=info update'
+    volumes:
+      - type: bind
+        source: ./liquibase
+        target: /liquibase/changelog
   postgresql:
     image: registry.redhat.io/rhel8/postgresql-12:1-49
     ports:

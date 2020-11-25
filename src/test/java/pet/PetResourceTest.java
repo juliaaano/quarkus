@@ -16,8 +16,8 @@ public class PetResourceTest {
             .get("/pets")
         .then()
             .statusCode(200)
-            .body("$.size()", is(3),
-                  "species", containsInAnyOrder("Cat", "Dog", "Dog"),
-                  "breed", containsInAnyOrder("Persian Cat", "Labrador", "Stray"));
+            .body("$.size()", is(2),
+                  "species", containsInAnyOrder("Cat", "Dog"),
+                  "breed", containsInAnyOrder("Persian Cat", "Labrador"));
     }
 }

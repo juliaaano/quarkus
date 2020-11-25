@@ -10,8 +10,7 @@ public class DatabaseH2TestProfile implements QuarkusTestProfile {
             "quarkus.arc.selected-alternatives", "pet.db.DatabasePetRepository",
             "quarkus.datasource.db-kind", "h2",
             "quarkus.datasource.jdbc.url", "jdbc:h2:mem:default;DB_CLOSE_DELAY=-1",
-            "quarkus.liquibase.migrate-at-start", "true",
-            "quarkus.liquibase.change-log", "liquibase/db.changelog-master.xml"
+            "quarkus.hibernate-orm.database.generation", "drop-and-create"
         );
     }
 }
