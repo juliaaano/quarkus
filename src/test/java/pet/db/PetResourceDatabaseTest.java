@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import java.util.Map;
-import javax.inject.Inject;
+import javax.enterprise.inject.spi.CDI;
 import javax.transaction.UserTransaction;
 import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
@@ -23,9 +23,6 @@ import io.quarkus.test.junit.TestProfile;
 @QuarkusTest
 @TestProfile(DatabaseH2TestProfile.class)
 public class PetResourceDatabaseTest {
-
-    @Inject
-    UserTransaction transaction;
 
     @Test
     public void get_pets() {
@@ -107,10 +104,12 @@ public class PetResourceDatabaseTest {
 
     private void transaction(Runnable function) {
 
+        final UserTransaction tx = CDI.current().select(UserTransaction.class).get();
+
         try {
-            transaction.begin();
+            tx.begin();
             function.run();
-            transaction.commit();
+            tx.commit();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

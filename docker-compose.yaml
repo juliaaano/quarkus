@@ -4,14 +4,14 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:11.0.3
     ports:
-      - "8002:8080"
+      - "50103:8080"
     environment:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
   postgresql:
     image: registry.redhat.io/rhel8/postgresql-12:1-49
-    # ports:
-    #   - "5432:5432"
+    ports:
+      - "50102:5432"
     environment:
       POSTGRESQL_USER: quarkus
       POSTGRESQL_PASSWORD: password
@@ -19,7 +19,7 @@ services:
   pgadmin:
     image: registry.hub.docker.com/dpage/pgadmin4
     ports:
-      - "8001:80"
+      - "50101:80"
     environment:
       PGADMIN_DEFAULT_EMAIL: quarkus@redhat.com
       PGADMIN_DEFAULT_PASSWORD: password
@@ -30,7 +30,7 @@ services:
   app:
     image: sagov/quarkus:latest
     ports:
-      - "8000:8080"
+      - "50100:8080"
     environment:
       QUARKUS_LOG_CONSOLE_JSON: "false"
       QUARKUS_DATASOURCE_USERNAME: quarkus
