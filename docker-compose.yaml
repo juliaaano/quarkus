@@ -1,24 +1,27 @@
 version: "3"
 
 services:
+  app:
+    image: sagov/quarkus:latest
+    ports:
+      - "50101:8080"
+    environment:
+      QUARKUS_LOG_CONSOLE_JSON: "false"
+      QUARKUS_DATASOURCE_USERNAME: quarkus
+      QUARKUS_DATASOURCE_PASSWORD: password
+      QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://postgresql:5432/quarkusdb
+      MP_JWT_VERIFY_PUBLICKEY_LOCATION: http://keycloak:8080/auth/realms/quarkus/protocol/openid-connect/certs
   keycloak:
     image: quay.io/keycloak/keycloak:11.0.3
     ports:
-      - "50103:8080"
+      - "50102:8080"
     environment:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
-  liquibase:
-    image: registry.hub.docker.com/liquibase/liquibase:4.2.0
-    command: '--url="jdbc:postgresql://postgresql:5432/quarkusdb" --username=quarkus --password=password --changeLogFile=db.changelog-master.xml --logLevel=info update'
-    volumes:
-      - type: bind
-        source: ./liquibase
-        target: /liquibase/changelog
   postgresql:
     image: registry.redhat.io/rhel8/postgresql-12:1-49
     ports:
-      - "50102:5432"
+      - "50103:5432"
     environment:
       POSTGRESQL_USER: quarkus
       POSTGRESQL_PASSWORD: password
@@ -26,7 +29,7 @@ services:
   pgadmin:
     image: registry.hub.docker.com/dpage/pgadmin4
     ports:
-      - "50101:80"
+      - "50104:80"
     environment:
       PGADMIN_DEFAULT_EMAIL: quarkus@redhat.com
       PGADMIN_DEFAULT_PASSWORD: password
@@ -34,16 +37,13 @@ services:
       - type: bind
         source: ./config/postgresql-servers.json
         target: /pgadmin4/servers.json
-  app:
-    image: sagov/quarkus:latest
-    ports:
-      - "50100:8080"
-    environment:
-      QUARKUS_LOG_CONSOLE_JSON: "false"
-      QUARKUS_DATASOURCE_USERNAME: quarkus
-      QUARKUS_DATASOURCE_PASSWORD: password
-      QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://postgresql:5432/quarkusdb
-      MP_JWT_VERIFY_PUBLICKEY_LOCATION: http://keycloak:8080/auth/realms/quarkus/protocol/openid-connect/certs
+  liquibase:
+    image: registry.hub.docker.com/liquibase/liquibase:4.2.0
+    command: '--url="jdbc:postgresql://postgresql:5432/quarkusdb" --username=quarkus --password=password --changeLogFile=db.changelog-master.xml --logLevel=info update'
+    volumes:
+      - type: bind
+        source: ./liquibase
+        target: /liquibase/changelog
 
 networks:
   default:

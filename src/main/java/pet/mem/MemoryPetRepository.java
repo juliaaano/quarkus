@@ -17,9 +17,13 @@ class MemoryPetRepository implements PetRepository {
 
     private Set<Pet> pets = newSetFromMap(synchronizedMap(new LinkedHashMap<>()));
 
-    public MemoryPetRepository() {
-        pets.add(pet("Dog", "Labrador", null));
-        pets.add(pet("Cat", "Persian Cat", "Garfield"));
+    MemoryPetRepository() {
+        pets.add(pet("1f1518c8-0d92-4694-8dc3-118d82547e8d", "Dog", "Labrador", "Max"));
+        pets.add(pet("f6184860-a801-446e-8f43-5c39bd1a77ac", "Dog", "Stray", null));
+        pets.add(pet("2df2973a-bf2e-4c4e-a0e4-6fdfa0d1b242", "Cat", "Persian Cat", "Garfield"));
+        pets.add(pet("e03c3727-186e-439d-a0f9-b5e6d9048c97", "Pig", "Mini-Pig", "Baby"));
+        pets.add(pet("c6451685-279a-48c7-aca2-02ebf39a2bec", "Cat", "Mixed", "Grump y Cat"));
+
     }
 
     @Override

@@ -21,6 +21,8 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 @Path("/pets")
+@Produces(TEXT_PLAIN)
+@Consumes(TEXT_PLAIN)
 @Tag(name = "pets", description = "operations about pets")
 public class PetResource {
 
@@ -65,7 +67,6 @@ public class PetResource {
     }
 
     @POST
-    @Produces(TEXT_PLAIN)
     @Consumes(APPLICATION_JSON)
     @Operation(
         summary = "create a pet",

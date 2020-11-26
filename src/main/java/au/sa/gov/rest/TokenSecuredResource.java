@@ -1,21 +1,24 @@
 package au.sa.gov.rest;
 
+import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 @Path("/secured")
 @RequestScoped
+@Produces(TEXT_PLAIN)
+@Consumes(TEXT_PLAIN)
 @Tag(name = "secured", description = "operations requiring OAuth2 JWT security.")
 public class TokenSecuredResource {
 
@@ -25,7 +28,6 @@ public class TokenSecuredResource {
     @GET
     @Path("permit-all")
     @PermitAll
-    @Produces(MediaType.TEXT_PLAIN)
     public String hello(@Context SecurityContext ctx) {
         return getResponseString(ctx);
     }
@@ -33,7 +35,6 @@ public class TokenSecuredResource {
     @GET
     @Path("roles-allowed")
     @RolesAllowed({"user", "admin"})
-    @Produces(MediaType.TEXT_PLAIN)
     public String helloRolesAllowed(@Context SecurityContext ctx) {
         return getResponseString(ctx);
     }
@@ -41,7 +42,6 @@ public class TokenSecuredResource {
     @GET
     @Path("roles-allowed-admin")
     @RolesAllowed("admin")
-    @Produces(MediaType.TEXT_PLAIN)
     public String helloRolesAllowedAdmin(@Context SecurityContext ctx) {
         return "Only admins should see this.";
     }
