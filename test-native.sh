@@ -4,7 +4,7 @@ set -euxo pipefail
 
 docker-compose version
 
-docker-compose up --detach postgresql
+docker-compose up --detach keycloak postgresql
 sleep 9
 docker-compose run --rm --name liquibase liquibase
 

@@ -18,6 +18,11 @@ services:
     environment:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
+      KEYCLOAK_IMPORT: /tmp/keycloak-realm.json
+    volumes:
+      - type: bind
+        source: ./config/keycloak-realm.json
+        target: /tmp/keycloak-realm.json
   postgresql:
     image: registry.redhat.io/rhel8/postgresql-12:1-49
     ports:

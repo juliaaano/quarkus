@@ -101,18 +101,18 @@ Retrieve JWT access tokens and use them:
 
 ```
 export access_token=$(\
-    curl -X POST http://localhost:8180/auth/realms/quarkus/protocol/openid-connect/token \
-    --user backend-service:secret \
+    curl -X POST http://localhost:50102/auth/realms/quarkus/protocol/openid-connect/token \
+    --user quarkus:quarkus \
     -H 'content-type: application/x-www-form-urlencoded' \
     -d 'username=alice&password=alice&grant_type=password' | jq --raw-output '.access_token' \
 )
-curl -v http://localhost:8080/secured/roles-allowed -H "Authorization: Bearer "$access_token
+curl -v http://localhost:8080/pets -H "Authorization: Bearer "$access_token
 
 export access_token=$(\
-    curl -X POST http://localhost:8180/auth/realms/quarkus/protocol/openid-connect/token \
-    --user backend-service:secret \
+    curl -X POST http://localhost:50102/auth/realms/quarkus/protocol/openid-connect/token \
+    --user quarkus:quarkus \
     -H 'content-type: application/x-www-form-urlencoded' \
     -d 'username=admin&password=admin&grant_type=password' | jq --raw-output '.access_token' \
 )
-curl -v http://localhost:8080/secured/roles-allowed-admin -H "Authorization: Bearer "$access_token
+curl -v http://localhost:8080/pets/context -H "Authorization: Bearer "$access_token
 ```

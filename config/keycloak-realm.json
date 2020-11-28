@@ -296,7 +296,7 @@
       ],
       "security-admin-console": [],
       "admin-cli": [],
-      "backend-service": [
+      "quarkus": [
         {
           "id": "5b9947c6-eb74-4de6-8623-0285720993f3",
           "name": "uma_protection",
@@ -384,13 +384,18 @@
   "clients": [
     {
       "id": "302430aa-3929-42cf-8ba2-2b9d2e71dc3a",
-      "clientId": "backend-service",
+      "clientId": "quarkus",
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
-      "secret": "secret",
-      "redirectUris": [],
-      "webOrigins": [],
+      "secret": "quarkus",
+      "redirectUris": [
+        "http://localhost:8080/*",
+        "http://localhost:50101/*"
+      ],
+      "webOrigins": [
+        "*"
+      ],
       "notBefore": 0,
       "bearerOnly": false,
       "consentRequired": false,
@@ -443,7 +448,7 @@
           "protocolMapper": "oidc-audience-mapper",
           "consentRequired": false,
           "config": {
-            "included.client.audience": "backend-service",
+            "included.client.audience": "quarkus",
             "id.token.claim": "false",
             "access.token.claim": "true"
           }
@@ -2063,18 +2068,18 @@
   }, {
     "id" : "948c59ec-46ed-4d99-aa43-02900029b930",
     "createdTimestamp" : 1554245880023,
-    "username" : "service-account-backend-service",
+    "username" : "service-account-quarkus",
     "enabled" : true,
     "totp" : false,
     "emailVerified" : false,
-    "email" : "service-account-backend-service@placeholder.org",
-    "serviceAccountClientId" : "backend-service",
+    "email" : "service-account-quarkus@placeholder.org",
+    "serviceAccountClientId" : "quarkus",
     "credentials" : [ ],
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
     "realmRoles" : [ "offline_access" ],
     "clientRoles" : {
-      "backend-service" : [ "uma_protection" ],
+      "quarkus" : [ "uma_protection" ],
       "account" : [ "view-profile", "manage-account" ]
     },
     "notBefore" : 0,
