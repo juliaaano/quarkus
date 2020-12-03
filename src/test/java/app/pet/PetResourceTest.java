@@ -1,4 +1,4 @@
-package pet;
+package app.pet;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;

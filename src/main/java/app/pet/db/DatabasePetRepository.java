@@ -1,15 +1,15 @@
-package pet.db;
+package app.pet.db;
 
 import static java.util.stream.Collectors.toList;
-import static pet.db.PetEntity.petEntity;
+import static app.pet.db.PetEntity.petEntity;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 import javax.transaction.Transactional;
-import pet.Pet;
-import pet.PetRepository;
+import app.pet.Pet;
+import app.pet.PetRepository;
 
 @Alternative
 @ApplicationScoped

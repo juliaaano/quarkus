@@ -1,4 +1,4 @@
-package pet;
+package app;
 
 import javax.annotation.Priority;
 import javax.enterprise.context.ApplicationScoped;

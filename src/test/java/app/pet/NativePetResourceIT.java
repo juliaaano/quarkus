@@ -1,4 +1,4 @@
-package pet;
+package app.pet;
 
 import static java.lang.String.format;
 import static java.net.URI.create;
@@ -13,7 +13,6 @@ import java.util.Base64;
 import java.util.Map;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
-import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import io.quarkus.test.junit.NativeImageTest;

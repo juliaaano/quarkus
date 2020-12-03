@@ -1,4 +1,4 @@
-package pet;
+package app.pet;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;

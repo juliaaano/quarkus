@@ -1,4 +1,4 @@
-package pet.db;
+package app.pet.db;
 
 import static java.time.Instant.now;
 import java.time.Instant;

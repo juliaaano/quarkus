@@ -1,8 +1,8 @@
-package pet.db;
+package app.pet.db;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
-import pet.Pet;
+import app.pet.Pet;
 
 @javax.persistence.Entity
 @Table(name = "pet")

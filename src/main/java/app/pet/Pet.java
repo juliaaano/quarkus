@@ -1,4 +1,4 @@
-package pet;
+package app.pet;
 
 import static java.util.UUID.randomUUID;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;

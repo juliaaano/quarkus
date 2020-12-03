@@ -1,15 +1,15 @@
-package pet.mem;
+package app.pet.mem;
 
 import static java.util.Collections.newSetFromMap;
 import static java.util.Collections.synchronizedMap;
-import static pet.Pet.pet;
+import static app.pet.Pet.pet;
 import java.util.LinkedHashMap;
 import java.util.Optional;
 import java.util.Set;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
-import pet.Pet;
-import pet.PetRepository;
+import app.pet.Pet;
+import app.pet.PetRepository;
 
 @Alternative
 @ApplicationScoped

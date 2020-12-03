@@ -1,4 +1,4 @@
-package pet;
+package app.pet;
 
 import java.util.Optional;
 
