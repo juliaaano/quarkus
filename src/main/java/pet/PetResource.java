@@ -42,11 +42,17 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
         // Issue with authorization code flow https://github.com/quarkusio/quarkus/issues/4766
         authorizationCode = @OAuthFlow(
             authorizationUrl = "http://localhost:50102/auth/realms/quarkus/protocol/openid-connect/auth",
-            scopes = { @OAuthScope(name = "openid", description = "OpenID Connect scope") }
+            scopes = {
+                @OAuthScope(name = "quarkus.pets:read", description = "Read pets data."),
+                @OAuthScope(name = "quarkus.pets:write", description = "Create, modify and delete pets.")
+            }
         ),
         password = @OAuthFlow(
             tokenUrl = "http://localhost:50102/auth/realms/quarkus/protocol/openid-connect/token",
-            scopes = {  @OAuthScope(name = "openid", description = "OpenID Connect scope") }
+            scopes = {
+                @OAuthScope(name = "quarkus.pets:read", description = "Read pets data."),
+                @OAuthScope(name = "quarkus.pets:write", description = "Create, modify and delete pets.")
+            }
         )
     )
 )
@@ -62,7 +68,7 @@ public class PetResource {
     }
 
     @GET
-    @RolesAllowed("user")
+    @RolesAllowed("PETS_READ")
     @Produces(APPLICATION_JSON)
     @Counted(name = "getCounter", description = "Number of times GET is executed.")
     @Operation(
@@ -85,7 +91,7 @@ public class PetResource {
 
     @GET
     @Path("/{identifier}")
-    @RolesAllowed("user")
+    @RolesAllowed("PETS_READ")
     @Produces(APPLICATION_JSON)
     @Operation(
         summary = "get a pet",
@@ -110,7 +116,7 @@ public class PetResource {
     }
 
     @POST
-    @RolesAllowed("admin")
+    @RolesAllowed("PETS_CREATE")
     @Consumes(APPLICATION_JSON)
     @Operation(
         summary = "create a pet",
@@ -135,7 +141,7 @@ public class PetResource {
 
     @DELETE
     @Path("{identifier}")
-    @RolesAllowed("admin")
+    @RolesAllowed("PETS_DELETE")
     @Operation(
         summary = "delete a pet",
         description = "This operation deletes a pet from the system.")
@@ -163,5 +169,4 @@ public class PetResource {
         return String.format("hello + %s," + " isHttps: %s," + " authScheme: %s",
                 ctx.getUserPrincipal().getName(), ctx.isSecure(), ctx.getAuthenticationScheme());
     }
-
 }

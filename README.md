@@ -102,17 +102,17 @@ Retrieve JWT access tokens and use them:
 ```
 export access_token=$(\
     curl -X POST http://localhost:50102/auth/realms/quarkus/protocol/openid-connect/token \
-    --user quarkus:quarkus \
+    --user quarkus-api-test-client:"" \
     -H 'content-type: application/x-www-form-urlencoded' \
-    -d 'username=alice&password=alice&grant_type=password' | jq --raw-output '.access_token' \
+    -d 'username=bob&password=password&grant_type=password&scope=pets:read'' | jq --raw-output '.access_token' \
 )
 curl -v http://localhost:8080/pets -H "Authorization: Bearer "$access_token
 
 export access_token=$(\
     curl -X POST http://localhost:50102/auth/realms/quarkus/protocol/openid-connect/token \
-    --user quarkus:quarkus \
+    --user quarkus-api-test-client:"" \
     -H 'content-type: application/x-www-form-urlencoded' \
-    -d 'username=admin&password=admin&grant_type=password' | jq --raw-output '.access_token' \
+    -d 'username=alice&password=password&grant_type=password&scope=pets:read pets:write' | jq --raw-output '.access_token' \
 )
-curl -v http://localhost:8080/pets/context -H "Authorization: Bearer "$access_token
+curl -v -X POST http://localhost:8080/pets -H "Authorization: Bearer "$access_token -H "Content-Type: application/json" -d '{"species":"bird","breed":"krakatoo"}'
 ```

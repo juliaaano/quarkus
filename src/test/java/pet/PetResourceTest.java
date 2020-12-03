@@ -10,8 +10,8 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.emptyString;
 import java.util.Map;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
-import io.quarkus.test.junit.DisabledOnNativeImage;
 import io.quarkus.test.junit.QuarkusTest;
 import io.smallrye.jwt.build.Jwt;
 
@@ -22,7 +22,7 @@ class PetResourceTest {
     void get_pets() {
 
         given()
-            .auth().oauth2(jwt("alice"))
+            .auth().oauth2(jwt("bob"))
         .when()
             .get("/pets")
         .then()
@@ -54,7 +54,7 @@ class PetResourceTest {
 
         final String identifier =
         given()
-            .auth().oauth2(jwt("admin"))
+            .auth().oauth2(jwt("alice"))
             .contentType(JSON)
             .body(Map.of("species", "Cat", "breed", "Tuxedo Cat", "name", "Felix"))
         .when()
@@ -68,7 +68,7 @@ class PetResourceTest {
             .asString();
 
         given()
-            .auth().oauth2(jwt("admin"))
+            .auth().oauth2(jwt("alice"))
             .pathParam("id", identifier)
         .when()
             .delete("/pets/{id}")
@@ -106,25 +106,24 @@ class PetResourceTest {
     }
 
     @Test
-    @DisabledOnNativeImage
     void forbidden() {
 
         given()
-            .auth().oauth2(jwt("stranger"))
+            .auth().oauth2(jwt("joe"))
         .when()
             .get("/pets")
         .then()
             .statusCode(403);
 
         given()
-            .auth().oauth2(jwt("stranger"))
+            .auth().oauth2(jwt("joe"))
         .when()
             .get("/pets/123456789")
         .then()
             .statusCode(403);
 
         given()
-            .auth().oauth2(jwt("alice"))
+            .auth().oauth2(jwt("bob"))
             .contentType(JSON)
         .when()
             .post("/pets")
@@ -132,7 +131,7 @@ class PetResourceTest {
             .statusCode(403);
 
         given()
-            .auth().oauth2(jwt("alice"))
+            .auth().oauth2(jwt("bob"))
         .when()
             .delete("/pets/123456789")
         .then()
@@ -144,15 +143,15 @@ class PetResourceTest {
             .issuer("https://example.com/issuer")
             .audience("theaudience")
             .upn(user)
-            .groups(role(user))
+            .groups(roles(user))
             .sign();
     }
 
-    private String role(final String user) {
+    private Set<String> roles(final String user) {
         return Map.of(
-            "admin", "admin",
-            "alice", "user",
-            "stranger", "stranger"
+            "alice", Set.of("PETS_CREATE", "PETS_READ", "PETS_UPDATE1", "PETS_DELETE"),
+            "bob", Set.of("PETS_READ"),
+            "joe", Set.of("stranger")
         ).get(user);
     }
 }
