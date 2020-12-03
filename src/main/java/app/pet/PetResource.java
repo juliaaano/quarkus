@@ -43,15 +43,17 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
         authorizationCode = @OAuthFlow(
             authorizationUrl = "http://localhost:50102/auth/realms/quarkus/protocol/openid-connect/auth",
             scopes = {
-                @OAuthScope(name = "quarkus.pets:read", description = "Read pets data."),
-                @OAuthScope(name = "quarkus.pets:write", description = "Create, modify and delete pets.")
+                @OAuthScope(name = "api.pets:read", description = "Allows to read pets."),
+                @OAuthScope(name = "api.pets:write", description = "Allows to create and modify pets."),
+                @OAuthScope(name = "api.pets:erase", description = "Allows to remove pets.")
             }
         ),
         password = @OAuthFlow(
             tokenUrl = "http://localhost:50102/auth/realms/quarkus/protocol/openid-connect/token",
             scopes = {
-                @OAuthScope(name = "quarkus.pets:read", description = "Read pets data."),
-                @OAuthScope(name = "quarkus.pets:write", description = "Create, modify and delete pets.")
+                @OAuthScope(name = "api.pets:read", description = "Allows to read pets."),
+                @OAuthScope(name = "api.pets:write", description = "Allows to create and modify pets."),
+                @OAuthScope(name = "api.pets:erase", description = "Allows to remove pets.")
             }
         )
     )

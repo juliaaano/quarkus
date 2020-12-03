@@ -75,8 +75,8 @@ class NativePetResourceIT extends PetResourceTest {
 
     private String scopes(final String user) {
         return Map.of(
-            "bob", "pets:read",
-            "alice", "pets:read pets:write",
+            "bob", "api.pets:read",
+            "alice", "api.pets:read api.pets:write",
             "joe", "openid"
         ).get(user);
     }

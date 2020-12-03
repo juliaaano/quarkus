@@ -80,6 +80,14 @@
                     "attributes": {}
                 },
                 {
+                    "id": "084576ce-3555-11eb-adc1-0242ac120002",
+                    "name": "PETS_UPDATE",
+                    "composite": false,
+                    "clientRole": true,
+                    "containerId": "cfcccb59-401c-4f8e-91a6-c8eb5f33a957",
+                    "attributes": {}
+                },
+                {
                     "id": "948c59ec-46ed-4d99-aa43-02900029b930",
                     "name": "PETS_DELETE",
                     "composite": false,
@@ -456,6 +464,7 @@
                 "quarkus-api": [
                     "PETS_READ",
                     "PETS_CREATE",
+                    "PETS_UPDATE",
                     "PETS_DELETE"
                 ],
                 "account": [
@@ -543,15 +552,21 @@
     "clientScopeMappings": {
         "quarkus-api": [
             {
-                "clientScope": "pets:read",
+                "clientScope": "api.pets:read",
                 "roles": [
                     "PETS_READ"
                 ]
             },
             {
-                "clientScope": "pets:write",
+                "clientScope": "api.pets:write",
                 "roles": [
                     "PETS_CREATE",
+                    "PETS_UPDATE"
+                ]
+            },
+            {
+                "clientScope": "api.pets:erase",
+                "roles": [
                     "PETS_DELETE"
                 ]
             }
@@ -866,11 +881,12 @@
                 "email"
             ],
             "optionalClientScopes": [
-                "pets:read",
+                "api.pets:read",
                 "address",
                 "phone",
                 "offline_access",
-                "pets:write",
+                "api.pets:write",
+                "api.pets:erase",
                 "microprofile-jwt"
             ]
         },
@@ -1107,7 +1123,7 @@
         },
         {
             "id": "26c85d11-d8fb-4b51-8cf3-081b706555b4",
-            "name": "pets:read",
+            "name": "api.pets:read",
             "description": "Allows to read pets.",
             "protocol": "openid-connect",
             "attributes": {
@@ -1118,13 +1134,24 @@
         },
         {
             "id": "23c18fe8-aa54-45db-84b2-4a3327fb690a",
-            "name": "pets:write",
-            "description": "Allows to create, update and delete pets.",
+            "name": "api.pets:write",
+            "description": "Allows to create and modify pets.",
             "protocol": "openid-connect",
             "attributes": {
                 "include.in.token.scope": "true",
                 "display.on.consent.screen": "true",
                 "consent.screen.text": "write pets"
+            }
+        },
+        {
+            "id": "6f52f3b0-03a1-46d3-a3a6-f8215ac3132d",
+            "name": "api.pets:erase",
+            "description": "Allows to remove pets.",
+            "protocol": "openid-connect",
+            "attributes": {
+                "include.in.token.scope": "true",
+                "display.on.consent.screen": "true",
+                "consent.screen.text": "erase pets"
             }
         },
         {
