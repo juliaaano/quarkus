@@ -37,7 +37,7 @@ class PetResourceTest {
     void get_pet() {
 
         given()
-            .auth().oauth2(jwt("alice")) // ensure user can retrieve only it's own pet, admins can get it all
+            .auth().oauth2(jwt("alice")) // ensure user can retrieve only it's own pet
             .pathParam("id", "2df2973a-bf2e-4c4e-a0e4-6fdfa0d1b242")
         .when()
             .get("/pets/{id}")
