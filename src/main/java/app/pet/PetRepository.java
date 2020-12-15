@@ -8,7 +8,9 @@ public interface PetRepository {
 
     public Iterable<Pet> find();
 
-    public String create(Pet pet);
+    public String save(Pet pet);
+
+    public boolean replace(Pet pet);
 
     public void delete(String identifier);
 }

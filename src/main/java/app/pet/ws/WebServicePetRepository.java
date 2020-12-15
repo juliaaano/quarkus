@@ -1,6 +1,7 @@
 package app.pet.ws;
 
 import static app.pet.Pet.pet;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import javax.enterprise.context.ApplicationScoped;
@@ -19,12 +20,17 @@ class WebServicePetRepository implements PetRepository {
 
     @Override
     public Set<Pet> find() {
+        return new HashSet<>();
+    }
+
+    @Override
+    public String save(final Pet pet) {
         return null;
     }
 
     @Override
-    public String create(final Pet pet) {
-        return null;
+    public boolean replace(Pet pet) {
+        return false;
     }
 
     @Override

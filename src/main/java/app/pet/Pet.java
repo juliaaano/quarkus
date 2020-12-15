@@ -44,6 +44,17 @@ public class Pet {
         return pet(randomUUID().toString(), species, breed, name);
     }
 
+    public Pet clone(final String identifier) {
+
+        final Pet pet = new Pet(identifier);
+
+        pet.species = this.species;
+        pet.breed = this.breed;
+        pet.name = this.name;
+
+        return pet;
+    }
+
     public String getIdentifier() {
         return identifier;
     }

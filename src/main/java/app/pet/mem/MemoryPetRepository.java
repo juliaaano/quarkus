@@ -37,9 +37,16 @@ class MemoryPetRepository implements PetRepository {
     }
 
     @Override
-    public String create(final Pet pet) {
+    public String save(final Pet pet) {
         pets.add(pet);
         return pet.getIdentifier();
+    }
+
+    @Override
+    public boolean replace(final Pet pet) {
+        final boolean removed = pets.remove(pet);
+        pets.add(pet);
+        return removed;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package app.pet.db;
 
-import static java.util.stream.Collectors.toList;
 import static app.pet.db.PetEntity.petEntity;
+import static java.util.stream.Collectors.toList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -29,10 +29,19 @@ class DatabasePetRepository implements PetRepository {
 
     @Override
     @Transactional
-    public String create(final Pet pet) {
+    public String save(final Pet pet) {
         final PetEntity entity = petEntity(pet);
         entity.persist();
-        return pet.getIdentifier();
+        return entity.identifier;
+    }
+
+    @Override
+    @Transactional
+    public boolean replace(final Pet pet) {
+        final PetEntity entity = petEntity(pet);
+        final boolean deleted = PetEntity.deleteById(pet.getIdentifier());
+        entity.persist();
+        return deleted;
     }
 
     @Override

@@ -3,6 +3,7 @@ package app.pet;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static io.restassured.http.ContentType.TEXT;
+import static java.util.UUID.randomUUID;
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -66,6 +67,57 @@ class PetResourceTest {
             .body(not(emptyString()))
         .extract()
             .asString();
+
+        given()
+            .auth().oauth2(jwt("alice"))
+            .pathParam("id", identifier)
+        .when()
+            .delete("/pets/{id}")
+        .then()
+            .statusCode(204);
+    }
+
+    @Test
+    void put_n_delete_pet() {
+
+        final String identifier = randomUUID().toString();
+
+        given()
+            .auth().oauth2(jwt("alice"))
+            .pathParam("id", identifier)
+            .contentType(JSON)
+            .body(Map.of("species", "Cat", "breed", "Tuxedo Cat", "name", "Felix"))
+        .when()
+            .put("/pets/{id}")
+        .then()
+            .statusCode(201)
+            .contentType(TEXT)
+            .header("Location", response -> endsWith("/pets/" + response.asString()))
+            .body(not(emptyString()));
+
+        given()
+            .auth().oauth2(jwt("alice"))
+            .pathParam("id", identifier)
+            .contentType(JSON)
+            .body(Map.of("species", "Cat", "breed", "Birman", "name", "Boris"))
+        .when()
+            .put("/pets/{id}")
+        .then()
+            .statusCode(204)
+            .header("Location", response -> endsWith("/pets/" + identifier))
+            .body(emptyString());
+
+        given()
+            .auth().oauth2(jwt("alice"))
+            .pathParam("id", identifier)
+        .when()
+            .get("/pets/{id}")
+        .then()
+            .statusCode(200)
+            .contentType(JSON)
+            .body("species", equalTo("Cat"),
+                  "breed", equalTo("Birman"),
+                  "name", equalTo("Boris"));
 
         given()
             .auth().oauth2(jwt("alice"))
@@ -149,7 +201,7 @@ class PetResourceTest {
 
     private Set<String> roles(final String user) {
         return Map.of(
-            "alice", Set.of("PETS_CREATE", "PETS_READ", "PETS_UPDATE1", "PETS_DELETE"),
+            "alice", Set.of("PETS_CREATE", "PETS_READ", "PETS_UPDATE", "PETS_DELETE"),
             "bob", Set.of("PETS_READ"),
             "joe", Set.of("stranger")
         ).get(user);
