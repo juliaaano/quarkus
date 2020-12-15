@@ -44,15 +44,26 @@ public class Pet {
         return pet(randomUUID().toString(), species, breed, name);
     }
 
-    public Pet clone(final String identifier) {
+    Pet clone(final String identifier) {
 
-        final Pet pet = new Pet(identifier);
+        final Pet cloned = new Pet(identifier);
 
-        pet.species = this.species;
-        pet.breed = this.breed;
-        pet.name = this.name;
+        cloned.species = this.species;
+        cloned.breed = this.breed;
+        cloned.name = this.name;
 
-        return pet;
+        return cloned;
+    }
+
+    Pet merge(final Pet pet) {
+
+        final Pet merged = new Pet(this.identifier);
+
+        merged.species = pet.species != null ? pet.species : this.species;
+        merged.breed = pet.breed != null ? pet.breed : this.breed;
+        merged.name = pet.name != null ? pet.name : this.name;
+
+        return merged;
     }
 
     public String getIdentifier() {
@@ -63,7 +74,7 @@ public class Pet {
         return species;
     }
 
-    public void setSpecies(String species) {
+    public void setSpecies(final String species) {
         this.species = species;
     }
 
@@ -71,7 +82,7 @@ public class Pet {
         return breed;
     }
 
-    public void setBreed(String breed) {
+    public void setBreed(final String breed) {
         this.breed = breed;
     }
 
@@ -79,7 +90,7 @@ public class Pet {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 

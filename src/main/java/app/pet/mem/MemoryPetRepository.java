@@ -38,6 +38,7 @@ class MemoryPetRepository implements PetRepository {
 
     @Override
     public String save(final Pet pet) {
+        pets.remove(pet);
         pets.add(pet);
         return pet.getIdentifier();
     }

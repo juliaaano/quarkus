@@ -7,12 +7,12 @@ import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.Status.NO_CONTENT;
 import static org.eclipse.microprofile.openapi.annotations.enums.SecuritySchemeType.OAUTH2;
 import java.net.URI;
-import java.util.Optional;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -97,7 +97,9 @@ public class PetResource {
         description = "Forbidden."
     )
     public Response get() {
+
         var pets = repository.find();
+
         return Response.ok(pets).build();
     }
 
@@ -129,9 +131,11 @@ public class PetResource {
         description = "Pet not found."
     )
     public Response get(@PathParam("identifier") final String identifier) {
-        final Optional<Pet> pet = repository.find(identifier);
-        return pet.map(p -> Response.ok(p).build())
-                  .orElse(Response.status(NOT_FOUND).build());
+
+        return repository.find(identifier)
+                .map(Response::ok)
+                .orElse(Response.status(NOT_FOUND))
+                .build();
     }
 
     @POST
@@ -164,13 +168,15 @@ public class PetResource {
         description = "Unsupported Media Type."
     )
     public Response post(final Pet pet) {
+
         final String identifier = repository.save(pet);
+
         return Response.created(URI.create("pets/" + identifier)).entity(identifier).build();
     }
 
     @PUT
     @Path("/{identifier}")
-    @RolesAllowed({"PETS_CREATE", "PETS_UPDATE"}) // Use update role for patch
+    @RolesAllowed({"PETS_CREATE", "PETS_UPDATE"})
     @Consumes(APPLICATION_JSON)
     @Operation(
         summary = "creates or replaces a pet",
@@ -207,11 +213,49 @@ public class PetResource {
     public Response put(@PathParam("identifier") final String identifier, final Pet pet) {
 
         var replaced = repository.replace(pet.clone(identifier));
-        var location = URI.create("pets/" + identifier);
 
         var response = replaced ? Response.status(NO_CONTENT) : Response.status(CREATED).entity(identifier);
 
-        return response.location(location).build();
+        return response.location(URI.create("pets/" + identifier)).build();
+    }
+
+    @PATCH
+    @Path("/{identifier}")
+    @RolesAllowed("PETS_UPDATE")
+    @Consumes(APPLICATION_JSON)
+    @Operation(
+        summary = "updates a pet",
+        description = "This operation updates an existing pet.")
+    @APIResponse(
+        responseCode = "204",
+        description = "Pet updated.",
+        headers = {
+            @Header(name = "Location", schema = @Schema(implementation = String.class, example = "http://my.domain/pets/1f31efb8-94ae-43ca-9a40-d966881e6ed6"))
+        }
+    )
+    @APIResponse(
+        responseCode = "401",
+        description = "Unauthorized."
+    )
+    @APIResponse(
+        responseCode = "403",
+        description = "Forbidden."
+    )
+    @APIResponse(
+        responseCode = "404",
+        description = "Pet not found."
+    )
+    @APIResponse(
+        responseCode = "415",
+        description = "Unsupported Media Type."
+    )
+    public Response patch(@PathParam("identifier") final String identifier, final Pet request) {
+
+        return repository.find(identifier)
+                .map(pet -> pet.merge(request))
+                .map(pet -> Response.status(NO_CONTENT).location(URI.create("pets/" + repository.save(pet))))
+                .orElse(Response.status(NOT_FOUND))
+                .build();
     }
 
     @DELETE

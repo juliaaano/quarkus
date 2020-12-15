@@ -129,6 +129,57 @@ class PetResourceTest {
     }
 
     @Test
+    void post_patch_n_delete_pet() {
+
+        final String identifier =
+        given()
+            .auth().oauth2(jwt("alice"))
+            .contentType(JSON)
+            .body(Map.of("species", "Cat", "breed", "Tuxedo Cat", "name", "Felix"))
+        .when()
+            .post("/pets")
+        .then()
+            .statusCode(201)
+            .contentType(TEXT)
+            .header("Location", response -> endsWith("/pets/" + response.asString()))
+            .body(not(emptyString()))
+        .extract()
+            .asString();
+
+        given()
+            .auth().oauth2(jwt("alice"))
+            .pathParam("id", identifier)
+            .contentType(JSON)
+            .body(Map.of("breed", "Birman", "name", "Boris"))
+        .when()
+            .patch("/pets/{id}")
+        .then()
+            .statusCode(204)
+            .header("Location", response -> endsWith("/pets/" + identifier))
+            .body(emptyString());
+
+        given()
+            .auth().oauth2(jwt("bob"))
+            .pathParam("id", identifier)
+        .when()
+            .get("/pets/{id}")
+        .then()
+            .statusCode(200)
+            .contentType(JSON)
+            .body("species", equalTo("Cat"),
+                  "breed", equalTo("Birman"),
+                  "name", equalTo("Boris"));
+
+        given()
+            .auth().oauth2(jwt("alice"))
+            .pathParam("id", identifier)
+        .when()
+            .delete("/pets/{id}")
+        .then()
+            .statusCode(204);
+    }
+
+    @Test
     void unauthorized() {
 
         given()
@@ -147,6 +198,20 @@ class PetResourceTest {
             .contentType(JSON)
         .when()
             .post("/pets")
+        .then()
+            .statusCode(401);
+
+        given()
+            .contentType(JSON)
+        .when()
+            .put("/pets/123456789")
+        .then()
+            .statusCode(401);
+
+        given()
+            .contentType(JSON)
+        .when()
+            .patch("/pets/123456789")
         .then()
             .statusCode(401);
 
@@ -179,6 +244,22 @@ class PetResourceTest {
             .contentType(JSON)
         .when()
             .post("/pets")
+        .then()
+            .statusCode(403);
+
+        given()
+            .auth().oauth2(jwt("bob"))
+            .contentType(JSON)
+        .when()
+            .put("/pets/123456789")
+        .then()
+            .statusCode(403);
+
+        given()
+            .auth().oauth2(jwt("bob"))
+            .contentType(JSON)
+        .when()
+            .patch("/pets/123456789")
         .then()
             .statusCode(403);
 
