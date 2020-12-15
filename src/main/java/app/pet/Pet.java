@@ -21,12 +21,12 @@ public class Pet {
     @Schema(hidden = true)
     private boolean sampleField;
 
-    public Pet() {
-        this.identifier = randomUUID().toString();
-    }
-
     private Pet(final String identifier) {
         this.identifier = identifier;
+    }
+
+    private Pet() {
+        this(randomUUID().toString());
     }
 
     public static Pet pet(final String identifier, final String species, final String breed, final String name) {
@@ -74,24 +74,12 @@ public class Pet {
         return species;
     }
 
-    public void setSpecies(final String species) {
-        this.species = species;
-    }
-
     public String getBreed() {
         return breed;
     }
 
-    public void setBreed(final String breed) {
-        this.breed = breed;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
     }
 
     @Override

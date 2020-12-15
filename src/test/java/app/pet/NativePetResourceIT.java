@@ -11,8 +11,9 @@ import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.Base64;
 import java.util.Map;
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import io.quarkus.test.junit.NativeImageTest;
@@ -22,7 +23,7 @@ class NativePetResourceIT extends PetResourceTest {
 
     private static final Logger logger = LoggerFactory.getLogger(NativePetResourceIT.class);
 
-    private static final Jsonb jsonb = JsonbBuilder.create();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     protected String jwt(final String user) {
@@ -36,7 +37,7 @@ class NativePetResourceIT extends PetResourceTest {
             .POST(body("grant_type=password&username=%s&password=%s&scope=%s", user, password(user), scopes(user)))
             .build();
 
-        var accessToken = send(request).get("access_token");
+        var accessToken = send(request).get("access_token").asText();
 
         logger.info(accessToken);
 
@@ -47,7 +48,7 @@ class NativePetResourceIT extends PetResourceTest {
         return BodyPublishers.ofString(format(body, user, password, scopes));
     }
 
-    private Map<String, String> send(final HttpRequest request) {
+    private JsonNode send(final HttpRequest request) {
 
         HttpResponse<String> response = null;
 
@@ -62,7 +63,11 @@ class NativePetResourceIT extends PetResourceTest {
             throw new RuntimeException(format("HTTP response status code is %s", response.statusCode()));
         }
 
-        return jsonb.fromJson(response.body(), Map.class);
+        try {
+            return objectMapper.readTree(response.body());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private String password(final String user) {
