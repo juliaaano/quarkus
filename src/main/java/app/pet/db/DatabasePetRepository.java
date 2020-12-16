@@ -29,10 +29,19 @@ class DatabasePetRepository implements PetRepository {
 
     @Override
     @Transactional
-    public String save(final Pet pet) {
+    public String create(final Pet pet) {
         final PetEntity entity = petEntity(pet);
         entity.persist();
         return entity.identifier;
+    }
+
+    @Override
+    @Transactional
+    public Pet update(final Pet pet) {
+        final PetEntity entity = PetEntity.findById(pet.getIdentifier());
+        entity.overwrite(pet);
+        entity.persist();
+        return entity.map();
     }
 
     @Override

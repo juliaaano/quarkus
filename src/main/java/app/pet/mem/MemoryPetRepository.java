@@ -1,8 +1,8 @@
 package app.pet.mem;
 
+import static app.pet.Pet.pet;
 import static java.util.Collections.newSetFromMap;
 import static java.util.Collections.synchronizedMap;
-import static app.pet.Pet.pet;
 import java.util.LinkedHashMap;
 import java.util.Optional;
 import java.util.Set;
@@ -37,10 +37,17 @@ class MemoryPetRepository implements PetRepository {
     }
 
     @Override
-    public String save(final Pet pet) {
+    public String create(final Pet pet) {
         pets.remove(pet);
         pets.add(pet);
         return pet.getIdentifier();
+    }
+
+    @Override
+    public Pet update(Pet pet) {
+        pets.remove(pet);
+        pets.add(pet);
+        return pet;
     }
 
     @Override

@@ -20,11 +20,11 @@ abstract class Entity extends PanacheEntityBase {
     @PrePersist
     void prePersist() {
         this.createdAt = now();
-        this.updatedAt = now();
+        this.updatedAt = createdAt;
     }
 
     @PreUpdate
     void preUpdate() {
-        this.createdAt = now();
+        this.updatedAt = now();
     }
 }

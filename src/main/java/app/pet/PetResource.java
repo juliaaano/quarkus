@@ -35,8 +35,8 @@ import org.eclipse.microprofile.openapi.annotations.security.SecurityScheme;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 @Path("/pets")
-@Produces(TEXT_PLAIN)
 @Consumes(TEXT_PLAIN)
+@Produces(TEXT_PLAIN)
 @Tag(name = "pets", description = "operations about pets")
 @SecurityScheme(
     securitySchemeName = "oauth2",
@@ -141,6 +141,7 @@ public class PetResource {
     @POST
     @RolesAllowed("PETS_CREATE")
     @Consumes(APPLICATION_JSON)
+    @Produces(TEXT_PLAIN)
     @Operation(
         summary = "create a pet",
         description = "This operation adds a pet to the system."
@@ -169,7 +170,7 @@ public class PetResource {
     )
     public Response post(final Pet pet) {
 
-        final String identifier = repository.save(pet);
+        final String identifier = repository.create(pet);
 
         return Response.created(URI.create("pets/" + identifier)).entity(identifier).build();
     }
@@ -178,6 +179,7 @@ public class PetResource {
     @Path("/{identifier}")
     @RolesAllowed({"PETS_CREATE", "PETS_UPDATE"})
     @Consumes(APPLICATION_JSON)
+    @Produces(TEXT_PLAIN)
     @Operation(
         summary = "creates or replaces a pet",
         description = "This operation replaces or creates a pet if it does not exist.")
@@ -223,14 +225,15 @@ public class PetResource {
     @Path("/{identifier}")
     @RolesAllowed("PETS_UPDATE")
     @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
     @Operation(
         summary = "updates a pet",
         description = "This operation updates an existing pet.")
     @APIResponse(
-        responseCode = "204",
+        responseCode = "200",
         description = "Pet updated.",
-        headers = {
-            @Header(name = "Location", schema = @Schema(implementation = String.class, example = "http://my.domain/pets/1f31efb8-94ae-43ca-9a40-d966881e6ed6"))
+        content = {
+            @Content(schema = @Schema(implementation = Pet.class))
         }
     )
     @APIResponse(
@@ -253,7 +256,8 @@ public class PetResource {
 
         return repository.find(identifier)
                 .map(pet -> pet.merge(request))
-                .map(pet -> Response.status(NO_CONTENT).location(URI.create("pets/" + repository.save(pet))))
+                .map(pet -> repository.update(pet))
+                .map(pet -> Response.ok(pet))
                 .orElse(Response.status(NOT_FOUND))
                 .build();
     }

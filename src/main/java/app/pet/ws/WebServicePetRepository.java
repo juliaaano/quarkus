@@ -24,7 +24,12 @@ class WebServicePetRepository implements PetRepository {
     }
 
     @Override
-    public String save(final Pet pet) {
+    public String create(final Pet pet) {
+        return null;
+    }
+
+    @Override
+    public Pet update(Pet pet) {
         return null;
     }
 

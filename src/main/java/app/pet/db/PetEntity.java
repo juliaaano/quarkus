@@ -17,7 +17,7 @@ class PetEntity extends Entity {
 
     static PetEntity petEntity(final Pet pet) {
 
-        final PetEntity entity = new PetEntity();
+        final var entity = new PetEntity();
 
         entity.identifier = pet.getIdentifier();
         entity.species = pet.getSpecies();
@@ -28,6 +28,14 @@ class PetEntity extends Entity {
     }
 
     Pet map() {
+
         return Pet.pet(this.identifier, this.species, this.breed, this.name);
+    }
+
+    void overwrite(final Pet pet) {
+
+        this.species = pet.getSpecies();
+        this.breed = pet.getBreed();
+        this.name = pet.getName();
     }
 }
