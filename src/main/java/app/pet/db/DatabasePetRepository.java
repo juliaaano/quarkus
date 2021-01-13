@@ -1,6 +1,7 @@
 package app.pet.db;
 
 import static app.pet.db.PetEntity.petEntity;
+import static io.quarkus.hibernate.orm.panache.PanacheEntityBase.findById;
 import static java.util.stream.Collectors.toList;
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +18,7 @@ class DatabasePetRepository implements PetRepository {
 
     @Override
     public Optional<Pet> find(final String identifier) {
-        final PetEntity entity = PetEntity.findById(identifier);
+        final PetEntity entity = findById(identifier);
         return entity != null ? Optional.of(entity.map()) : Optional.empty();
     }
 

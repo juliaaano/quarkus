@@ -154,18 +154,7 @@ class PetResourceTest {
         .when()
             .patch("/pets/{id}")
         .then()
-            .statusCode(204)
-            .header("Location", response -> endsWith("/pets/" + identifier))
-            .body(emptyString());
-
-        given()
-            .auth().oauth2(jwt("bob"))
-            .pathParam("id", identifier)
-        .when()
-            .get("/pets/{id}")
-        .then()
             .statusCode(200)
-            .contentType(JSON)
             .body("species", equalTo("Cat"),
                   "breed", equalTo("Birman"),
                   "name", equalTo("Boris"));
