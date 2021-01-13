@@ -33,6 +33,8 @@ import org.eclipse.microprofile.openapi.annotations.security.OAuthFlows;
 import org.eclipse.microprofile.openapi.annotations.security.OAuthScope;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityScheme;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Path("/pets")
 @Consumes(TEXT_PLAIN)
@@ -64,6 +66,8 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 )
 @RequestScoped
 public class PetResource {
+
+    private static final Logger logger = LoggerFactory.getLogger(PetResource.class);
 
     private final JsonWebToken jwt;
     private final PetRepository repository;
@@ -291,7 +295,7 @@ public class PetResource {
     @Operation(hidden = true)
     public String context(@Context SecurityContext ctx) {
 
-        System.out.println(jwt.toString());
+        logger.info(jwt.toString());
 
         return String.format("hello + %s," + " isHttps: %s," + " authScheme: %s",
                 ctx.getUserPrincipal().getName(), ctx.isSecure(), ctx.getAuthenticationScheme());

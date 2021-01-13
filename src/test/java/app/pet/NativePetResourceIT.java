@@ -31,7 +31,7 @@ class NativePetResourceIT extends PetResourceTest {
         var request = HttpRequest.newBuilder()
             .uri(create("http://localhost:50102/auth/realms/quarkus/protocol/openid-connect/token"))
             .timeout(ofSeconds(5))
-            .header("Authorization", basicAuth("quarkus-api-test-client:''")) // Preemptive auth, otherwise could use built-in authentitcator.
+            .header("Authorization", basicAuth("quarkus-api-test-client:''")) // Preemptive auth, otherwise could use built-in authenticator.
             .header("Accept", "application/json")
             .header("Content-Type", "application/x-www-form-urlencoded")
             .POST(body("grant_type=password&username=%s&password=%s&scope=%s", user, password(user), scopes(user)))
