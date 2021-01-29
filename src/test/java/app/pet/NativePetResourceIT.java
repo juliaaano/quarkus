@@ -21,7 +21,7 @@ import io.quarkus.test.junit.NativeImageTest;
 @NativeImageTest
 class NativePetResourceIT extends PetResourceTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(NativePetResourceIT.class);
+    private static final Logger log = LoggerFactory.getLogger(NativePetResourceIT.class);
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -39,7 +39,7 @@ class NativePetResourceIT extends PetResourceTest {
 
         var accessToken = send(request).get("access_token").asText();
 
-        logger.info(accessToken);
+        log.info(accessToken);
 
         return accessToken;
     }
@@ -59,7 +59,7 @@ class NativePetResourceIT extends PetResourceTest {
         }
 
         if (response.statusCode() != 200) {
-            logger.error("HTTP response {} {}", response.statusCode(), response.body());
+            log.error("HTTP response {} {}", response.statusCode(), response.body());
             throw new RuntimeException(format("HTTP response status code is %s", response.statusCode()));
         }
 

@@ -67,7 +67,7 @@ import org.slf4j.LoggerFactory;
 @RequestScoped
 public class PetResource {
 
-    private static final Logger logger = LoggerFactory.getLogger(PetResource.class);
+    private static final Logger log = LoggerFactory.getLogger(PetResource.class);
 
     private final JsonWebToken jwt;
     private final PetRepository repository;
@@ -295,7 +295,7 @@ public class PetResource {
     @Operation(hidden = true)
     public String context(@Context SecurityContext ctx) {
 
-        logger.info(jwt.toString());
+        log.info(jwt.toString());
 
         return String.format("hello + %s," + " isHttps: %s," + " authScheme: %s",
                 ctx.getUserPrincipal().getName(), ctx.isSecure(), ctx.getAuthenticationScheme());

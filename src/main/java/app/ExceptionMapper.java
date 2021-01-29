@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 @Provider
 public class ExceptionMapper implements javax.ws.rs.ext.ExceptionMapper<Throwable> {
 
-    private static final Logger logger = LoggerFactory.getLogger(ExceptionMapper.class);
+    private static final Logger log = LoggerFactory.getLogger(ExceptionMapper.class);
 
     @Override
     public Response toResponse(final Throwable exception) {
@@ -30,8 +30,8 @@ public class ExceptionMapper implements javax.ws.rs.ext.ExceptionMapper<Throwabl
             "details", causes
         );
 
-        logger.error("Internal server error", exception);
-        logger.info("Error response mapped to: {}", response);
+        log.error("Internal server error", exception);
+        log.info("Error response mapped to: {}", response);
 
         return Response
             .status(INTERNAL_SERVER_ERROR)
