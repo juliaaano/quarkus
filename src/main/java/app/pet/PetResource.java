@@ -9,6 +9,7 @@ import static org.eclipse.microprofile.openapi.annotations.enums.SecuritySchemeT
 import java.net.URI;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -35,6 +36,7 @@ import org.eclipse.microprofile.openapi.annotations.security.SecurityScheme;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import app.UUID;
 
 @Path("/pets")
 @Consumes(TEXT_PLAIN)
@@ -145,7 +147,7 @@ public class PetResource {
     @POST
     @RolesAllowed("PETS_CREATE")
     @Consumes(APPLICATION_JSON)
-    @Produces(TEXT_PLAIN)
+    @Produces({TEXT_PLAIN, APPLICATION_JSON})
     @Operation(
         summary = "create a pet",
         description = "This operation adds a pet to the system."
@@ -172,7 +174,7 @@ public class PetResource {
         responseCode = "415",
         description = "Unsupported Media Type."
     )
-    public Response post(final Pet pet) {
+    public Response post(@Valid final Pet pet) {
 
         final String identifier = repository.create(pet);
 
@@ -183,7 +185,7 @@ public class PetResource {
     @Path("/{identifier}")
     @RolesAllowed({"PETS_CREATE", "PETS_UPDATE"})
     @Consumes(APPLICATION_JSON)
-    @Produces(TEXT_PLAIN)
+    @Produces({TEXT_PLAIN, APPLICATION_JSON})
     @Operation(
         summary = "creates or replaces a pet",
         description = "This operation replaces or creates a pet if it does not exist.")
@@ -216,7 +218,7 @@ public class PetResource {
         responseCode = "415",
         description = "Unsupported Media Type."
     )
-    public Response put(@PathParam("identifier") final String identifier, final Pet pet) {
+    public Response put(@UUID @PathParam("identifier") final String identifier, @Valid final Pet pet) {
 
         var replaced = repository.replace(pet.clone(identifier));
 

@@ -9,14 +9,12 @@ import javax.inject.Inject;
 import org.junit.jupiter.api.Test;
 import app.pet.PetRepository;
 import io.quarkus.test.TestTransaction;
-import io.quarkus.test.junit.DisabledOnNativeImage;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.TestProfile;
 
 @QuarkusTest
 @TestProfile(DatabaseH2TestProfile.class)
 @TestTransaction
-@DisabledOnNativeImage
 public class DatabasePetRepositoryTest {
 
     @Inject

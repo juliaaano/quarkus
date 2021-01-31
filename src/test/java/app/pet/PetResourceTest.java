@@ -10,6 +10,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.emptyString;
+import static org.hamcrest.Matchers.hasSize;
 import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
@@ -166,6 +167,59 @@ class PetResourceTest {
             .delete("/pets/{id}")
         .then()
             .statusCode(204);
+    }
+
+    @Test
+    void put_with_invalid_identifier() {
+
+        given()
+            .auth().oauth2(jwt("alice"))
+            .pathParam("id", "not-a-uuid")
+            .contentType(JSON)
+            .body(Map.of("species", "Cat", "breed", "Tuxedo Cat", "name", "Felix"))
+        .when()
+            .put("/pets/{id}")
+        .then()
+            .statusCode(400)
+            .contentType(JSON)
+            .body("parameterViolations", hasSize(1))
+            .body("parameterViolations[0].path", equalTo("put.identifier"))
+            .body("parameterViolations[0].message", equalTo("Must match UUID format."));
+    }
+
+    @Test
+    void put_with_invalid_pet() {
+
+        given()
+            .auth().oauth2(jwt("alice"))
+            .pathParam("id", randomUUID().toString())
+            .contentType(JSON)
+            .body(Map.of("species", "", "breed", "Tuxedo Cat", "name", "Felix"))
+        .when()
+            .put("/pets/{id}")
+        .then()
+            .statusCode(400)
+            .contentType(JSON)
+            .body("parameterViolations", hasSize(1))
+            .body("parameterViolations[0].path", equalTo("put.pet.species"))
+            .body("parameterViolations[0].message", equalTo("must not be blank"));
+    }
+
+    @Test
+    void post_with_invalid_pet() {
+
+        given()
+            .auth().oauth2(jwt("alice"))
+            .contentType(JSON)
+            .body(Map.of("species", "Cat", "breed", "", "name", "Felix", "identifier", "it-should-be-ignored"))
+        .when()
+            .post("/pets")
+        .then()
+            .statusCode(400)
+            .contentType(JSON)
+            .body("parameterViolations", hasSize(1))
+            .body("parameterViolations[0].path", equalTo("post.pet.breed"))
+            .body("parameterViolations[0].message", equalTo("must not be blank"));
     }
 
     @Test
