@@ -1,4 +1,4 @@
-# SA Gov Quarkus Project
+# Quarkus Project
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
@@ -20,10 +20,10 @@ docker login registry.redhat.io
 ## Packaging and running the application
 
 The application can be packaged using `mvn package`.
-It produces the `au-sa-gov-quarkus-1.0-SNAPSHOT-runner.jar` file in the `/target` directory.
+It produces the `juliaaano-quarkus-1.0-SNAPSHOT-runner.jar` file in the `/target` directory.
 Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/lib` directory.
 
-The application is now runnable using `java -jar target/au-sa-gov-quarkus-1.0-SNAPSHOT-runner.jar`.
+The application is now runnable using `java -jar target/juliaaano-quarkus-1.0-SNAPSHOT-runner.jar`.
 
 ## Creating a native executable
 
@@ -31,7 +31,7 @@ You can create a native executable using: `mvn package -Pnative`.
 
 Or, if you don't have GraalVM installed, you can run the native executable build in a container using: `mvn package -Pnative -Dquarkus.native.container-build=true`.
 
-You can then execute your native executable with: `./target/au-sa-gov-quarkus-1.0-SNAPSHOT-runner`
+You can then execute your native executable with: `./target/juliaaano-quarkus-1.0-SNAPSHOT-runner`
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/building-native-image.
 
@@ -65,32 +65,32 @@ These instructions are intended to be used in testing and development. A differe
 ### JVM build
 
 ```
-oc new-build --binary=true --docker-image=registry.redhat.io/ubi8/openjdk-11 --name=sagov-quarkus --labels="app=sagov-quarkus"
-oc start-build sagov-quarkus --from-dir . --follow
+oc new-build --binary=true --docker-image=registry.redhat.io/ubi8/openjdk-11 --name=juliaaano-quarkus --labels="app=juliaaano-quarkus"
+oc start-build juliaaano-quarkus --from-dir . --follow
 ```
 
 ### Native build
 
 ```
 mvn clean package -Pnative -Dquarkus.native.container-build=true
-oc new-build --binary=true --docker-image=quay.io/quarkus/ubi-quarkus-native-binary-s2i:1.0 --name=sagov-quarkus --labels="app=sagov-quarkus"
-oc start-build sagov-quarkus --from-file ./target/au-sa-gov-quarkus-1.0-SNAPSHOT-runner --follow
+oc new-build --binary=true --docker-image=quay.io/quarkus/ubi-quarkus-native-binary-s2i:1.0 --name=juliaaano-quarkus --labels="app=juliaaano-quarkus"
+oc start-build juliaaano-quarkus --from-file ./target/juliaaano-quarkus-1.0-SNAPSHOT-runner --follow
 ```
 
 ### Deployment
 
 ```
 oc apply -f manifests/
-oc set image deployment sagov-quarkus app=$(oc get istag sagov-quarkus:latest -o jsonpath='{.image.dockerImageReference}')
-oc scale deployment sagov-quarkus --replicas 2
-oc expose service sagov-quarkus
-curl "http://$(oc get route sagov-quarkus -o jsonpath='{.spec.host}')/health"
+oc set image deployment juliaaano-quarkus app=$(oc get istag juliaaano-quarkus:latest -o jsonpath='{.image.dockerImageReference}')
+oc scale deployment juliaaano-quarkus --replicas 2
+oc expose service juliaaano-quarkus
+curl "http://$(oc get route juliaaano-quarkus -o jsonpath='{.spec.host}')/health"
 ```
 
 ### Clean up
 
 ```
-oc delete all -l app=sagov-quarkus
+oc delete all -l app=juliaaano-quarkus
 ```
 
 ## Keycloak and JWT RBAC Security

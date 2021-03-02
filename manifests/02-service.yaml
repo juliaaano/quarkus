@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: sagov-quarkus
+  name: juliaaano-quarkus
   labels:
-    app: sagov-quarkus
+    app: juliaaano-quarkus
 spec:
   selector:
-    app: sagov-quarkus
+    app: juliaaano-quarkus
   ports:
   - name: http
     port: 8080

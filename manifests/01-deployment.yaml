@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sagov-quarkus
+  name: juliaaano-quarkus
   labels:
-    app: sagov-quarkus
+    app: juliaaano-quarkus
 spec:
   replicas: 0
   selector:
     matchLabels:
-      app: sagov-quarkus
+      app: juliaaano-quarkus
   template:
     metadata:
       labels:
-        app: sagov-quarkus
+        app: juliaaano-quarkus
     spec:
       containers:
         - name: app
@@ -22,7 +22,7 @@ spec:
               value: mySampleEnv
           envFrom:
             - configMapRef:
-                name: sagov-quarkus
+                name: juliaaano-quarkus
           ports:
             - containerPort: 8080
           volumeMounts:

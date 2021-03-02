@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: sagov-quarkus
+  name: juliaaano-quarkus
   labels:
-    app: sagov-quarkus
+    app: juliaaano-quarkus
 data:
   QUARKUS_LOG_CONSOLE_JSON: "true"
   QUARKUS_DATASOURCE_USERNAME: quarkus

@@ -4,8 +4,8 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <modelVersion>4.0.0</modelVersion>
-  <groupId>au.gov.sa</groupId>
-  <artifactId>au-sa-gov-quarkus</artifactId>
+  <groupId>com.juliaaano</groupId>
+  <artifactId>juliaaano-quarkus</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <properties>
