@@ -84,7 +84,7 @@ oc apply -f manifests/
 oc set image deployment juliaaano-quarkus app=$(oc get istag juliaaano-quarkus:latest -o jsonpath='{.image.dockerImageReference}')
 oc scale deployment juliaaano-quarkus --replicas 2
 oc expose service juliaaano-quarkus
-curl "http://$(oc get route juliaaano-quarkus -o jsonpath='{.spec.host}')/health"
+curl "http://$(oc get route juliaaano-quarkus -o jsonpath='{.spec.host}')/q/health"
 ```
 
 ### Clean up
