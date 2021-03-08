@@ -1,0 +1,21 @@
+[
+    {
+        "httpRequest": {
+            "path": "/status"
+        },
+        "httpResponse": {
+            "statusCode": 200,
+            "body": "OK"
+        }
+    },
+    {
+        "httpRequest": {
+            "path": "/hello",
+            "method": "GET"
+        },
+        "httpResponse": {
+            "statusCode": 200,
+            "body": "{\"status\":\"APPROVED\"}"
+        }
+    }
+]
