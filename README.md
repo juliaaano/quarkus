@@ -110,7 +110,7 @@ export access_token=$(\
     curl -X POST http://localhost:50102/auth/realms/quarkus/protocol/openid-connect/token \
     --user quarkus-api-test-client:"" \
     -H 'content-type: application/x-www-form-urlencoded' \
-    -d 'username=bob&password=password&grant_type=password&scope=api.pets:read'' | jq --raw-output '.access_token' \
+    -d 'username=bob&password=password&grant_type=password&scope=api.pets:read' | jq --raw-output '.access_token' \
 )
 curl -v http://localhost:8080/pets -H "Authorization: Bearer "$access_token
 

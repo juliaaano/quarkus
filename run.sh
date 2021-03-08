@@ -16,3 +16,5 @@ docker-compose up --detach app
 docker-compose ps
 
 echo "end of run.sh" > /dev/null
+
+
