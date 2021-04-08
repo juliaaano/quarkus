@@ -38,7 +38,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import app.UUID;
 
-@Path("/pets")
+@Path("pets")
 @Consumes(TEXT_PLAIN)
 @Produces(TEXT_PLAIN)
 @Tag(name = "pets", description = "operations about pets")
@@ -47,16 +47,8 @@ import app.UUID;
     type = OAUTH2,
     description = "Authentication needed for this operation",
     flows = @OAuthFlows(
-        // Issue with authorization code flow https://github.com/quarkusio/quarkus/issues/4766
         authorizationCode = @OAuthFlow(
             authorizationUrl = "http://localhost:50102/auth/realms/quarkus/protocol/openid-connect/auth",
-            scopes = {
-                @OAuthScope(name = "api.pets:read", description = "Allows to read pets."),
-                @OAuthScope(name = "api.pets:write", description = "Allows to create and modify pets."),
-                @OAuthScope(name = "api.pets:erase", description = "Allows to remove pets.")
-            }
-        ),
-        password = @OAuthFlow(
             tokenUrl = "http://localhost:50102/auth/realms/quarkus/protocol/openid-connect/token",
             scopes = {
                 @OAuthScope(name = "api.pets:read", description = "Allows to read pets."),
@@ -110,7 +102,7 @@ public class PetResource {
     }
 
     @GET
-    @Path("/{identifier}")
+    @Path("{identifier}")
     @RolesAllowed("PETS_READ")
     @Produces(APPLICATION_JSON)
     @Operation(
@@ -182,7 +174,7 @@ public class PetResource {
     }
 
     @PUT
-    @Path("/{identifier}")
+    @Path("{identifier}")
     @RolesAllowed({"PETS_CREATE", "PETS_UPDATE"})
     @Consumes(APPLICATION_JSON)
     @Produces({TEXT_PLAIN, APPLICATION_JSON})
@@ -228,7 +220,7 @@ public class PetResource {
     }
 
     @PATCH
-    @Path("/{identifier}")
+    @Path("{identifier}")
     @RolesAllowed("PETS_UPDATE")
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
@@ -293,7 +285,7 @@ public class PetResource {
     }
 
     @GET
-    @Path("/context")
+    @Path("context")
     @Operation(hidden = true)
     public String context(@Context SecurityContext ctx) {
 

@@ -31,9 +31,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/pets",
+							"raw": "{{baseUrl}}{{basePath}}/pets",
 							"host": [
-								"{{baseUrl}}"
+								"{{baseUrl}}{{basePath}}"
 							],
 							"path": [
 								"pets"
@@ -48,9 +48,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/pets",
+									"raw": "{{baseUrl}}{{basePath}}/pets",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets"
@@ -75,9 +75,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/pets",
+									"raw": "{{baseUrl}}{{basePath}}/pets",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets"
@@ -102,9 +102,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/pets",
+									"raw": "{{baseUrl}}{{basePath}}/pets",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets"
@@ -157,9 +157,9 @@
 							"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/pets",
+							"raw": "{{baseUrl}}{{basePath}}/pets",
 							"host": [
-								"{{baseUrl}}"
+								"{{baseUrl}}{{basePath}}"
 							],
 							"path": [
 								"pets"
@@ -178,9 +178,9 @@
 									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/pets",
+									"raw": "{{baseUrl}}{{basePath}}/pets",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets"
@@ -209,9 +209,9 @@
 									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/pets",
+									"raw": "{{baseUrl}}{{basePath}}/pets",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets"
@@ -245,9 +245,9 @@
 									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/pets",
+									"raw": "{{baseUrl}}{{basePath}}/pets",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets"
@@ -276,9 +276,9 @@
 									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/pets",
+									"raw": "{{baseUrl}}{{basePath}}/pets",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets"
@@ -327,9 +327,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/pets/:identifier",
+							"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
 							"host": [
-								"{{baseUrl}}"
+								"{{baseUrl}}{{basePath}}"
 							],
 							"path": [
 								"pets",
@@ -351,9 +351,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/pets/:identifier",
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets",
@@ -384,9 +384,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/pets/:identifier",
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets",
@@ -417,9 +417,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/pets/:identifier",
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets",
@@ -450,9 +450,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/pets/:identifier",
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets",
@@ -510,9 +510,9 @@
 							"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Dog\",\n    \"name\": \"Felix\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/pets/:identifier",
+							"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
 							"host": [
-								"{{baseUrl}}"
+								"{{baseUrl}}{{basePath}}"
 							],
 							"path": [
 								"pets",
@@ -539,9 +539,9 @@
 									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/pets/:identifier",
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets",
@@ -581,9 +581,9 @@
 									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/pets/:identifier",
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets",
@@ -618,9 +618,9 @@
 									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/pets/:identifier",
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets",
@@ -660,9 +660,9 @@
 									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/pets/:identifier",
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets",
@@ -697,9 +697,9 @@
 									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/pets/:identifier",
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets",
@@ -763,9 +763,9 @@
 							"raw": "{\n    \"name\": \"Snowball\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/pets/:identifier",
+							"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
 							"host": [
-								"{{baseUrl}}"
+								"{{baseUrl}}{{basePath}}"
 							],
 							"path": [
 								"pets",
@@ -792,9 +792,9 @@
 									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/pets/:identifier",
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets",
@@ -829,9 +829,9 @@
 									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/pets/:identifier",
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets",
@@ -866,9 +866,9 @@
 									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/pets/:identifier",
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets",
@@ -903,9 +903,9 @@
 									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/pets/:identifier",
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets",
@@ -940,9 +940,9 @@
 									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/pets/:identifier",
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets",
@@ -992,9 +992,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/pets/:identifier",
+							"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
 							"host": [
-								"{{baseUrl}}"
+								"{{baseUrl}}{{basePath}}"
 							],
 							"path": [
 								"pets",
@@ -1017,9 +1017,9 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/pets/:identifier",
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets",
@@ -1050,9 +1050,9 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/pets/:identifier",
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets",
@@ -1083,9 +1083,9 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/pets/:identifier",
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
 									"host": [
-										"{{baseUrl}}"
+										"{{baseUrl}}{{basePath}}"
 									],
 									"path": [
 										"pets",
@@ -1140,6 +1140,10 @@
 		{
 			"key": "baseUrl",
 			"value": "http://localhost:8080"
+		},
+		{
+			"key": "basePath",
+			"value": "/api"
 		}
 	]
 }
