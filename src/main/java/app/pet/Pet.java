@@ -2,18 +2,14 @@ package app.pet;
 
 import static java.util.UUID.randomUUID;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import app.UUID;
 
 @Schema(description = "Pet details.")
 public class Pet {
 
-    @NotNull
-    @UUID
     @Schema(example = "73df7903-33b0-4203-b87e-26034e106542", readOnly = true)
-    private transient final String identifier;
+    private final String identifier;
 
     @NotBlank
     @Schema(example = "Cat", required = true)

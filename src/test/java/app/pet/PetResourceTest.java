@@ -10,15 +10,24 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.emptyString;
+import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.hasSize;
 import java.util.Map;
 import java.util.Set;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
+import io.restassured.RestAssured;
 import io.smallrye.jwt.build.Jwt;
 
 @QuarkusTest
 class PetResourceTest {
+
+    @BeforeAll
+    static void beforeAll() {
+
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+    }
 
     @Test
     void get_pets() {
@@ -31,8 +40,11 @@ class PetResourceTest {
             .statusCode(200)
             .contentType(JSON)
             .body("$.size()", is(5),
+                  "identifier", hasSize(5),
                   "species", containsInAnyOrder("Cat", "Cat", "Dog", "Dog", "Pig"),
-                  "breed", containsInAnyOrder("Mixed", "Persian Cat", "Labrador", "Stray", "Mini-Pig"));
+                  "breed", containsInAnyOrder("Mixed", "Persian Cat", "Labrador", "Stray", "Mini-Pig"),
+                  "find { it.breed == 'Stray' }", hasKey("species"),
+                  "find { it.breed == 'Stray' }", not(hasKey("name")));
     }
 
     @Test
@@ -46,7 +58,8 @@ class PetResourceTest {
         .then()
             .statusCode(200)
             .contentType(JSON)
-            .body("species", equalTo("Cat"),
+            .body("identifier", equalTo("2df2973a-bf2e-4c4e-a0e4-6fdfa0d1b242"),
+                  "species", equalTo("Cat"),
                   "breed", equalTo("Persian Cat"),
                   "name", equalTo("Garfield"));
     }

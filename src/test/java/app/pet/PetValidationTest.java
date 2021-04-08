@@ -23,20 +23,6 @@ public class PetValidationTest {
     }
 
     @Test
-    public void pet_has_invalid_identifier() {
-
-        var pet_01 = pet().identifier(null).build();
-        var pet_02 = pet().identifier("").build();
-        var pet_03 = pet().identifier("not-uuid").build();
-
-        final String message = "[%s] Pet.identifier should be invalid.";
-
-        assertEquals(1, violations(pet_01), format(message, "pet_01"));
-        assertEquals(1, violations(pet_02), format(message, "pet_02"));
-        assertEquals(1, violations(pet_03), format(message, "pet_03"));
-    }
-
-    @Test
     public void pet_has_invalid_species() {
 
         var pet_01 = pet().species(null).build();
@@ -107,11 +93,6 @@ public class PetValidationTest {
             this.species = "Alien";
             this.breed = "Unknown";
             this.name = "Stranger";
-            return this;
-        }
-
-        private Builder identifier(String identifier) {
-            this.identifier = identifier;
             return this;
         }
 
