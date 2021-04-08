@@ -9,7 +9,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 public class Pet {
 
     @Schema(example = "73df7903-33b0-4203-b87e-26034e106542", readOnly = true)
-    private final String identifier;
+    private String identifier;
 
     @NotBlank
     @Schema(example = "Cat", required = true)

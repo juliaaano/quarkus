@@ -106,6 +106,10 @@ In Quarkus **DEV** mode, there is no security enabled, the API can be accessed f
 
 As a container, the app runs in **PROD** mode along a set of other services, which can be found in the [docker-compose.yaml](./docker-compose.yaml) file.
 
+Check out this awesome UI provided by Quarkus:
+
+* http://localhost:8080/q/dev/
+
 ### Postman API testing
 
 This project offers an automated setup of integration API testing with Postman.

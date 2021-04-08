@@ -16,11 +16,13 @@ import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 import io.smallrye.jwt.build.Jwt;
 
 @QuarkusTest
+@TestHTTPEndpoint(PetResource.class)
 class PetResourceTest {
 
     @BeforeAll
