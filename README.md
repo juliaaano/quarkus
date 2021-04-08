@@ -85,17 +85,17 @@ $ oc start-build juliaaano-quarkus --from-file ./target/juliaaano-quarkus-1.0-SN
 ### Deployment
 
 ```
-oc apply -f manifests/
-oc set image deployment juliaaano-quarkus app=$(oc get istag juliaaano-quarkus:latest -o jsonpath='{.image.dockerImageReference}')
-oc scale deployment juliaaano-quarkus --replicas 2
-oc expose service juliaaano-quarkus
-curl "http://$(oc get route juliaaano-quarkus -o jsonpath='{.spec.host}')/q/health"
+$ oc apply -f manifests/
+$ oc set image deployment juliaaano-quarkus app=$(oc get istag juliaaano-quarkus:latest -o jsonpath='{.image.dockerImageReference}')
+$ oc scale deployment juliaaano-quarkus --replicas 2
+$ oc expose service juliaaano-quarkus
+$ curl "http://$(oc get route juliaaano-quarkus -o jsonpath='{.spec.host}')/q/health"
 ```
 
 ### Clean up
 
 ```
-oc delete all -l app=juliaaano-quarkus
+$ oc delete all -l app=juliaaano-quarkus
 ```
 
 ## Playing with the app
@@ -114,7 +114,7 @@ Postman collections present in the [postman](./postman) folder can be imported a
 
 ![Postman API Testing with Newman](./postman-api-testing-newman.png )
 
-The QUARKUS_APP_HOST var points to the system under test and can be adjusted accordingly.
+The **QUARKUS_APP_HOST** var points to the system under test and can be adjusted accordingly.
 
 ```
 $ mvn quarkus:dev
@@ -123,7 +123,7 @@ $ QUARKUS_APP_HOST=http://localhost:8080 docker-compose run --rm postman
 
 ### Keycloak and JWT RBAC Security
 
-When using docker-compose, a Keycloack realm is automatically imported, so tokens can be issued and used with the application as follows:
+When using docker-compose, a Keycloak realm is automatically imported, so tokens can be issued and used with the application as follows:
 
 ```
 $ export access_token=$(\
