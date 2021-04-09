@@ -6,7 +6,6 @@ services:
     ports:
       - "50101:8080"
     environment:
-      QUARKUS_PROFILE: alpha
       QUARKUS_LOG_CONSOLE_JSON: "false"
       QUARKUS_DATASOURCE_USERNAME: quarkus
       QUARKUS_DATASOURCE_PASSWORD: password
@@ -32,24 +31,10 @@ services:
       POSTGRESQL_USER: quarkus
       POSTGRESQL_PASSWORD: password
       POSTGRESQL_DATABASE: quarkusdb
-  mockserver:
-    image: mockserver/mockserver:mockserver-5.11.2
-    ports:
-      - 50104:1080
-    environment:
-      MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
-      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/initializer.json
-    volumes:
-      - type: bind
-        source: ./config/mockserver.properties
-        target: /config/mockserver.properties
-      - type: bind
-        source: ./config/mockserver-initializer.json
-        target: /config/initializer.json
   pgadmin:
     image: registry.hub.docker.com/dpage/pgadmin4
     ports:
-      - "50105:80"
+      - "50104:80"
     environment:
       PGADMIN_DEFAULT_EMAIL: quarkus@redhat.com
       PGADMIN_DEFAULT_PASSWORD: password
@@ -71,6 +56,20 @@ services:
       - type: bind
         source: ./postman
         target: /etc/newman
+  mockserver:
+    image: mockserver/mockserver:mockserver-5.11.2
+    ports:
+      - 50109:1080
+    environment:
+      MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
+      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/initializer.json
+    volumes:
+      - type: bind
+        source: ./config/mockserver.properties
+        target: /config/mockserver.properties
+      - type: bind
+        source: ./config/mockserver-initializer.json
+        target: /config/initializer.json
 networks:
   default:
     name: quarkus

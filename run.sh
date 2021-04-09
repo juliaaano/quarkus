@@ -4,7 +4,7 @@ set -euxo pipefail
 
 docker-compose version
 
-docker-compose up --detach keycloak postgresql mockserver pgadmin
+docker-compose up --detach keycloak postgresql pgadmin
 
 mvn --show-version clean package -Dquarkus.container-image.build=true -DskipTests
 # mvn --show-version clean package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -DskipTests
