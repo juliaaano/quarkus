@@ -64,7 +64,13 @@ services:
       - type: bind
         source: ./liquibase
         target: /liquibase/changelog
-
+  postman:
+    image: postman/newman:5.2.2-alpine
+    command: run quarkus.postman_collection.json --verbose --color on --env-var "baseUrl=${QUARKUS_APP_HOST:-http://host.docker.internal:8080}"
+    volumes:
+      - type: bind
+        source: ./postman
+        target: /etc/newman
 networks:
   default:
     name: quarkus

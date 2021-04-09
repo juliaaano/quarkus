@@ -10,15 +10,26 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.emptyString;
+import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.hasSize;
 import java.util.Map;
 import java.util.Set;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
+import io.restassured.RestAssured;
 import io.smallrye.jwt.build.Jwt;
 
 @QuarkusTest
+@TestHTTPEndpoint(PetResource.class)
 class PetResourceTest {
+
+    @BeforeAll
+    static void beforeAll() {
+
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+    }
 
     @Test
     void get_pets() {
@@ -26,13 +37,16 @@ class PetResourceTest {
         given()
             .auth().oauth2(jwt("bob"))
         .when()
-            .get("/pets")
+            .get()
         .then()
             .statusCode(200)
             .contentType(JSON)
             .body("$.size()", is(5),
+                  "identifier", hasSize(5),
                   "species", containsInAnyOrder("Cat", "Cat", "Dog", "Dog", "Pig"),
-                  "breed", containsInAnyOrder("Mixed", "Persian Cat", "Labrador", "Stray", "Mini-Pig"));
+                  "breed", containsInAnyOrder("Mixed", "Persian Cat", "Labrador", "Stray", "Mini-Pig"),
+                  "find { it.breed == 'Stray' }", hasKey("species"),
+                  "find { it.breed == 'Stray' }", not(hasKey("name")));
     }
 
     @Test
@@ -42,11 +56,12 @@ class PetResourceTest {
             .auth().oauth2(jwt("alice")) // ensure user can retrieve only it's own pet
             .pathParam("id", "2df2973a-bf2e-4c4e-a0e4-6fdfa0d1b242")
         .when()
-            .get("/pets/{id}")
+            .get("/{id}")
         .then()
             .statusCode(200)
             .contentType(JSON)
-            .body("species", equalTo("Cat"),
+            .body("identifier", equalTo("2df2973a-bf2e-4c4e-a0e4-6fdfa0d1b242"),
+                  "species", equalTo("Cat"),
                   "breed", equalTo("Persian Cat"),
                   "name", equalTo("Garfield"));
     }
@@ -60,7 +75,7 @@ class PetResourceTest {
             .contentType(JSON)
             .body(Map.of("species", "Cat", "breed", "Tuxedo Cat", "name", "Felix"))
         .when()
-            .post("/pets")
+            .post()
         .then()
             .statusCode(201)
             .contentType(TEXT)
@@ -73,7 +88,7 @@ class PetResourceTest {
             .auth().oauth2(jwt("alice"))
             .pathParam("id", identifier)
         .when()
-            .delete("/pets/{id}")
+            .delete("/{id}")
         .then()
             .statusCode(204);
     }
@@ -89,7 +104,7 @@ class PetResourceTest {
             .contentType(JSON)
             .body(Map.of("species", "Cat", "breed", "Tuxedo Cat", "name", "Felix"))
         .when()
-            .put("/pets/{id}")
+            .put("/{id}")
         .then()
             .statusCode(201)
             .contentType(TEXT)
@@ -102,7 +117,7 @@ class PetResourceTest {
             .contentType(JSON)
             .body(Map.of("species", "Cat", "breed", "Birman", "name", "Boris"))
         .when()
-            .put("/pets/{id}")
+            .put("/{id}")
         .then()
             .statusCode(204)
             .header("Location", response -> endsWith("/pets/" + identifier))
@@ -112,7 +127,7 @@ class PetResourceTest {
             .auth().oauth2(jwt("alice"))
             .pathParam("id", identifier)
         .when()
-            .get("/pets/{id}")
+            .get("/{id}")
         .then()
             .statusCode(200)
             .contentType(JSON)
@@ -124,7 +139,7 @@ class PetResourceTest {
             .auth().oauth2(jwt("alice"))
             .pathParam("id", identifier)
         .when()
-            .delete("/pets/{id}")
+            .delete("/{id}")
         .then()
             .statusCode(204);
     }
@@ -138,7 +153,7 @@ class PetResourceTest {
             .contentType(JSON)
             .body(Map.of("species", "Cat", "breed", "Tuxedo Cat", "name", "Felix"))
         .when()
-            .post("/pets")
+            .post()
         .then()
             .statusCode(201)
             .contentType(TEXT)
@@ -153,7 +168,7 @@ class PetResourceTest {
             .contentType(JSON)
             .body(Map.of("breed", "Birman", "name", "Boris"))
         .when()
-            .patch("/pets/{id}")
+            .patch("/{id}")
         .then()
             .statusCode(200)
             .body("species", equalTo("Cat"),
@@ -164,7 +179,7 @@ class PetResourceTest {
             .auth().oauth2(jwt("alice"))
             .pathParam("id", identifier)
         .when()
-            .delete("/pets/{id}")
+            .delete("/{id}")
         .then()
             .statusCode(204);
     }
@@ -178,7 +193,7 @@ class PetResourceTest {
             .contentType(JSON)
             .body(Map.of("species", "Cat", "breed", "Tuxedo Cat", "name", "Felix"))
         .when()
-            .put("/pets/{id}")
+            .put("/{id}")
         .then()
             .statusCode(400)
             .contentType(JSON)
@@ -196,7 +211,7 @@ class PetResourceTest {
             .contentType(JSON)
             .body(Map.of("species", "", "breed", "Tuxedo Cat", "name", "Felix"))
         .when()
-            .put("/pets/{id}")
+            .put("/{id}")
         .then()
             .statusCode(400)
             .contentType(JSON)
@@ -213,7 +228,7 @@ class PetResourceTest {
             .contentType(JSON)
             .body(Map.of("species", "Cat", "breed", "", "name", "Felix", "identifier", "it-should-be-ignored"))
         .when()
-            .post("/pets")
+            .post()
         .then()
             .statusCode(400)
             .contentType(JSON)
@@ -227,40 +242,40 @@ class PetResourceTest {
 
         given()
         .when()
-            .get("/pets")
+            .get()
         .then()
             .statusCode(401);
 
         given()
         .when()
-            .get("/pets/123456789")
-        .then()
-            .statusCode(401);
-
-        given()
-            .contentType(JSON)
-        .when()
-            .post("/pets")
+            .get("/123456789")
         .then()
             .statusCode(401);
 
         given()
             .contentType(JSON)
         .when()
-            .put("/pets/123456789")
+            .post()
         .then()
             .statusCode(401);
 
         given()
             .contentType(JSON)
         .when()
-            .patch("/pets/123456789")
+            .put("/123456789")
+        .then()
+            .statusCode(401);
+
+        given()
+            .contentType(JSON)
+        .when()
+            .patch("/123456789")
         .then()
             .statusCode(401);
 
         given()
         .when()
-            .delete("/pets/123456789")
+            .delete("/123456789")
         .then()
             .statusCode(401);
     }
@@ -271,14 +286,14 @@ class PetResourceTest {
         given()
             .auth().oauth2(jwt("joe"))
         .when()
-            .get("/pets")
+            .get()
         .then()
             .statusCode(403);
 
         given()
             .auth().oauth2(jwt("joe"))
         .when()
-            .get("/pets/123456789")
+            .get("/123456789")
         .then()
             .statusCode(403);
 
@@ -286,7 +301,7 @@ class PetResourceTest {
             .auth().oauth2(jwt("bob"))
             .contentType(JSON)
         .when()
-            .post("/pets")
+            .post()
         .then()
             .statusCode(403);
 
@@ -294,7 +309,7 @@ class PetResourceTest {
             .auth().oauth2(jwt("bob"))
             .contentType(JSON)
         .when()
-            .put("/pets/123456789")
+            .put("/123456789")
         .then()
             .statusCode(403);
 
@@ -302,14 +317,14 @@ class PetResourceTest {
             .auth().oauth2(jwt("bob"))
             .contentType(JSON)
         .when()
-            .patch("/pets/123456789")
+            .patch("/123456789")
         .then()
             .statusCode(403);
 
         given()
             .auth().oauth2(jwt("bob"))
         .when()
-            .delete("/pets/123456789")
+            .delete("/123456789")
         .then()
             .statusCode(403);
     }

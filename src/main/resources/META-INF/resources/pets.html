@@ -29,7 +29,7 @@
 
           $http({
             method: "POST",
-            url: '/pets',
+            url: '/api/pets',
             data: angular.toJson(data),
             headers: {
               'Content-Type': 'application/json'
@@ -42,7 +42,7 @@
         function _refreshPageData() {
           $http({
             method: 'GET',
-            url: '/pets'
+            url: '/api/pets'
           }).then(function successCallback(response) {
             $scope.pets = response.data;
           }, function errorCallback(response) {

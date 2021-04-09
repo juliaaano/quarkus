@@ -18,8 +18,8 @@
     <!-- <quarkus.platform.version>	1.7.6.Final-redhat-00014</quarkus.platform.version> -->
     <!-- <quarkus-plugin.version>	1.7.6.Final-redhat-00014</quarkus-plugin.version> -->
     <!-- <quarkus.platform.group-id>com.redhat.quarkus</quarkus.platform.group-id> -->
-    <quarkus.platform.version>1.12.0.Final</quarkus.platform.version>
-    <quarkus-plugin.version>1.12.0.Final</quarkus-plugin.version>
+    <quarkus.platform.version>1.13.1.Final</quarkus.platform.version>
+    <quarkus-plugin.version>1.13.1.Final</quarkus-plugin.version>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
     <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
     <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
@@ -38,6 +38,10 @@
   </dependencyManagement>
 
   <dependencies>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-arc</artifactId>
+    </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-resteasy</artifactId>

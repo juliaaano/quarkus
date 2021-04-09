@@ -1,0 +1,1149 @@
+{
+	"info": {
+		"_postman_id": "5171b15d-2308-4241-a25f-629de8fe8cb8",
+		"name": "Quarkus Example REST API (DEV)",
+		"description": "This is a sample REST API using Quarkus.\n\nContact Support:\n Name: Quarkus\n Email: someone@quarkus.io",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "pets",
+			"item": [
+				{
+					"name": "get all pets",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "oauth2"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}{{basePath}}/pets",
+							"host": [
+								"{{baseUrl}}{{basePath}}"
+							],
+							"path": [
+								"pets"
+							]
+						},
+						"description": "This operation lists all pets registered in the system."
+					},
+					"response": [
+						{
+							"name": "List of pets.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"breed\": \"Tuxedo\",\n  \"identifier\": \"73df7903-33b0-4203-b87e-26034e106542\",\n  \"species\": \"Cat\",\n  \"name\": \"Felix\"\n },\n {\n  \"breed\": \"Tuxedo\",\n  \"identifier\": \"73df7903-33b0-4203-b87e-26034e106542\",\n  \"species\": \"Cat\",\n  \"name\": \"Felix\"\n }\n]"
+						},
+						{
+							"name": "Forbidden.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "create a pet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"pm.collectionVariables.set(\"petId\", responseBody);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "oauth2"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{basePath}}/pets",
+							"host": [
+								"{{baseUrl}}{{basePath}}"
+							],
+							"path": [
+								"pets"
+							]
+						},
+						"description": "This operation adds a pet to the system."
+					},
+					"response": [
+						{
+							"name": "Unsupported Media Type.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets"
+									]
+								}
+							},
+							"status": "Unsupported Media Type",
+							"code": 415,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Pet created.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Location",
+									"value": "http://my.domain/pets/1f31efb8-94ae-43ca-9a40-d966881e6ed6",
+									"description": ""
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "\"1f31efb8-94ae-43ca-9a40-d966881e6ed6\""
+						},
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "get a pet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Cat is Felix\", () => {",
+									"  const responseJson = pm.response.json();",
+									"  pm.expect(responseJson.species).to.eql(\"Cat\");",
+									"  pm.expect(responseJson.breed).to.eql(\"Tuxedo\");",
+									"  pm.expect(responseJson.name).to.eql(\"Felix\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "oauth2"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
+							"host": [
+								"{{baseUrl}}{{basePath}}"
+							],
+							"path": [
+								"pets",
+								":identifier"
+							],
+							"variable": [
+								{
+									"key": "identifier",
+									"value": "{{petId}}"
+								}
+							]
+						},
+						"description": "This operation retrieves a pet by its unique identifier."
+					},
+					"response": [
+						{
+							"name": "The pet.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets",
+										":identifier"
+									],
+									"variable": [
+										{
+											"key": "identifier"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"breed\": \"Tuxedo\",\n \"identifier\": \"73df7903-33b0-4203-b87e-26034e106542\",\n \"species\": \"Cat\",\n \"name\": \"Felix\"\n}"
+						},
+						{
+							"name": "Forbidden.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets",
+										":identifier"
+									],
+									"variable": [
+										{
+											"key": "identifier"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets",
+										":identifier"
+									],
+									"variable": [
+										{
+											"key": "identifier"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Pet not found.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets",
+										":identifier"
+									],
+									"variable": [
+										{
+											"key": "identifier"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "creates or replaces a pet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "oauth2"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Dog\",\n    \"name\": \"Felix\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
+							"host": [
+								"{{baseUrl}}{{basePath}}"
+							],
+							"path": [
+								"pets",
+								":identifier"
+							],
+							"variable": [
+								{
+									"key": "identifier",
+									"value": "{{petId}}",
+									"description": "(Required) "
+								}
+							]
+						},
+						"description": "This operation replaces or creates a pet if it does not exist."
+					},
+					"response": [
+						{
+							"name": "Pet created.",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets",
+										":identifier"
+									],
+									"variable": [
+										{
+											"key": "identifier"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Location",
+									"value": "http://my.domain/pets/1f31efb8-94ae-43ca-9a40-d966881e6ed6",
+									"description": ""
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "\"1f31efb8-94ae-43ca-9a40-d966881e6ed6\""
+						},
+						{
+							"name": "Unsupported Media Type.",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets",
+										":identifier"
+									],
+									"variable": [
+										{
+											"key": "identifier"
+										}
+									]
+								}
+							},
+							"status": "Unsupported Media Type",
+							"code": 415,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Pet replaced.",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets",
+										":identifier"
+									],
+									"variable": [
+										{
+											"key": "identifier"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Location",
+									"value": "http://my.domain/pets/1f31efb8-94ae-43ca-9a40-d966881e6ed6",
+									"description": ""
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden.",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets",
+										":identifier"
+									],
+									"variable": [
+										{
+											"key": "identifier"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets",
+										":identifier"
+									],
+									"variable": [
+										{
+											"key": "identifier"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "updates a pet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Cat is Felix\", () => {",
+									"  const responseJson = pm.response.json();",
+									"  pm.expect(responseJson.species).to.eql(\"Dog\");",
+									"  pm.expect(responseJson.breed).to.eql(\"Tuxedo\");",
+									"  pm.expect(responseJson.name).to.eql(\"Snowball\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "oauth2"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Snowball\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
+							"host": [
+								"{{baseUrl}}{{basePath}}"
+							],
+							"path": [
+								"pets",
+								":identifier"
+							],
+							"variable": [
+								{
+									"key": "identifier",
+									"value": "{{petId}}",
+									"description": "(Required) "
+								}
+							]
+						},
+						"description": "This operation updates an existing pet."
+					},
+					"response": [
+						{
+							"name": "Pet updated.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets",
+										":identifier"
+									],
+									"variable": [
+										{
+											"key": "identifier"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"breed\": \"Tuxedo\",\n \"identifier\": \"73df7903-33b0-4203-b87e-26034e106542\",\n \"species\": \"Cat\",\n \"name\": \"Felix\"\n}"
+						},
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets",
+										":identifier"
+									],
+									"variable": [
+										{
+											"key": "identifier"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unsupported Media Type.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets",
+										":identifier"
+									],
+									"variable": [
+										{
+											"key": "identifier"
+										}
+									]
+								}
+							},
+							"status": "Unsupported Media Type",
+							"code": 415,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Pet not found.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets",
+										":identifier"
+									],
+									"variable": [
+										{
+											"key": "identifier"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"breed\": \"Tuxedo\",\n    \"species\": \"Cat\",\n    \"name\": \"Felix\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets",
+										":identifier"
+									],
+									"variable": [
+										{
+											"key": "identifier"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "delete a pet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"pm.collectionVariables.unset(\"petId\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "oauth2"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
+							"host": [
+								"{{baseUrl}}{{basePath}}"
+							],
+							"path": [
+								"pets",
+								":identifier"
+							],
+							"variable": [
+								{
+									"key": "identifier",
+									"value": "{{petId}}",
+									"description": "(Required) "
+								}
+							]
+						},
+						"description": "This operation deletes a pet from the system."
+					},
+					"response": [
+						{
+							"name": "Pet deleted.",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets",
+										":identifier"
+									],
+									"variable": [
+										{
+											"key": "identifier"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets",
+										":identifier"
+									],
+									"variable": [
+										{
+											"key": "identifier"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden.",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{basePath}}/pets/:identifier",
+									"host": [
+										"{{baseUrl}}{{basePath}}"
+									],
+									"path": [
+										"pets",
+										":identifier"
+									],
+									"variable": [
+										{
+											"key": "identifier"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"description": "operations about pets"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "basePath",
+			"value": "/api"
+		}
+	]
+}
