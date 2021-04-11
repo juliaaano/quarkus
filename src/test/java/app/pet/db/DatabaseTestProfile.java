@@ -3,7 +3,7 @@ package app.pet.db;
 import java.util.Map;
 import io.quarkus.test.junit.QuarkusTestProfile;
 
-public class DatabaseH2TestProfile implements QuarkusTestProfile {
+public class DatabaseTestProfile implements QuarkusTestProfile {
 
     @Override
     public Map<String, String> getConfigOverrides() {
