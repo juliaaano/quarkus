@@ -1,9 +1,12 @@
 package app.pet.ws;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Optional;
 import javax.inject.Inject;
+import javax.ws.rs.ProcessingException;
+import javax.ws.rs.WebApplicationException;
 import org.junit.jupiter.api.Test;
 import app.pet.Pet;
 import app.pet.PetRepository;
@@ -26,6 +29,39 @@ public class WebServicePetRepositoryTest {
 
         assertTrue(pet.isPresent());
         assertEquals("123456789", pet.get().getIdentifier());
+        assertEquals("dog", pet.get().getSpecies());
+        assertEquals("husky", pet.get().getBreed());
+        assertEquals("max", pet.get().getName());
+    }
+
+    @Test
+    void get_pet_not_found() {
+
+        assertTrue(repository.find("not-found").isEmpty());
+    }
+
+    @Test
+    void get_pet_server_error() {
+
+        assertThrows(WebApplicationException.class, () -> {
+            repository.find("error");
+        });
+    }
+
+    @Test
+    void get_pet_network_fault() {
+
+        assertThrows(ProcessingException.class, () -> {
+            repository.find("fault");
+        });
+    }
+
+    @Test
+    void get_pet_timeout() {
+
+        assertThrows(ProcessingException.class, () -> {
+            repository.find("timeout");
+        });
     }
 
     @Test
@@ -33,7 +69,5 @@ public class WebServicePetRepositoryTest {
 
 
         repository.find();
-        // final var pet = Pet.pet("a_species", "a_breed", "a_name");
-
     }
 }
