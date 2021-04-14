@@ -1,5 +1,7 @@
 package app.pet.ws;
 
+import static app.pet.Pet.pet;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -23,25 +25,25 @@ public class WebServicePetRepositoryTest {
     PetRepository repository;
 
     @Test
-    void get_pet() {
+    void find_pet() {
 
-        Optional<Pet> pet = repository.find("123456789");
+        final var pet = repository.find("123456789");
 
         assertTrue(pet.isPresent());
         assertEquals("123456789", pet.get().getIdentifier());
-        assertEquals("dog", pet.get().getSpecies());
-        assertEquals("husky", pet.get().getBreed());
-        assertEquals("max", pet.get().getName());
+        assertEquals("DOG", pet.get().getSpecies());
+        assertEquals("Husky", pet.get().getBreed());
+        assertEquals("Max", pet.get().getName());
     }
 
     @Test
-    void get_pet_not_found() {
+    void find_pet_not_found() {
 
         assertTrue(repository.find("not-found").isEmpty());
     }
 
     @Test
-    void get_pet_server_error() {
+    void find_pet_server_error() {
 
         assertThrows(WebApplicationException.class, () -> {
             repository.find("error");
@@ -49,7 +51,7 @@ public class WebServicePetRepositoryTest {
     }
 
     @Test
-    void get_pet_network_fault() {
+    void find_pet_network_fault() {
 
         assertThrows(ProcessingException.class, () -> {
             repository.find("fault");
@@ -57,7 +59,7 @@ public class WebServicePetRepositoryTest {
     }
 
     @Test
-    void get_pet_timeout() {
+    void find_pet_timeout() {
 
         assertThrows(ProcessingException.class, () -> {
             repository.find("timeout");
@@ -65,9 +67,20 @@ public class WebServicePetRepositoryTest {
     }
 
     @Test
-    void get_pets() {
+    void find_pets() {
 
+        assertThat(repository.find())
+            .containsExactlyInAnyOrder(
+                pet("123456789", "DOG", "Husky", "Max"),
+                pet("111199999", "Turtle", "NONE", "Oliver"),
+                pet("987654321", "Cat", "Burmilla", "Lisa")
+            );
+    }
 
-        repository.find();
+    @Test
+    void create_pet() {
+
+        assertThat(repository.create(pet("123456789", "DOG", "Husky", "Max")))
+            .contains("created");
     }
 }

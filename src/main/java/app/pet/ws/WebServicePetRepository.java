@@ -1,6 +1,7 @@
 package app.pet.ws;
 
-import java.util.HashSet;
+import static app.pet.ws.PetDTO.petDTO;
+import static java.util.stream.Collectors.toSet;
 import java.util.Optional;
 import java.util.Set;
 import javax.enterprise.context.ApplicationScoped;
@@ -26,9 +27,9 @@ class WebServicePetRepository implements PetRepository {
     @Override
     public Optional<Pet> find(final String identifier) {
 
-        final PetResource pet;
+        final PetDTO pet;
         try {
-            pet = client.get(identifier);
+            pet = client.getPet(identifier);
         } catch (WebApplicationException ex) {
             if (ex.getResponse().getStatus() == 404) {
                 log.info("Pet with id {} not found", identifier);
@@ -43,21 +44,23 @@ class WebServicePetRepository implements PetRepository {
 
     @Override
     public Set<Pet> find() {
-        return new HashSet<>();
+
+        return client.getPets().stream().map(PetDTO::map).collect(toSet());
     }
 
     @Override
     public String create(final Pet pet) {
+
+        return client.putPet(pet.getIdentifier(), petDTO(pet));
+    }
+
+    @Override
+    public Pet update(final Pet pet) {
         return null;
     }
 
     @Override
-    public Pet update(Pet pet) {
-        return null;
-    }
-
-    @Override
-    public boolean replace(Pet pet) {
+    public boolean replace(final Pet pet) {
         return false;
     }
 
