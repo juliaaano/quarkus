@@ -5,7 +5,6 @@ import static io.restassured.http.ContentType.JSON;
 import static io.restassured.http.ContentType.TEXT;
 import static java.util.UUID.randomUUID;
 import static org.hamcrest.CoreMatchers.endsWith;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -60,10 +59,10 @@ class PetResourceTest {
         .then()
             .statusCode(200)
             .contentType(JSON)
-            .body("identifier", equalTo("2df2973a-bf2e-4c4e-a0e4-6fdfa0d1b242"),
-                  "species", equalTo("Cat"),
-                  "breed", equalTo("Persian Cat"),
-                  "name", equalTo("Garfield"));
+            .body("identifier", is("2df2973a-bf2e-4c4e-a0e4-6fdfa0d1b242"),
+                  "species", is("Cat"),
+                  "breed", is("Persian Cat"),
+                  "name", is("Garfield"));
     }
 
     @Test
@@ -131,9 +130,9 @@ class PetResourceTest {
         .then()
             .statusCode(200)
             .contentType(JSON)
-            .body("species", equalTo("Cat"),
-                  "breed", equalTo("Birman"),
-                  "name", equalTo("Boris"));
+            .body("species", is("Cat"),
+                  "breed", is("Birman"),
+                  "name", is("Boris"));
 
         given()
             .auth().oauth2(jwt("alice"))
@@ -171,9 +170,9 @@ class PetResourceTest {
             .patch("/{id}")
         .then()
             .statusCode(200)
-            .body("species", equalTo("Cat"),
-                  "breed", equalTo("Birman"),
-                  "name", equalTo("Boris"));
+            .body("species", is("Cat"),
+                  "breed", is("Birman"),
+                  "name", is("Boris"));
 
         given()
             .auth().oauth2(jwt("alice"))
@@ -198,8 +197,8 @@ class PetResourceTest {
             .statusCode(400)
             .contentType(JSON)
             .body("parameterViolations", hasSize(1))
-            .body("parameterViolations[0].path", equalTo("put.identifier"))
-            .body("parameterViolations[0].message", equalTo("Must match UUID format."));
+            .body("parameterViolations[0].path", is("put.identifier"))
+            .body("parameterViolations[0].message", is("Must match UUID format."));
     }
 
     @Test
@@ -216,8 +215,8 @@ class PetResourceTest {
             .statusCode(400)
             .contentType(JSON)
             .body("parameterViolations", hasSize(1))
-            .body("parameterViolations[0].path", equalTo("put.pet.species"))
-            .body("parameterViolations[0].message", equalTo("must not be blank"));
+            .body("parameterViolations[0].path", is("put.pet.species"))
+            .body("parameterViolations[0].message", is("must not be blank"));
     }
 
     @Test
@@ -233,8 +232,8 @@ class PetResourceTest {
             .statusCode(400)
             .contentType(JSON)
             .body("parameterViolations", hasSize(1))
-            .body("parameterViolations[0].path", equalTo("post.pet.breed"))
-            .body("parameterViolations[0].message", equalTo("must not be blank"));
+            .body("parameterViolations[0].path", is("post.pet.breed"))
+            .body("parameterViolations[0].message", is("must not be blank"));
     }
 
     @Test

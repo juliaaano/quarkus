@@ -67,8 +67,8 @@ public class PetResource {
     private final PetRepository repository;
 
     PetResource(JsonWebToken jwt, PetRepository repository) {
-        this.repository = repository;
         this.jwt = jwt;
+        this.repository = repository;
     }
 
     @GET

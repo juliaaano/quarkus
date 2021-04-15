@@ -11,6 +11,7 @@ services:
       QUARKUS_DATASOURCE_PASSWORD: password
       QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://postgresql:5432/quarkusdb
       MP_JWT_VERIFY_PUBLICKEY_LOCATION: http://keycloak:8080/auth/realms/quarkus/protocol/openid-connect/certs
+      PETS_API_MP_REST_URL: http://mockserver:1080/
   keycloak:
     image: quay.io/keycloak/keycloak:11.0.3
     ports:
@@ -56,6 +57,20 @@ services:
       - type: bind
         source: ./postman
         target: /etc/newman
+  mockserver:
+    image: mockserver/mockserver:mockserver-5.11.2
+    ports:
+      - 50109:1080
+    environment:
+      MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
+      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/initializer.json
+    volumes:
+      - type: bind
+        source: ./config/mockserver.properties
+        target: /config/mockserver.properties
+      - type: bind
+        source: ./config/mockserver-initializer.json
+        target: /config/initializer.json
 networks:
   default:
     name: quarkus

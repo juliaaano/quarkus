@@ -13,7 +13,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.TestProfile;
 
 @QuarkusTest
-@TestProfile(DatabaseH2TestProfile.class)
+@TestProfile(DatabaseTestProfile.class)
 @TestTransaction
 public class DatabasePetRepositoryTest {
 

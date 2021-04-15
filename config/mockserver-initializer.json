@@ -1,0 +1,65 @@
+[
+    {
+        "httpRequest": {
+            "path": "/status"
+        },
+        "httpResponse": {
+            "statusCode": 200,
+            "body": "OK"
+        }
+    },
+    {
+        "httpRequest": {
+            "path": "/v1/pets/123456789",
+            "method": "GET"
+        },
+        "httpResponse": {
+            "statusCode": 200,
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "values": [
+                        "application/json"
+                    ]
+                }
+            ],
+            "body": "{\"id\": \"123456789\",\"type\": \"DOG\",\"denomination\": \"Max\",\"variety\": \"Husky\"}"
+        }
+    },
+    {
+        "httpRequest": {
+            "path": "/v1/pets",
+            "method": "GET"
+        },
+        "httpResponse": {
+            "statusCode": 200,
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "values": [
+                        "application/json"
+                    ]
+                }
+            ],
+            "body": "[{\"id\": \"123456789\",\"type\": \"DOG\",\"denomination\": \"Max\",\"variety\": \"Husky\"},{\"id\": \"987654321\",\"type\": \"Cat\",\"denomination\": \"Lisa\",\"variety\": \"Burmilla\"},{\"id\": \"111199999\",\"type\": \"TURTLE\",\"denomination\": \"Oliver\",\"variety\": \"NONE\"}]"
+        }
+    },
+    {
+        "httpRequest": {
+            "path": "/v1/pets/*",
+            "method": "PUT"
+        },
+        "httpResponse": {
+            "statusCode": 200,
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "values": [
+                        "application/xml"
+                    ]
+                }
+            ],
+            "body": "<result>created</result>"
+        }
+    }
+]
