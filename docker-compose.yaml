@@ -11,6 +11,7 @@ services:
       QUARKUS_DATASOURCE_PASSWORD: password
       QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://postgresql:5432/quarkusdb
       MP_JWT_VERIFY_PUBLICKEY_LOCATION: http://keycloak:8080/auth/realms/quarkus/protocol/openid-connect/certs
+      PETS_API_MP_REST_URL: http://mockserver:1080/
   keycloak:
     image: quay.io/keycloak/keycloak:11.0.3
     ports:
