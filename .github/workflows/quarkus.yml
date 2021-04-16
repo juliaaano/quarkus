@@ -41,3 +41,17 @@ jobs:
       run: $MVN test
     - name: mvn package -Dquarkus.container-image.push=true -DskipTests
       run: $MVN package -Dquarkus.container-image.push=true -DskipTests
+  build-native:
+    runs-on: ubuntu-latest
+    env:
+      MVN: mvn --show-version --batch-mode
+    steps:
+    - name: Setup GraalVM environment
+      uses: DeLaGuardo/setup-graalvm@4.0
+      with:
+        graalvm: 21.0.0.2
+        java: java11
+    - name: Install native-image component
+      run: gu install native-image
+    - name: docker-compose up keycloak postgresql
+      run: docker-compose up --detach keycloak postgresql
