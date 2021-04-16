@@ -20,5 +20,8 @@ jobs:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
-    - name: maven build
-      run: mvn --show-version --batch-mode clean package
+    - name: Maven compile
+      run: mvn --show-version --batch-mode clean compile
+    - run: mvn --show-version --batch-mode test
+    - name: Maven package
+      run: mvn --show-version --batch-mode package -DskipTests
