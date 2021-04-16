@@ -1,8 +1,7 @@
 package app.pet;
 
-import static java.lang.String.format;
 import static java.util.UUID.randomUUID;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,63 +18,77 @@ public class PetValidationTest {
 
     @Test
     public void pet_is_valid() {
-        assertEquals(0, violations(pet().build()), "Pet should be valid.");
+
+        assertThat(pet().violations()).isZero();
     }
 
     @Test
-    public void pet_has_invalid_species() {
+    public void pet_species_is_valid() {
 
-        var pet_01 = pet().species(null).build();
-        var pet_02 = pet().species("").build();
+        assertThat(pet().species(null).violations())
+            .as("Pet.species is null")
+            .isOne();
 
-        final String message = "[%s] Pet.species should be invalid.";
-
-        assertEquals(1, violations(pet_01), format(message, "pet_01"));
-        assertEquals(1, violations(pet_02), format(message, "pet_02"));
+        assertThat(pet().species("").violations())
+            .as("Pet.species is blank")
+            .isOne();
     }
 
     @Test
-    public void pet_has_invalid_breed() {
+    public void pet_breed_is_valid() {
 
-        var pet_01 = pet().breed(null).build();
-        var pet_02 = pet().breed("").build();
-        var pet_03 = pet().breed("A".repeat(41)).build();
+        assertThat(pet().breed(null).violations())
+            .as("Pet.breed is null")
+            .isOne();
 
-        final String message = "[%s] Pet.breed should be invalid.";
+        assertThat(pet().breed("").violations())
+            .as("Pet.breed is blank")
+            .isOne();
 
-        assertEquals(1, violations(pet_01), format(message, "pet_01"));
-        assertEquals(1, violations(pet_02), format(message, "pet_02"));
-        assertEquals(1, violations(pet_03), format(message, "pet_03"));
+        assertThat(pet().breed("A".repeat(41)).violations())
+            .as("Pet.breed is too long")
+            .isOne();
     }
 
     @Test
-    public void pet_has_invalid_name() {
+    public void pet_name_is_valid() {
 
-        var pet_01 = pet().name("").build();
-        var pet_02 = pet().name("A").build();
-        var pet_03 = pet().name("A".repeat(41)).build();
+        assertThat(pet().name(null).violations())
+            .as("Pet.name is null")
+            .isZero();
 
-        final String message = "[%s] Pet.name should be invalid.";
+        assertThat(pet().name("").violations())
+            .as("Pet.name is blank")
+            .isOne();
 
-        assertEquals(1, violations(pet_01), format(message, "pet_01"));
-        assertEquals(1, violations(pet_02), format(message, "pet_02"));
-        assertEquals(1, violations(pet_03), format(message, "pet_03"));
+        assertThat(pet().name("A").violations())
+            .as("Pet.name is too short")
+            .isOne();
+
+        assertThat(pet().name("A".repeat(41)).violations())
+            .as("Pet.name is too long")
+            .isOne();
     }
 
-    private int violations(Pet pet) {
-        return validator.validate(pet).size();
+    private PetValidator pet() {
+        return new PetValidator(validator).pet();
     }
-
-    private Builder pet() {
-        return new Builder().pet();
-    }
-
-    private static final class Builder {
+    private static final class PetValidator {
 
         private String identifier;
         private String species;
         private String breed;
         private String name;
+
+        private final Validator validator;
+
+        public PetValidator(final Validator validator) {
+            this.validator = validator;
+        }
+
+        private int violations() {
+            return validator.validate(this.build()).size();
+        }
 
         private Pet build() {
 
@@ -87,7 +100,7 @@ public class PetValidationTest {
             );
         }
 
-        private Builder pet() {
+        private PetValidator pet() {
 
             this.identifier = randomUUID().toString();
             this.species = "Alien";
@@ -96,17 +109,17 @@ public class PetValidationTest {
             return this;
         }
 
-        private Builder species(String species) {
+        private PetValidator species(String species) {
             this.species = species;
             return this;
         }
 
-        private Builder breed(String breed) {
+        private PetValidator breed(String breed) {
             this.breed = breed;
             return this;
         }
 
-        private Builder name(String name) {
+        private PetValidator name(String name) {
             this.name = name;
             return this;
         }

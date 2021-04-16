@@ -2,9 +2,8 @@ package app.pet.db;
 
 import static app.pet.Pet.pet;
 import static java.util.UUID.randomUUID;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import javax.inject.Inject;
 import org.junit.jupiter.api.Test;
 import app.pet.PetRepository;
@@ -23,21 +22,25 @@ public class DatabasePetRepositoryTest {
     @Test
     void create_pet() {
 
-        final var pet = pet("a_species", "a_breed", "a_name");
+        repository.create(pet("a_species", "a_breed", "a_name"));
 
-        repository.create(pet);
-
-        assertEquals(1, PetEntity.count());
+        assertThat(PetEntity.count()).isOne();
 
         final PetEntity entity = PetEntity.findAll().firstResult();
 
-        assertNotNull(entity.createdAt, "Entity.createdAt is null.");
-        assertNotNull(entity.updatedAt, "Entity.createdAt is null.");
-        assertEquals(entity.createdAt, entity.updatedAt, "Entity.createdAt and updatedAt must be equal.");
+        assertThat(entity.createdAt)
+            .as("createdAt is null")
+            .isNotNull();
 
-        assertEquals("a_species", entity.species);
-        assertEquals("a_breed", entity.breed);
-        assertEquals("a_name", entity.name);
+        assertThat(entity.updatedAt)
+            .as("updatedAt is null")
+            .isNotNull();
+
+        assertEquals(entity.createdAt, entity.updatedAt, "createdAt and updatedAt must be equal.");
+
+        assertThat(entity.species).isEqualTo("a_species");
+        assertThat(entity.breed).isEqualTo("a_breed");
+        assertThat(entity.name).isEqualTo("a_name");
     }
 
     @Test
@@ -52,12 +55,15 @@ public class DatabasePetRepositoryTest {
 
         repository.update(pet(pet.identifier, pet.species, pet.breed, "x_name"));
 
-        assertEquals(1, PetEntity.count());
+        assertThat(PetEntity.count()).isOne();
 
         final PetEntity entity = PetEntity.findAll().firstResult();
 
-        assertTrue(entity.updatedAt.compareTo(entity.createdAt) > 0, "Entity.updatedAt must be at a later time compared to createdAt.");
-        assertEquals("x_name", entity.name);
+        assertThat(entity.updatedAt)
+            .as("updatedAt must be at a later time compared to createdAt")
+            .isAfter(entity.createdAt);
+
+        assertThat(entity.name).isEqualTo("x_name");
     }
 
     @Test
@@ -72,12 +78,15 @@ public class DatabasePetRepositoryTest {
 
         boolean replaced = repository.replace(pet(pet.identifier, pet.species, pet.breed, "x_name"));
 
-        assertTrue(replaced, "Entity should have been replaced.");
-        assertEquals(1, PetEntity.count());
+        assertThat(replaced)
+            .as("entity should have been replaced")
+            .isTrue();
+
+        assertThat(PetEntity.count()).isOne();
 
         final PetEntity entity = PetEntity.findAll().firstResult();
 
         assertEquals(entity.createdAt, entity.updatedAt, "Entity.createdAt and updatedAt must be equal.");
-        assertEquals("x_name", entity.name);
+        assertThat(entity.name).isEqualTo("x_name");
     }
 }

@@ -2,15 +2,11 @@ package app.pet.ws;
 
 import static app.pet.Pet.pet;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import java.util.Optional;
 import javax.inject.Inject;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.WebApplicationException;
 import org.junit.jupiter.api.Test;
-import app.pet.Pet;
 import app.pet.PetRepository;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
@@ -29,17 +25,18 @@ public class WebServicePetRepositoryTest {
 
         final var pet = repository.find("123456789");
 
-        assertTrue(pet.isPresent());
-        assertEquals("123456789", pet.get().getIdentifier());
-        assertEquals("DOG", pet.get().getSpecies());
-        assertEquals("Husky", pet.get().getBreed());
-        assertEquals("Max", pet.get().getName());
+        assertThat(pet).isPresent();
+
+        assertThat(pet.get().getIdentifier()).isEqualTo("123456789");
+        assertThat(pet.get().getSpecies()).isEqualTo("DOG");
+        assertThat(pet.get().getBreed()).isEqualTo("Husky");
+        assertThat(pet.get().getName()).isEqualTo("Max");
     }
 
     @Test
     void find_pet_not_found() {
 
-        assertTrue(repository.find("not-found").isEmpty());
+        assertThat(repository.find("not-found")).isEmpty();
     }
 
     @Test
