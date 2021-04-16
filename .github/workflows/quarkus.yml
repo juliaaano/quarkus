@@ -13,7 +13,7 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-    - name: Cache Maven
+    - name: Cache ~/.m2
       uses: actions/cache@v2
       with:
         path: ~/.m2
@@ -26,7 +26,7 @@ jobs:
         username: ${{ secrets.REDHAT_USR }}
         password: ${{ secrets.REDHAT_PWD }}
         logout: true
-    - name: Docker login dockerhub.io
+    - name: Docker login docker.io
       uses: docker/login-action@v1.8.0
       with:
         registry: docker.io
@@ -35,9 +35,9 @@ jobs:
         logout: true
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Maven compile
+    - name: mvn clean compile
       run: $MVN clean compile
-    - name: Maven test
+    - name: mvn test
       run: $MVN test
-    - name: Maven package image push
+    - name: mvn package -Dquarkus.container-image.push=true -DskipTests
       run: $MVN package -Dquarkus.container-image.push=true -DskipTests
