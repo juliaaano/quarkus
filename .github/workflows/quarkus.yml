@@ -19,11 +19,18 @@ jobs:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
+    - name: Docker Login
+      uses: docker/login-action@v1.8.0
+      with:     
+        registry: registry.redhat.io
+        username: ${{ secrets.REDHAT_USR }}
+        password: ${{ secrets.REDHAT_PWD }}
+        logout: true
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Maven compile
+    - name: Maven Compile
       run: $MVN clean compile
-    - name: Maven test
+    - name: Maven Test
       run: $MVN test
-    - name: Maven package and image push
+    - name: Maven Package and Image Push
       run: $MVN package -Dquarkus.container-image.push=true -DskipTests
