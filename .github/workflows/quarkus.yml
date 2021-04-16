@@ -53,6 +53,12 @@ jobs:
         java: java11
     - name: gu install native-image
       run: gu install native-image
+    - name: Cache ~/.m2
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
     - name: Docker login registry.redhat.io
       uses: docker/login-action@v1.8.0
       with:
