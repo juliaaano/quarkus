@@ -3,7 +3,7 @@ name: quarkus-ci
 on: [push]
 
 jobs:
-  build:
+  build-jvm:
     runs-on: ubuntu-latest
     env:
       MVN: mvn --show-version --batch-mode
@@ -111,4 +111,4 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
     - name: mvn package -Pnative -DskipTests -Dquarkus.native.container-build=true -Dquarkus.container-image.push=true
-      run: $MVN package -Pnative -DskipTests -Dquarkus.native.container-build=true -Dquarkus.container-image.push=true -Dquarkus.container-image.image=juliaaano/quarkus-native:latest
+      run: $MVN package -Pnative -DskipTests -Dquarkus.native.container-build=true -Dquarkus.container-image.push=true -Dquarkus.container-image.image=docker.io/juliaaano/quarkus-native:latest
