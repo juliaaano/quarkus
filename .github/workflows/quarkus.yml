@@ -13,23 +13,23 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-    - name: Docker login registry.redhat.io
+    - name: login registry.redhat.io
       uses: docker/login-action@v1.8.0
       with:
         registry: registry.redhat.io
         username: ${{ secrets.REDHAT_USR }}
         password: ${{ secrets.REDHAT_PWD }}
         logout: true
-    - name: Docker login docker.io
+    - name: login docker.io
       uses: docker/login-action@v1.8.0
       with:
         registry: docker.io
         username: ${{ secrets.DOCKERHUB_USR }}
         password: ${{ secrets.DOCKERHUB_PWD }}
         logout: true
-    - name: Checkout
+    - name: checkout
       uses: actions/checkout@v2
-    - name: Cache ~/.m2
+    - name: cache ~/.m2
       uses: actions/cache@v2
       with:
         path: ~/.m2
@@ -53,26 +53,27 @@ jobs:
         java: java11
     - name: gu install native-image
       run: gu install native-image
-    - name: Cache ~/.m2
-      uses: actions/cache@v2
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-        restore-keys: ${{ runner.os }}-m2
-    - name: Docker login registry.redhat.io
+    - name: login registry.redhat.io
       uses: docker/login-action@v1.8.0
       with:
         registry: registry.redhat.io
         username: ${{ secrets.REDHAT_USR }}
         password: ${{ secrets.REDHAT_PWD }}
         logout: true
-    - name: Checkout
+    - name: checkout
       uses: actions/checkout@v2
+    - name: cache ~/.m2
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
     - name: docker-compose version
       run: docker-compose version
     - name: docker-compose up keycloak postgresql
-      run: docker-compose up --detach keycloak postgresql && sleep 9
+      run: docker-compose up --detach keycloak postgresql && sleep 5
     - name: docker-compose run liquibase
       run: docker-compose run --rm --name liquibase liquibase
-    - name: mvn clean verify -Pnative
-      run: $MVN clean verify -Pnative
+    - name: mvn clean verify -Pnative -Dquarkus.container-image.push=true
+      run: $MVN clean verify -Pnative -Dquarkus.container-image.push=true -Dquarkus.container-image.image=juliaaano/quarkus-native:latest
+    - run: docker images
