@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "5171b15d-2308-4241-a25f-629de8fe8cb8",
-		"name": "Quarkus Example REST API (DEV)",
+		"name": "Quarkus Example REST API",
 		"description": "This is a sample REST API using Quarkus.\n\nContact Support:\n Name: Quarkus\n Email: someone@quarkus.io",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -25,9 +25,6 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "oauth2"
-						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -142,9 +139,6 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "oauth2"
-						},
 						"method": "POST",
 						"header": [
 							{
@@ -321,9 +315,6 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "oauth2"
-						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -495,9 +486,6 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "oauth2"
-						},
 						"method": "PUT",
 						"header": [
 							{
@@ -748,9 +736,6 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "oauth2"
-						},
 						"method": "PATCH",
 						"header": [
 							{
@@ -986,9 +971,6 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "oauth2"
-						},
 						"method": "DELETE",
 						"header": [],
 						"url": {

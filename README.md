@@ -1,5 +1,7 @@
 # Quarkus Project
 
+[![quarkus-ci](https://github.com/juliaaano/quarkus/actions/workflows/quarkus.yml/badge.svg)](https://github.com/juliaaano/quarkus/actions/workflows/quarkus.yml)
+
 This project uses [**Quarkus**](https://quarkus.io/), the Supersonic Subatomic Java Framework.
 
 It showcases a diverse set of features and capabilities provided by the framework.

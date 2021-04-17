@@ -6,8 +6,8 @@ docker-compose version
 
 docker-compose up --detach keycloak postgresql pgadmin
 
-mvn --show-version clean package -Dquarkus.container-image.build=true -DskipTests
-# mvn --show-version clean package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -DskipTests
+mvn --show-version clean package -DskipTests -Dquarkus.container-image.build=true
+# mvn --show-version clean package -DskipTests -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true
 
 docker-compose run --rm --name liquibase liquibase
 
