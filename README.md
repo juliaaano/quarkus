@@ -139,7 +139,7 @@ $ export access_token=$(\
     -H 'content-type: application/x-www-form-urlencoded' \
     -d 'username=bob&password=password&grant_type=password&scope=api.pets:read' | jq --raw-output '.access_token' \
 )
-$ curl -v http://localhost:8080/pets -H "Authorization: Bearer "$access_token
+$ curl -v http://localhost:8080/api/pets -H "Authorization: Bearer "$access_token
 
 $ export access_token=$(\
     curl -X POST http://localhost:50102/auth/realms/quarkus/protocol/openid-connect/token \
@@ -147,5 +147,12 @@ $ export access_token=$(\
     -H 'content-type: application/x-www-form-urlencoded' \
     -d 'username=alice&password=password&grant_type=password&scope=api.pets:read api.pets:write api.pets:erase' | jq --raw-output '.access_token' \
 )
-$ curl -v -X POST http://localhost:8080/pets -H "Authorization: Bearer "$access_token -H "Content-Type: application/json" -d '{"species":"bird","breed":"krakatoo"}'
+$ curl -v -X POST http://localhost:8080/api/pets -H "Authorization: Bearer "$access_token -H "Content-Type: application/json" -d '{"species":"bird","breed":"krakatoo"}'
+```
+
+## Misc
+
+Test i18n localization:
+```
+curl -i -X PUT http://localhost:8080/api/pets/x -d '{}' -H 'Content-Type: application/json' -H 'Accept-Language: fr-FR'
 ```

@@ -78,7 +78,7 @@ class PetResourceTest {
         .then()
             .statusCode(201)
             .contentType(TEXT)
-            .header("Location", response -> endsWith("/pets/" + response.asString()))
+            .header("Location", response -> endsWith("/api/pets/" + response.asString()))
             .body(not(emptyString()))
         .extract()
             .asString();
@@ -199,6 +199,25 @@ class PetResourceTest {
             .body("parameterViolations", hasSize(1))
             .body("parameterViolations[0].path", is("put.identifier"))
             .body("parameterViolations[0].message", is("Must match UUID format."));
+    }
+
+    @Test
+    void put_with_invalid_pet_in_es_ES() {
+
+        given()
+            .auth().oauth2(jwt("alice"))
+            .pathParam("id", randomUUID().toString())
+            .header("Accept-Language", "es-ES")
+            .contentType(JSON)
+            .body(Map.of("species", "Cat", "name", "Felix"))
+        .when()
+            .put("/{id}")
+        .then()
+            .statusCode(400)
+            .contentType(JSON)
+            .body("parameterViolations", hasSize(1))
+            .body("parameterViolations[0].path", is("put.pet.breed"))
+            .body("parameterViolations[0].message", is("no debe estar vacío"));
     }
 
     @Test

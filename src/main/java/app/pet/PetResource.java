@@ -149,7 +149,7 @@ public class PetResource {
         responseCode = "201",
         description = "Pet created.",
         headers = {
-            @Header(name = "Location", schema = @Schema(implementation = String.class, example = "http://my.domain/pets/1f31efb8-94ae-43ca-9a40-d966881e6ed6"))
+            @Header(name = "Location", schema = @Schema(implementation = String.class, example = "http://my.domain/api/pets/1f31efb8-94ae-43ca-9a40-d966881e6ed6"))
         },
         content = {
             @Content(schema = @Schema(implementation = String.class, example = "1f31efb8-94ae-43ca-9a40-d966881e6ed6"))
@@ -186,7 +186,7 @@ public class PetResource {
         responseCode = "201",
         description = "Pet created.",
         headers = {
-            @Header(name = "Location", schema = @Schema(implementation = String.class, example = "http://my.domain/pets/1f31efb8-94ae-43ca-9a40-d966881e6ed6"))
+            @Header(name = "Location", schema = @Schema(implementation = String.class, example = "http://my.domain/api/pets/1f31efb8-94ae-43ca-9a40-d966881e6ed6"))
         },
         content = {
             @Content(schema = @Schema(implementation = String.class, example = "1f31efb8-94ae-43ca-9a40-d966881e6ed6"))
@@ -196,7 +196,7 @@ public class PetResource {
         responseCode = "204",
         description = "Pet replaced.",
         headers = {
-            @Header(name = "Location", schema = @Schema(implementation = String.class, example = "http://my.domain/pets/1f31efb8-94ae-43ca-9a40-d966881e6ed6"))
+            @Header(name = "Location", schema = @Schema(implementation = String.class, example = "http://my.domain/api/pets/1f31efb8-94ae-43ca-9a40-d966881e6ed6"))
         }
     )
     @APIResponse(
