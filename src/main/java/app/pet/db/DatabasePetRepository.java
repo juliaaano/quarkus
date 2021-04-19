@@ -2,18 +2,27 @@ package app.pet.db;
 
 import static app.pet.db.PetEntity.petEntity;
 import static java.util.stream.Collectors.toList;
+import static org.eclipse.microprofile.metrics.MetricUnits.NONE;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 import javax.transaction.Transactional;
+import org.eclipse.microprofile.metrics.annotation.Gauge;
 import app.pet.Pet;
 import app.pet.PetRepository;
 
 @Alternative
 @ApplicationScoped
 class DatabasePetRepository implements PetRepository {
+
+    private int totalNumberOfPets = 0;
+
+    @Gauge(name = "totalNumberOfPets", description = "Total number of pets retrieved last query.", unit = NONE)
+    public int totalNumberOfPets() {
+        return totalNumberOfPets;
+    }
 
     @Override
     public Optional<Pet> find(final String identifier) {
@@ -24,7 +33,9 @@ class DatabasePetRepository implements PetRepository {
     @Override
     public List<Pet> find() {
         final Stream<PetEntity> stream = PetEntity.streamAll();
-        return stream.map(PetEntity::map).collect(toList());
+        final List<Pet> pets = stream.map(PetEntity::map).collect(toList());
+        totalNumberOfPets = pets.size();
+        return pets;
     }
 
     @Override

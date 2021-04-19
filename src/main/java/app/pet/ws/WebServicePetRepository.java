@@ -2,12 +2,14 @@ package app.pet.ws;
 
 import static app.pet.ws.PetDTO.petDTO;
 import static java.util.stream.Collectors.toSet;
+import static org.eclipse.microprofile.metrics.MetricUnits.NANOSECONDS;
 import java.util.Optional;
 import java.util.Set;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
+import org.eclipse.microprofile.metrics.annotation.SimplyTimed;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +27,7 @@ class WebServicePetRepository implements PetRepository {
     PetRestClient client;
 
     @Override
+    @SimplyTimed(name = "findOnePetTimer", description = "How long it takes to get one pet", unit = NANOSECONDS)
     public Optional<Pet> find(final String identifier) {
 
         final PetDTO pet;

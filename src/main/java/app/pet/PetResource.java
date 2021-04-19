@@ -5,6 +5,7 @@ import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 import static javax.ws.rs.core.Response.Status.CREATED;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.Status.NO_CONTENT;
+import static org.eclipse.microprofile.metrics.MetricUnits.MILLISECONDS;
 import static org.eclipse.microprofile.openapi.annotations.enums.SecuritySchemeType.OAUTH2;
 import java.net.URI;
 import javax.annotation.security.RolesAllowed;
@@ -23,7 +24,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import org.eclipse.microprofile.jwt.JsonWebToken;
-import org.eclipse.microprofile.metrics.annotation.Counted;
+import org.eclipse.microprofile.metrics.annotation.Timed;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.headers.Header;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
@@ -74,7 +75,7 @@ public class PetResource {
     @GET
     @RolesAllowed("PETS_READ")
     @Produces(APPLICATION_JSON)
-    @Counted(name = "getCounter", description = "Number of times GET is executed.")
+    @Timed(name = "getAllPetsTimer", description = "A measure of how long it takes to get all pets.", unit = MILLISECONDS)
     @Operation(
         summary = "get all pets",
         description = "This operation lists all pets registered in the system."
