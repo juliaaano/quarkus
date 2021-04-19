@@ -14,6 +14,7 @@ It showcases a diverse set of features and capabilities provided by the framewor
 * Docker, Kubernetes and OpenShift deployments.
 * Unit testing (REST Assured, JUnit).
 * Postman automated API testing.
+* CI pipeline with [GitHub Actions](./github/workflows/quarkus.yml)
 * Works on native mode.
 
 ## Running the application in dev mode
