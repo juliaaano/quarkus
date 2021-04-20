@@ -37,10 +37,18 @@ Instructions require **docker** and **docker-compose** installed.
 $ docker login registry.redhat.io
 ```
 
-### The run all script
-
+### Run from the CI upstream image build
 ```
-$ run.sh
+$ ./run.sh
+```
+Try the **native** or any other compatible image:
+```
+$ ./run.sh juliaaano/quarkus-native:latest
+```
+
+### Build and run image locally:
+```
+$ ./build.sh && ./run.sh juliaaano/quarkus:local
 ```
 
 ### Build and run by yourself
