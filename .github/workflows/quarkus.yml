@@ -92,7 +92,7 @@ jobs:
     - name: docker-compose version
       run: docker-compose version
     - name: docker-compose up keycloak postgresql
-      run: docker-compose up --detach keycloak postgresql && sleep 5
+      run: docker-compose up --detach keycloak postgresql && sleep 9
     - name: docker-compose run liquibase
       run: docker-compose run --rm --name liquibase liquibase
     - name: mvn clean verify -Pnative
