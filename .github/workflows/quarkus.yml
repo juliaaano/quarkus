@@ -1,6 +1,15 @@
 name: quarkus-ci
 
-on: [push]
+on:
+  push:
+    paths-ignore:
+    - 'README.md'
+    - '.dockerignore'
+    - '.gitignore'
+    - '*.sh'
+    - '*.png'
+  schedule:
+  - cron: "0 0 * * *"
 
 jobs:
   build-jvm:
