@@ -2,7 +2,7 @@ version: "3"
 
 services:
   app:
-    image: ${APP_IMAGE:-juliaaano/quarkus:latest}
+    image: ${APP_IMAGE:-quay.io/juliaaano/quarkus:latest}
     ports:
       - "50101:8080"
     environment:
