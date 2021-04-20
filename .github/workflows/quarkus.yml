@@ -109,6 +109,13 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
+    - name: login registry.redhat.io
+      uses: docker/login-action@v1.8.0
+      with:
+        registry: registry.redhat.io
+        username: ${{ secrets.REDHAT_USR }}
+        password: ${{ secrets.REDHAT_PWD }}
+        logout: true
     - name: login quay.io
       uses: docker/login-action@v1.8.0
       with:
