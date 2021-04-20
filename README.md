@@ -43,12 +43,12 @@ $ ./run.sh
 ```
 Try the **native** or any other compatible image:
 ```
-$ ./run.sh juliaaano/quarkus-native:latest
+$ ./run.sh quay.io/juliaaano/quarkus-native:latest
 ```
 
 ### Build and run image locally:
 ```
-$ ./build.sh && ./run.sh juliaaano/quarkus:local
+$ ./build.sh && ./run.sh quay.io/juliaaano/quarkus:local
 ```
 
 ### Build and run by yourself

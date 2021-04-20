@@ -29,12 +29,12 @@ jobs:
         username: ${{ secrets.REDHAT_USR }}
         password: ${{ secrets.REDHAT_PWD }}
         logout: true
-    - name: login docker.io
+    - name: login quay.io
       uses: docker/login-action@v1.8.0
       with:
-        registry: docker.io
-        username: ${{ secrets.DOCKERHUB_USR }}
-        password: ${{ secrets.DOCKERHUB_PWD }}
+        registry: quay.io
+        username: ${{ secrets.QUAY_USR }}
+        password: ${{ secrets.QUAY_PWD }}
         logout: true
     - name: checkout
       uses: actions/checkout@v2
@@ -74,12 +74,12 @@ jobs:
         username: ${{ secrets.REDHAT_USR }}
         password: ${{ secrets.REDHAT_PWD }}
         logout: true
-    - name: login docker.io
+    - name: login quay.io
       uses: docker/login-action@v1.8.0
       with:
-        registry: docker.io
-        username: ${{ secrets.DOCKERHUB_USR }}
-        password: ${{ secrets.DOCKERHUB_PWD }}
+        registry: quay.io
+        username: ${{ secrets.QUAY_USR }}
+        password: ${{ secrets.QUAY_PWD }}
         logout: true
     - name: checkout
       uses: actions/checkout@v2
@@ -92,7 +92,7 @@ jobs:
     - name: docker-compose version
       run: docker-compose version
     - name: docker-compose up keycloak postgresql
-      run: docker-compose up --detach keycloak postgresql && sleep 5
+      run: docker-compose up --detach keycloak postgresql && sleep 9
     - name: docker-compose run liquibase
       run: docker-compose run --rm --name liquibase liquibase
     - name: mvn clean verify -Pnative
@@ -109,12 +109,12 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-    - name: login docker.io
+    - name: login quay.io
       uses: docker/login-action@v1.8.0
       with:
-        registry: docker.io
-        username: ${{ secrets.DOCKERHUB_USR }}
-        password: ${{ secrets.DOCKERHUB_PWD }}
+        registry: quay.io
+        username: ${{ secrets.QUAY_USR }}
+        password: ${{ secrets.QUAY_PWD }}
         logout: true
     - name: checkout
       uses: actions/checkout@v2
@@ -125,4 +125,4 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
     - name: mvn package -Pnative -DskipTests -Dquarkus.native.container-build=true -Dquarkus.container-image.push=true
-      run: $MVN package -Pnative -DskipTests -Dquarkus.native.container-build=true -Dquarkus.container-image.push=true -Dquarkus.container-image.image=docker.io/juliaaano/quarkus-native:latest
+      run: $MVN package -Pnative -DskipTests -Dquarkus.native.container-build=true -Dquarkus.container-image.push=true -Dquarkus.container-image.image=quay.io/juliaaano/quarkus-native:latest
