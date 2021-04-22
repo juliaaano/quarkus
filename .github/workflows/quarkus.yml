@@ -11,7 +11,11 @@ on:
   schedule:
   - cron: "0 0 * * *"
 
+permissions:
+  packages: write
+
 jobs:
+
   build-jvm:
     runs-on: ubuntu-latest
     env:
