@@ -11,8 +11,8 @@ on:
   schedule:
   - cron: "0 0 * * *"
 
-permissions:
-  packages: read
+# permissions:
+#   packages: none # Overriden by package 'Actions access'.
 
 jobs:
 
