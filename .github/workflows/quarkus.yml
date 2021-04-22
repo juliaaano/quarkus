@@ -14,6 +14,10 @@ on:
 # permissions:
 #   packages: none # Overriden by package 'Actions access'.
 
+concurrency:
+  group: quarkus-ci
+  cancel-in-progress: false
+
 jobs:
 
   build-jvm:
