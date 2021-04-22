@@ -11,7 +11,11 @@ on:
   schedule:
   - cron: "0 0 * * *"
 
+# permissions:
+#   packages: none # Overriden by package 'Actions access'.
+
 jobs:
+
   build-jvm:
     runs-on: ubuntu-latest
     env:
@@ -29,12 +33,12 @@ jobs:
         username: ${{ secrets.REDHAT_USR }}
         password: ${{ secrets.REDHAT_PWD }}
         logout: true
-    - name: login quay.io
+    - name: login ghcr.io
       uses: docker/login-action@v1.8.0
       with:
-        registry: quay.io
-        username: ${{ secrets.QUAY_USR }}
-        password: ${{ secrets.QUAY_PWD }}
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
         logout: true
     - name: checkout
       uses: actions/checkout@v2
@@ -74,13 +78,6 @@ jobs:
         username: ${{ secrets.REDHAT_USR }}
         password: ${{ secrets.REDHAT_PWD }}
         logout: true
-    - name: login quay.io
-      uses: docker/login-action@v1.8.0
-      with:
-        registry: quay.io
-        username: ${{ secrets.QUAY_USR }}
-        password: ${{ secrets.QUAY_PWD }}
-        logout: true
     - name: checkout
       uses: actions/checkout@v2
     - name: cache ~/.m2
@@ -116,12 +113,12 @@ jobs:
         username: ${{ secrets.REDHAT_USR }}
         password: ${{ secrets.REDHAT_PWD }}
         logout: true
-    - name: login quay.io
+    - name: login ghcr.io
       uses: docker/login-action@v1.8.0
       with:
-        registry: quay.io
-        username: ${{ secrets.QUAY_USR }}
-        password: ${{ secrets.QUAY_PWD }}
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
         logout: true
     - name: checkout
       uses: actions/checkout@v2
@@ -132,4 +129,4 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
     - name: mvn package -Pnative -DskipTests -Dquarkus.native.container-build=true -Dquarkus.container-image.push=true
-      run: $MVN package -Pnative -DskipTests -Dquarkus.native.container-build=true -Dquarkus.container-image.push=true -Dquarkus.container-image.image=quay.io/juliaaano/quarkus-native:latest
+      run: $MVN package -Pnative -DskipTests -Dquarkus.native.container-build=true -Dquarkus.container-image.push=true -Dquarkus.container-image.image=ghcr.io/juliaaano/quarkus-native:latest
