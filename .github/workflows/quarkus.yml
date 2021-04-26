@@ -30,7 +30,6 @@ concurrency:
 jobs:
 
   build-jvm:
-    needs: codeql
     runs-on: ubuntu-latest
     env:
       MVN: mvn --show-version --batch-mode
@@ -69,7 +68,6 @@ jobs:
     - name: mvn package -DskipTests -Dquarkus.container-image.push=true
       run: $MVN package -Dquarkus.container-image.push=true -DskipTests
   test-native:
-    needs: codeql
     runs-on: ubuntu-latest
     env:
       MVN: mvn --show-version --batch-mode
