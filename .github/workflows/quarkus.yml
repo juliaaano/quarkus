@@ -29,8 +29,7 @@ concurrency:
 
 jobs:
 
-  analyze:
-    name: codeql
+  codeql:
     runs-on: ubuntu-latest
     steps:
     - name: checkout
@@ -40,7 +39,7 @@ jobs:
       with:
         languages: java
     - name: mvn clean compile
-      uses: mvn --show-version --batch-mode clean compile
+      run: mvn --show-version --batch-mode clean compile
     - name: codeql analyze
       uses: github/codeql-action/analyze@v1
 
