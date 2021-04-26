@@ -32,14 +32,20 @@ jobs:
   codeql:
     runs-on: ubuntu-latest
     steps:
-    - name: checkout
-      uses: actions/checkout@v2
     - name: codeql init
       uses: github/codeql-action/init@v1
       with:
         languages: java
-    - name: mvn clean compile
-      run: mvn --show-version --batch-mode clean compile
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: cache ~/.m2
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+    - name: mvn compile
+      run: mvn --show-version --batch-mode compile
     - name: codeql analyze
       uses: github/codeql-action/analyze@v1
 
