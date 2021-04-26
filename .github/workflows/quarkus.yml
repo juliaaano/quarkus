@@ -18,7 +18,7 @@ on:
     #        │  │ │ │ │
     #        │  │ │ │ │
     #        *  * * * *
-    - cron: '30 1 * * *'
+    - cron: '15 1 * * *'
 
 # permissions:
 #   packages: none # Overriden by package 'Actions access'.
@@ -28,26 +28,6 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-
-  codeql:
-    runs-on: ubuntu-latest
-    steps:
-    - name: codeql init
-      uses: github/codeql-action/init@v1
-      with:
-        languages: java
-    - name: checkout
-      uses: actions/checkout@v2
-    - name: cache ~/.m2
-      uses: actions/cache@v2
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-        restore-keys: ${{ runner.os }}-m2
-    - name: mvn compile
-      run: mvn --show-version --batch-mode compile
-    - name: codeql analyze
-      uses: github/codeql-action/analyze@v1
 
   build-jvm:
     needs: codeql
