@@ -36,7 +36,7 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      # - name: mvn compile
-      #   run: mvn --show-version --batch-mode compile
+      - name: mvn compile
+        run: mvn --show-version --batch-mode compile
       - name: codeql analyze
         uses: github/codeql-action/analyze@v2
