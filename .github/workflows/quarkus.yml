@@ -3,11 +3,11 @@ name: quarkus-ci
 on:
   push:
     paths-ignore:
-    - 'README.md'
-    - '.dockerignore'
-    - '.gitignore'
-    - '*.sh'
-    - '*.png'
+      - "README.md"
+      - ".dockerignore"
+      - ".gitignore"
+      - "*.sh"
+      - "*.png"
   schedule:
     #        ┌───────────── minute (0 - 59)
     #        │  ┌───────────── hour (0 - 23)
@@ -18,7 +18,7 @@ on:
     #        │  │ │ │ │
     #        │  │ │ │ │
     #        *  * * * *
-    - cron: '15 1 * * *'
+    - cron: "15 1 * * *"
 
 # permissions:
 #   packages: none # Overriden by package 'Actions access'.
@@ -28,87 +28,86 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-
   build-jvm:
     runs-on: ubuntu-latest
     env:
       MVN: mvn --show-version --batch-mode
     steps:
-    - name: JDK 11
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'adopt'
-    - name: login registry.redhat.io
-      uses: docker/login-action@v1.8.0
-      with:
-        registry: registry.redhat.io
-        username: ${{ secrets.REDHAT_USR }}
-        password: ${{ secrets.REDHAT_PWD }}
-        logout: true
-    - name: login ghcr.io
-      uses: docker/login-action@v1.8.0
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-        logout: true
-    - name: checkout
-      uses: actions/checkout@v2
-    - name: cache ~/.m2
-      uses: actions/cache@v2
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-        restore-keys: ${{ runner.os }}-m2
-    - name: mvn clean compile
-      run: $MVN clean compile
-    - name: mvn test
-      run: $MVN test
-    - name: mvn package -DskipTests -Dquarkus.container-image.push=true
-      run: $MVN package -Dquarkus.container-image.push=true -DskipTests
+      - name: JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: "11"
+          distribution: "adopt"
+      - name: login registry.redhat.io
+        uses: docker/login-action@v1.8.0
+        with:
+          registry: registry.redhat.io
+          username: ${{ secrets.REDHAT_USR }}
+          password: ${{ secrets.REDHAT_PWD }}
+          logout: true
+      - name: login ghcr.io
+        uses: docker/login-action@v1.8.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          logout: true
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: cache ~/.m2
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: mvn clean compile
+        run: $MVN clean compile
+      - name: mvn test
+        run: $MVN test
+      - name: mvn package -DskipTests -Dquarkus.container-image.push=true
+        run: $MVN package -Dquarkus.container-image.push=true -DskipTests
   test-native:
     runs-on: ubuntu-latest
     env:
       MVN: mvn --show-version --batch-mode
     steps:
-    - name: JDK 11
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'adopt'
-    - name: GraalVM 21.0.0.2
-      uses: DeLaGuardo/setup-graalvm@4.0
-      with:
-        graalvm: 21.0.0.2
-        java: java11
-    - name: gu install native-image
-      run: gu install native-image
-    - name: login registry.redhat.io
-      uses: docker/login-action@v1.8.0
-      with:
-        registry: registry.redhat.io
-        username: ${{ secrets.REDHAT_USR }}
-        password: ${{ secrets.REDHAT_PWD }}
-        logout: true
-    - name: checkout
-      uses: actions/checkout@v2
-    - name: cache ~/.m2
-      uses: actions/cache@v2
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-        restore-keys: ${{ runner.os }}-m2
-    - name: docker-compose version
-      run: docker-compose version
-    - name: docker-compose up keycloak postgresql
-      run: |
-        docker-compose up --detach keycloak postgresql
-        sleep 9
-    - name: docker-compose run liquibase
-      run: docker-compose run --rm --name liquibase liquibase
-    - name: mvn clean verify -Pnative
-      run: $MVN clean verify -Pnative
+      - name: JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: "11"
+          distribution: "adopt"
+      - name: GraalVM 21.0.0.2
+        uses: DeLaGuardo/setup-graalvm@4.0
+        with:
+          graalvm: 21.0.0.2
+          java: java11
+      - name: gu install native-image
+        run: gu install native-image
+      - name: login registry.redhat.io
+        uses: docker/login-action@v1.8.0
+        with:
+          registry: registry.redhat.io
+          username: ${{ secrets.REDHAT_USR }}
+          password: ${{ secrets.REDHAT_PWD }}
+          logout: true
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: cache ~/.m2
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: docker-compose version
+        run: docker-compose version
+      - name: docker-compose up keycloak postgresql
+        run: |
+          docker-compose up --detach keycloak postgresql
+          sleep 9
+      - name: docker-compose run liquibase
+        run: docker-compose run --rm --name liquibase liquibase
+      - name: mvn clean verify -Pnative
+        run: $MVN clean verify -Pnative
   # Image push happens before native tests when running 'mvn clean verify -Pnative -Dquarkus.container-image.push=true', so decided to split.
   build-native:
     needs: test-native
@@ -116,32 +115,32 @@ jobs:
     env:
       MVN: mvn --show-version --batch-mode
     steps:
-    - name: JDK 11
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'adopt'
-    - name: login registry.redhat.io
-      uses: docker/login-action@v1.8.0
-      with:
-        registry: registry.redhat.io
-        username: ${{ secrets.REDHAT_USR }}
-        password: ${{ secrets.REDHAT_PWD }}
-        logout: true
-    - name: login ghcr.io
-      uses: docker/login-action@v1.8.0
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-        logout: true
-    - name: checkout
-      uses: actions/checkout@v2
-    - name: cache ~/.m2
-      uses: actions/cache@v2
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-        restore-keys: ${{ runner.os }}-m2
-    - name: mvn package -Pnative -DskipTests -Dquarkus.native.container-build=true -Dquarkus.container-image.push=true
-      run: $MVN package -Pnative -DskipTests -Dquarkus.native.container-build=true -Dquarkus.container-image.push=true -Dquarkus.container-image.image=ghcr.io/juliaaano/quarkus-native:latest
+      - name: JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: "11"
+          distribution: "adopt"
+      - name: login registry.redhat.io
+        uses: docker/login-action@v1.8.0
+        with:
+          registry: registry.redhat.io
+          username: ${{ secrets.REDHAT_USR }}
+          password: ${{ secrets.REDHAT_PWD }}
+          logout: true
+      - name: login ghcr.io
+        uses: docker/login-action@v1.8.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          logout: true
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: cache ~/.m2
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: mvn package -Pnative -DskipTests -Dquarkus.native.container-build=true -Dquarkus.container-image.push=true
+        run: $MVN package -Pnative -DskipTests -Dquarkus.native.container-build=true -Dquarkus.container-image.push=true -Dquarkus.container-image.image=ghcr.io/juliaaano/quarkus-native:latest
