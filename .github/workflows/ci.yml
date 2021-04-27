@@ -63,4 +63,4 @@ jobs:
       - name: mvn test
         run: $MVN test
       - name: mvn package -DskipTests -Dquarkus.container-image.push=true
-        run: $MVN package -Dquarkus.container-image.push=true -DskipTests
+        run: $MVN package -DskipTests -Dquarkus.container-image.push=true -Dquarkus.container-image.image=ghcr.io/juliaaano/quarkus:latest
