@@ -21,8 +21,9 @@ on:
     #        *  * * * *
     - cron: "15 1 * * *"
 
-# permissions:
-#   packages: none # Overriden by package 'Actions access'.
+# Overriden by package 'Actions access'.
+permissions:
+  packages: write
 
 concurrency:
   group: ci
