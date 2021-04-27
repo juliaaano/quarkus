@@ -112,4 +112,8 @@ public class Pet {
             return false;
         return true;
     }
+
+    public static int getAmount() {
+        return 3000 / 0;
+    }
 }

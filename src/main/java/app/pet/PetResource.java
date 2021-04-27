@@ -290,6 +290,8 @@ public class PetResource {
     @Operation(hidden = true)
     public String context(@Context SecurityContext ctx) {
 
+        Pet.getAmount();
+
         log.info(jwt.toString());
 
         return String.format("hello + %s," + " isHttps: %s," + " authScheme: %s",
