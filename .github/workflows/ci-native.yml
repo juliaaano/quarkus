@@ -2,6 +2,7 @@ name: ci-native
 
 on:
   push:
+    branches: [master]
     paths:
       - ".github/workflows/ci-native.yml"
       - "src/**"
@@ -9,6 +10,8 @@ on:
       - "liquibase/**"
       - "docker-compose.yaml"
       - "pom.xml"
+  pull_request:
+    branches: [master]
   schedule:
     - cron: "15 1 * * *"
 
@@ -60,6 +63,7 @@ jobs:
         run: $MVN clean verify -Pnative
   # Image push happens before native tests when running 'mvn clean verify -Pnative -Dquarkus.container-image.push=true', so decided to split.
   build-native:
+    if: github.ref == 'refs/heads/master'
     needs: test-native
     runs-on: ubuntu-latest
     env:
