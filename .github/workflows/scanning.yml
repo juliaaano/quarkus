@@ -11,6 +11,9 @@ on:
   schedule:
     - cron: "30 1 * * *"
 
+permissions:
+  security-events: write
+
 jobs:
   codeql:
     runs-on: ubuntu-latest
