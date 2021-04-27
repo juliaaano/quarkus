@@ -1,6 +1,8 @@
 # Quarkus Project
 
-[![quarkus-ci](https://github.com/juliaaano/quarkus/actions/workflows/quarkus.yml/badge.svg)](https://github.com/juliaaano/quarkus/actions/workflows/quarkus.yml)
+[![ci](https://github.com/juliaaano/quarkus/actions/workflows/ci.yml/badge.svg)](https://github.com/juliaaano/quarkus/actions/workflows/ci.yml)
+[![ci-native](https://github.com/juliaaano/quarkus/actions/workflows/ci-native.yml/badge.svg)](https://github.com/juliaaano/quarkus/actions/workflows/ci-native.yml)
+[![scanning](https://github.com/juliaaano/quarkus/actions/workflows/scanning.yml/badge.svg)](https://github.com/juliaaano/quarkus/actions/workflows/scanning.yml)
 
 This project uses [**Quarkus**](https://quarkus.io/), the Supersonic Subatomic Java Framework.
 
