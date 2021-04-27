@@ -67,7 +67,7 @@ jobs:
         run: $MVN test
       - name: mvn package -DskipTests -Dquarkus.container-image.push=true latest
         if: github.ref == 'refs/heads/master'
-        run: $MVN package -DskipTests -Dquarkus.container-image.push=true -Dquarkus.container-image.image=ghcr.io/juliaaano/quarkus:latest '-Dquarkus.jib.labels."org.opencontainers.image.revision"=$GITHUB_SHA'
+        run: $MVN package -DskipTests -Dquarkus.container-image.push=true -Dquarkus.container-image.image=ghcr.io/juliaaano/quarkus:latest '-Dquarkus.jib.labels."org.opencontainers.image.revision"='$GITHUB_SHA
       - name: mvn package -DskipTests -Dquarkus.container-image.push=true snapshot
         if: github.ref != 'refs/heads/master'
-        run: $MVN package -DskipTests -Dquarkus.container-image.push=true -Dquarkus.container-image.image=ghcr.io/juliaaano/quarkus:snapshot '-Dquarkus.jib.labels."org.opencontainers.image.revision"=$GITHUB_SHA'
+        run: $MVN package -DskipTests -Dquarkus.container-image.push=true -Dquarkus.container-image.image=ghcr.io/juliaaano/quarkus:snapshot '-Dquarkus.jib.labels."org.opencontainers.image.revision"='$GITHUB_SHA
