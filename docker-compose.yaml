@@ -44,21 +44,29 @@ services:
         source: ./config/postgresql-servers.json
         target: /pgadmin4/servers.json
   liquibase:
-    image: registry.hub.docker.com/liquibase/liquibase:4.2.0
-    command: '--url="jdbc:postgresql://postgresql:5432/quarkusdb" --username=quarkus --password=password --changeLogFile=db.changelog-master.xml --logLevel=info update'
+    image: docker.io/liquibase/liquibase:4.3.4
+    command:
+      [
+        "--url=jdbc:postgresql://postgresql:5432/quarkusdb",
+        "--username=quarkus",
+        "--password=password",
+        "--changeLogFile=db.changelog-master.xml",
+        "--logLevel=info",
+        "update",
+      ]
     volumes:
       - type: bind
         source: ./liquibase
         target: /liquibase/changelog
   postman:
-    image: postman/newman:5.2.2-alpine
+    image: docker.io/postman/newman:5.2.2-alpine
     command: run quarkus.postman_collection.json --verbose --color on --env-var "baseUrl=${QUARKUS_APP_HOST:-http://host.docker.internal:8080}"
     volumes:
       - type: bind
         source: ./postman
         target: /etc/newman
   mockserver:
-    image: mockserver/mockserver:mockserver-5.11.2
+    image: docker.io/mockserver/mockserver:mockserver-5.11.2
     ports:
       - 50109:1080
     environment:

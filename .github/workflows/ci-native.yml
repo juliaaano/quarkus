@@ -58,7 +58,7 @@ jobs:
           docker-compose up --detach keycloak postgresql
           sleep 9
       - name: docker-compose run liquibase
-        run: docker-compose run --rm --name liquibase liquibase
+        run: docker-compose run --rm liquibase
       - name: mvn clean verify -Pnative
         run: $MVN clean verify -Pnative
   # Image push happens before native tests when running 'mvn clean verify -Pnative -Dquarkus.container-image.push=true', so decided to split.
