@@ -50,6 +50,7 @@ services:
         "--url=jdbc:postgresql://postgresql:5432/quarkusdb",
         "--username=quarkus",
         "--password=password",
+        "--defaultsFile=/liquibase/changelog/liquibase.properties",
         "--changeLogFile=db.changelog-master.xml",
         "--logLevel=info",
         "update",

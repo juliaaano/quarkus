@@ -15,6 +15,7 @@ spec:
               "--url=jdbc:postgresql://postgresql:5432/quarkusdb1",
               "--username=quarkus",
               "--password=password",
+              "--defaultsFile=/liquibase/changelog/liquibase.properties",
               "--changeLogFile=db.changelog-master.xml",
               "--logLevel=info",
               "update",
