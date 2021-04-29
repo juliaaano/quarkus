@@ -76,39 +76,56 @@ $ docker-compose up -d <docker-compose-service-names>
 $ test-native.sh
 ```
 
-## Running the application with OpenShift
+## OpenShift
 
-These instructions are intended to be used in testing and development. A different and more comprehensive approach must be considered for CI/CD.
+Works with Kubernetes too, but then you need to take care of the database and ingress yourself.
+
+```
+$ oc new-project juliaaano
+$ oc new-app --name=postgresql --template=postgresql-ephemeral -e POSTGRESQL_USER=quarkus -e POSTGRESQL_PASSWORD=password -e POSTGRESQL_DATABASE=quarkusdb --labels="app=quarkus-app"
+$ kubectl create configmap liquibase --from-file=liquibase/ && kubectl label cm liquibase app=quarkus-app
+$ kubectl apply -f manifests/
+$ kubectl set env deployment quarkus APP_AUTHORIZATION_ENABLED=false
+$ kubectl scale deployment quarkus --replicas 2
+$ oc expose service quarkus --labels="app=quarkus-app"
+$ curl -i "http://$(oc get route quarkus -o jsonpath='{.spec.host}')/q/health"
+```
+
+### S2I: build image from source
+
+These instructions are intended to be used in testing and development and not for CI/CD.
 
 ### JVM build
 
+_**TODO:** Not working, fix the /.s2i script._
+
 ```
-$ oc new-build --binary=true --docker-image=registry.redhat.io/ubi8/openjdk-11 --name=juliaaano-quarkus --labels="app=juliaaano-quarkus"
-$ oc start-build juliaaano-quarkus --from-dir . --follow
+$ oc new-build --binary=true --docker-image=registry.redhat.io/ubi8/openjdk-11 --name=quarkus --labels="app=quarkus-app"
+$ oc start-build quarkus --from-dir . --follow
 ```
 
 ### Native build
 
 ```
 $ mvn clean package -Pnative -Dquarkus.native.container-build=true
-$ oc new-build --binary=true --docker-image=quay.io/quarkus/ubi-quarkus-native-binary-s2i:1.0 --name=juliaaano-quarkus --labels="app=juliaaano-quarkus"
-$ oc start-build juliaaano-quarkus --from-file ./target/juliaaano-quarkus-1.0-SNAPSHOT-runner --follow
+$ oc new-build --binary=true --docker-image=quay.io/quarkus/ubi-quarkus-native-binary-s2i:1.0 --name=quarkus-native --labels="app=quarkus-app"
+$ oc start-build quarkus-native --from-file ./target/quarkus-app-1.0-SNAPSHOT-runner --follow
 ```
 
 ### Deployment
 
+Once image is built and pushed to the registry, just set the image in the deployment:
+
 ```
-$ oc apply -f manifests/
-$ oc set image deployment juliaaano-quarkus app=$(oc get istag juliaaano-quarkus:latest -o jsonpath='{.image.dockerImageReference}')
-$ oc scale deployment juliaaano-quarkus --replicas 2
-$ oc expose service juliaaano-quarkus
-$ curl "http://$(oc get route juliaaano-quarkus -o jsonpath='{.spec.host}')/q/health"
+$ oc set image deployment quarkus app=$(oc get istag quarkus-native:latest -o jsonpath='{.image.dockerImageReference}')
 ```
+
+Review any steps above in [OpenShift](#OpenShift).
 
 ### Clean up
 
 ```
-$ oc delete all -l app=juliaaano-quarkus
+$ kubectl delete all -l app=quarkus-app
 ```
 
 ## Playing with the app

@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name: liquibase
   labels:
-    app: juliaaano-quarkus
+    app: quarkus-app
 spec:
   template:
     spec:

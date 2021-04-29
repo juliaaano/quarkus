@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: juliaaano-quarkus
+  name: quarkus
   labels:
-    app: juliaaano-quarkus
+    app: quarkus-app
 data:
-  QUARKUS_LOG_CONSOLE_JSON: "true"
+  QUARKUS_LOG_CONSOLE_JSON: "false"
   QUARKUS_DATASOURCE_USERNAME: quarkus
   QUARKUS_DATASOURCE_PASSWORD: password
   QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://postgresql:5432/quarkusdb

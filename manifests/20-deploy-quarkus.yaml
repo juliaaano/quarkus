@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: juliaaano-quarkus
+  name: quarkus
   labels:
-    app: juliaaano-quarkus
+    app: quarkus-app
 spec:
   replicas: 0
   selector:
     matchLabels:
-      app: juliaaano-quarkus
+      app: quarkus-app
   template:
     metadata:
       labels:
-        app: juliaaano-quarkus
+        app: quarkus-app
     spec:
       containers:
         - name: app
-          image: registry/namespace/name:tag
+          image: ghcr.io/juliaaano/quarkus:latest
           env:
             - name: MY_SAMPLE_ENV
               value: mySampleEnv
           envFrom:
             - configMapRef:
-                name: juliaaano-quarkus
+                name: quarkus
           ports:
             - containerPort: 8080
           volumeMounts:
