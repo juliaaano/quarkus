@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: liquibase
+  labels:
+    app: juliaaano-quarkus
+spec:
+  template:
+    spec:
+      containers:
+        - name: liquibase
+          image: docker.io/liquibase/liquibase:4.3.4
+          args:
+            [
+              "--url=jdbc:postgresql://postgresql:5432/quarkusdb1",
+              "--username=quarkus",
+              "--password=password",
+              "--changeLogFile=db.changelog-master.xml",
+              "--logLevel=info",
+              "update",
+            ]
+          volumeMounts:
+            - name: liquibase
+              mountPath: "/liquibase/changelog"
+      volumes:
+        - name: liquibase
+          configMap:
+            name: liquibase
+      restartPolicy: Never
+  backoffLimit: 0
