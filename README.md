@@ -53,28 +53,24 @@ $ ./run.sh ghcr.io/juliaaano/quarkus-native:latest
 $ ./build.sh && ./run.sh ghcr.io/juliaaano/quarkus:local
 ```
 
-### Build and run by yourself
-
-```
-$ mvn clean package -Dquarkus.container-image.build=true
-$ mvn clean package -Dquarkus.container-image.push=true
-```
-
-For **native** executable, add the extra option as seen next.
-
-```
-$ mvn clean package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true
-```
-
-```
-$ docker-compose up -d <docker-compose-service-names>
-```
-
 ## Build and test a native executable
 
 ```
 $ test-native.sh
 ```
+
+## Playing with the app
+
+In Quarkus **DEV** mode, there is no security enabled, the API can be accessed from:
+
+* http://localhost:8080/q/swagger-ui
+
+As a container, the app runs in **PROD** mode along a set of other services, which can be found in the [docker-compose.yaml](./docker-compose.yaml) file.
+
+Check out this awesome UI provided by Quarkus:
+
+* http://localhost:8080/q/dev/
+
 
 ## OpenShift
 
@@ -127,18 +123,6 @@ Review any steps above in [OpenShift](#OpenShift).
 ```
 $ kubectl delete all -l app=quarkus-app
 ```
-
-## Playing with the app
-
-In Quarkus **DEV** mode, there is no security enabled, the API can be accessed from:
-
-* http://localhost:8080/q/swagger-ui
-
-As a container, the app runs in **PROD** mode along a set of other services, which can be found in the [docker-compose.yaml](./docker-compose.yaml) file.
-
-Check out this awesome UI provided by Quarkus:
-
-* http://localhost:8080/q/dev/
 
 ### Postman API testing
 
