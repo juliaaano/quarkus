@@ -21,9 +21,8 @@ on:
     #        *  * * * *
     - cron: "15 1 * * *"
 
-# Managed by package 'Actions access'.
-# permissions:
-#   packages: write
+permissions:
+  packages: write
 
 concurrency:
   group: ci
