@@ -33,6 +33,7 @@ class PetResourceTest {
     @Test
     void get_pets() {
 
+        // @formatter:off
         given()
             .auth().oauth2(jwt("bob"))
         .when()
@@ -46,11 +47,13 @@ class PetResourceTest {
                   "breed", containsInAnyOrder("Mixed", "Persian Cat", "Labrador", "Stray", "Mini-Pig"),
                   "find { it.breed == 'Stray' }", hasKey("species"),
                   "find { it.breed == 'Stray' }", not(hasKey("name")));
+        // @formatter:on
     }
 
     @Test
     void get_pet() {
 
+        // @formatter:off
         given()
             .auth().oauth2(jwt("alice")) // ensure user can retrieve only it's own pet
             .pathParam("id", "2df2973a-bf2e-4c4e-a0e4-6fdfa0d1b242")
@@ -68,6 +71,7 @@ class PetResourceTest {
     @Test
     void post_n_delete_pet() {
 
+        // @formatter:off
         final String identifier =
         given()
             .auth().oauth2(jwt("alice"))
@@ -90,6 +94,7 @@ class PetResourceTest {
             .delete("/{id}")
         .then()
             .statusCode(204);
+        // @formatter:on
     }
 
     @Test
@@ -97,6 +102,7 @@ class PetResourceTest {
 
         final String identifier = randomUUID().toString();
 
+        // @formatter:off
         given()
             .auth().oauth2(jwt("alice"))
             .pathParam("id", identifier)
@@ -141,11 +147,13 @@ class PetResourceTest {
             .delete("/{id}")
         .then()
             .statusCode(204);
+        // @formatter:on
     }
 
     @Test
     void post_patch_n_delete_pet() {
 
+        // @formatter:off
         final String identifier =
         given()
             .auth().oauth2(jwt("alice"))
@@ -181,11 +189,13 @@ class PetResourceTest {
             .delete("/{id}")
         .then()
             .statusCode(204);
+        // @formatter:on
     }
 
     @Test
     void put_with_invalid_identifier() {
 
+        // @formatter:off
         given()
             .auth().oauth2(jwt("alice"))
             .pathParam("id", "not-a-uuid")
@@ -199,11 +209,13 @@ class PetResourceTest {
             .body("parameterViolations", hasSize(1))
             .body("parameterViolations[0].path", is("put.identifier"))
             .body("parameterViolations[0].message", is("Must match UUID format."));
+        // @formatter:on
     }
 
     @Test
     void put_with_invalid_pet_in_es_ES() {
 
+        // @formatter:off
         given()
             .auth().oauth2(jwt("alice"))
             .pathParam("id", randomUUID().toString())
@@ -218,11 +230,13 @@ class PetResourceTest {
             .body("parameterViolations", hasSize(1))
             .body("parameterViolations[0].path", is("put.pet.breed"))
             .body("parameterViolations[0].message", is("no debe estar vacío"));
+        // @formatter:on
     }
 
     @Test
     void put_with_invalid_pet() {
 
+        // @formatter:off
         given()
             .auth().oauth2(jwt("alice"))
             .pathParam("id", randomUUID().toString())
@@ -236,11 +250,13 @@ class PetResourceTest {
             .body("parameterViolations", hasSize(1))
             .body("parameterViolations[0].path", is("put.pet.species"))
             .body("parameterViolations[0].message", is("must not be blank"));
+        // @formatter:on
     }
 
     @Test
     void post_with_invalid_pet() {
 
+        // @formatter:off
         given()
             .auth().oauth2(jwt("alice"))
             .contentType(JSON)
@@ -253,11 +269,13 @@ class PetResourceTest {
             .body("parameterViolations", hasSize(1))
             .body("parameterViolations[0].path", is("post.pet.breed"))
             .body("parameterViolations[0].message", is("must not be blank"));
+        // @formatter:on
     }
 
     @Test
     void unauthorized() {
 
+        // @formatter:off
         given()
         .when()
             .get()
@@ -296,11 +314,13 @@ class PetResourceTest {
             .delete("/123456789")
         .then()
             .statusCode(401);
+        // @formatter:on
     }
 
     @Test
     void forbidden() {
 
+        // @formatter:off
         given()
             .auth().oauth2(jwt("joe"))
         .when()
@@ -345,8 +365,10 @@ class PetResourceTest {
             .delete("/123456789")
         .then()
             .statusCode(403);
+        // @formatter:on
     }
 
+    // @formatter:off
     protected String jwt(final String user) {
         return Jwt
             .issuer("https://example.com/issuer")
@@ -363,4 +385,5 @@ class PetResourceTest {
             "joe", Set.of("stranger")
         ).get(user);
     }
+    // @formatter:on
 }

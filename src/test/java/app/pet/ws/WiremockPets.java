@@ -4,13 +4,14 @@ import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.containing;
 import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.matchingJsonPath;
 import static com.github.tomakehurst.wiremock.client.WireMock.put;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static com.github.tomakehurst.wiremock.http.Fault.MALFORMED_RESPONSE_CHUNK;
 import java.util.Collections;
 import java.util.Map;
 import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.http.Fault;
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
 
 public class WiremockPets implements QuarkusTestResourceLifecycleManager {
@@ -35,7 +36,15 @@ public class WiremockPets implements QuarkusTestResourceLifecycleManager {
         return Collections.singletonMap("pets_api/mp-rest/url", wireMockServer.baseUrl());
     }
 
+    @Override
+    public void stop() {
+        if (null != wireMockServer) {
+            wireMockServer.stop();
+        }
+    }
+
     private void stubForGetPet() {
+        // @formatter:off
         stubFor(get(urlEqualTo("/v1/pets/123456789"))
             .willReturn(aResponse()
                 .withHeader("Content-Type", "application/json")
@@ -47,28 +56,36 @@ public class WiremockPets implements QuarkusTestResourceLifecycleManager {
                     "\"variety\": \"Husky\"" +
                     "}")
         ));
+        // @formatter:on
     }
 
     private void stubForGetPetError() {
+        // @formatter:off
         stubFor(get(urlEqualTo("/v1/pets/error"))
             .willReturn(aResponse().withStatus(500)));
+        // @formatter:on
     }
 
     private void stubForGetPetFault() {
+        // @formatter:off
         stubFor(get(urlEqualTo("/v1/pets/fault"))
-            .willReturn(aResponse().withFault(Fault.MALFORMED_RESPONSE_CHUNK)));
+            .willReturn(aResponse().withFault(MALFORMED_RESPONSE_CHUNK)));
+        // @formatter:on
     }
 
     private void stubForGetPetTimeout() {
+        // @formatter:off
         stubFor(get(urlEqualTo("/v1/pets/timeout"))
             .willReturn(aResponse()
                 .withHeader("Content-Type", "application/json")
                 .withBody("{}")
                 .withFixedDelay(2000)
         ));
+        // @formatter:on
     }
 
     private void stubForGetPets() {
+        // @formatter:off
         stubFor(get(urlEqualTo("/v1/pets"))
             .willReturn(aResponse()
                 .withHeader("Content-Type", "application/json")
@@ -94,25 +111,21 @@ public class WiremockPets implements QuarkusTestResourceLifecycleManager {
                     "}" +
                     "]")
         ));
+        // @formatter:on
     }
 
     private void stubForPutPet() {
+        // @formatter:off
         stubFor(put(urlEqualTo("/v1/pets/123456789"))
             .withHeader("Accept", equalTo("application/xml"))
             .withHeader("Content-Type", equalTo("application/json"))
-            .withRequestBody(containing("Max"))
-            .withRequestBody(containing("DOG"))
+            .withRequestBody(matchingJsonPath("$.denomination", equalTo("Max")))
+            .withRequestBody(matchingJsonPath("$.type", equalTo("DOG")))
             .withRequestBody(containing("Husky"))
             .willReturn(aResponse()
                 .withHeader("Content-Type", "application/xml")
                 .withBody("<result>created</result>")
         ));
-    }
-
-    @Override
-    public void stop() {
-        if (null != wireMockServer) {
-            wireMockServer.stop();  
-        }
+        // @formatter:on
     }
 }
