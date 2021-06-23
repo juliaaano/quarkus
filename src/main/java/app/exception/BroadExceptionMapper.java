@@ -27,7 +27,7 @@ public class BroadExceptionMapper implements ExceptionMapper<Throwable> {
         }
 
         final var response = Map.of(
-            "message", exception.getMessage(),
+            "message", exception.getMessage() != null ? exception.getMessage() : "Empty",
             "details", causes
         );
 

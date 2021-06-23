@@ -14,14 +14,12 @@ import java.util.Map;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import io.quarkus.test.junit.NativeImageTest;
+import io.quarkus.test.common.http.TestHTTPEndpoint;
+import io.quarkus.test.junit.QuarkusIntegrationTest;
 
-@NativeImageTest
-class NativePetResourceIT extends PetResourceTest {
-
-    private static final Logger log = LoggerFactory.getLogger(NativePetResourceIT.class);
+@QuarkusIntegrationTest
+@TestHTTPEndpoint(PetResource.class)
+class PetResourceIT extends PetResourceBase {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -39,7 +37,7 @@ class NativePetResourceIT extends PetResourceTest {
 
         var accessToken = send(request).get("access_token").asText();
 
-        log.info(accessToken);
+        System.out.println(accessToken);
 
         return accessToken;
     }
@@ -59,7 +57,7 @@ class NativePetResourceIT extends PetResourceTest {
         }
 
         if (response.statusCode() != 200) {
-            log.error("HTTP response {} {}", response.statusCode(), response.body());
+            System.out.println(format("HTTP response %s %s", response.statusCode(), response.body()));
             throw new RuntimeException(format("HTTP response status code is %s", response.statusCode()));
         }
 

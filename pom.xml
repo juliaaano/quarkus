@@ -23,7 +23,6 @@
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <!-- <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id> -->
-    <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
     <wiremock.version>2.27.2</wiremock.version>
   </properties>
