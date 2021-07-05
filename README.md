@@ -102,7 +102,7 @@ $ oc start-build quarkus --from-dir . --follow
 ```
 $ mvn clean package -Pnative -Dquarkus.native.container-build=true
 $ oc new-build --binary=true --docker-image=quay.io/quarkus/ubi-quarkus-native-binary-s2i:1.0 --name=quarkus-native --labels="app=quarkus-app"
-$ oc start-build quarkus-native --from-file ./target/quarkus-app-1.0-SNAPSHOT-runner --follow
+$ oc start-build quarkus-native --from-file ./target/quarkus-app-1.0.0-runner --follow
 ```
 
 ### Deployment
