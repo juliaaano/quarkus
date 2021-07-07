@@ -12,17 +12,22 @@ import static com.github.tomakehurst.wiremock.http.Fault.MALFORMED_RESPONSE_CHUN
 import java.util.Collections;
 import java.util.Map;
 import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.client.WireMock;
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
 
 public class WiremockPets implements QuarkusTestResourceLifecycleManager {
+
+    private static final int WIREMOCK_PORT = 8090;
 
     private WireMockServer wireMockServer;
 
     @Override
     public Map<String, String> start() {
 
-        wireMockServer = new WireMockServer();
+        wireMockServer = new WireMockServer(WIREMOCK_PORT);
         wireMockServer.start();
+
+        WireMock.configureFor(WIREMOCK_PORT);
 
         stubForGetPet();
         stubForGetPetError();
