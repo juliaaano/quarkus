@@ -13,7 +13,7 @@ services:
       MP_JWT_VERIFY_PUBLICKEY_LOCATION: http://keycloak:8080/auth/realms/quarkus/protocol/openid-connect/certs
       PETS_API_MP_REST_URL: http://mockserver:1080/
   keycloak:
-    image: quay.io/keycloak/keycloak:12.0.4
+    image: quay.io/keycloak/keycloak:14.0.0
     ports:
       - "50102:8080"
     environment:

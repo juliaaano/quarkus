@@ -164,3 +164,9 @@ Test i18n localization:
 ```
 curl -i -X PUT http://localhost:8080/api/pets/x -d '{}' -H 'Content-Type: application/json' -H 'Accept-Language: fr-FR'
 ```
+
+Keycloak export:
+
+```
+$ docker exec -it quarkus_keycloak_1 /opt/jboss/keycloak/bin/standalone.sh -Djboss.socket.binding.port-offset=100 -Dkeycloak.migration.action=export -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.realmName=quarkus -Dkeycloak.migration.usersExportStrategy=REALM_FILE -Dkeycloak.migration.file=/tmp/export.json
+```
