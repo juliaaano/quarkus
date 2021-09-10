@@ -16,7 +16,7 @@ It showcases a diverse set of features and capabilities provided by the framewor
 * Docker, Kubernetes and OpenShift deployments.
 * Unit testing (REST Assured, JUnit).
 * Postman automated API testing.
-* CI pipeline with [GitHub Actions](./github/workflows/quarkus.yml)
+* CI pipeline with [GitHub Actions](./github/workflows/ci.yml)
 * Works on native mode.
 
 ## Running the application in dev mode
@@ -161,6 +161,7 @@ $ curl -v -X POST http://localhost:8080/api/pets -H "Authorization: Bearer "$acc
 ## Misc
 
 Test i18n localization:
+
 ```
 curl -i -X PUT http://localhost:8080/api/pets/x -d '{}' -H 'Content-Type: application/json' -H 'Accept-Language: fr-FR'
 ```
