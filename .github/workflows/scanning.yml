@@ -9,7 +9,7 @@ on:
       - "src/**"
       - "pom.xml"
   schedule:
-    - cron: "30 1 * * *"
+    - cron: "30 1 * * 1"
 
 permissions:
   security-events: write
