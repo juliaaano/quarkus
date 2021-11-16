@@ -50,7 +50,7 @@ $ ./run.sh ghcr.io/juliaaano/quarkus-native:latest
 
 ### Build and run image locally:
 ```
-$ ./build.sh && ./run.sh ghcr.io/juliaaano/quarkus:local
+$ ./build.sh && ./run.sh localhost/juliaaano/quarkus
 ```
 
 ## Build and test a native executable
@@ -133,6 +133,7 @@ The **QUARKUS_APP_HOST** var points to the system under test and can be adjusted
 
 ```
 $ mvn quarkus:dev
+$ docker-compose run --rm postman
 $ QUARKUS_APP_HOST=http://localhost:8080 docker-compose run --rm postman
 ```
 
