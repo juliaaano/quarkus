@@ -32,12 +32,12 @@ jobs:
         with:
           java-version: "11"
           distribution: "adopt"
-      - uses: ayltai/setup-graalvm@v1
+      - name: GraalVM 21.2.0
+        uses: ayltai/setup-graalvm@v1
         with:
           java-version: 11
           graalvm-version: 21.2.0
-      - name: gu install native-image
-        run: gu install native-image
+          native-image: true
       - name: login registry.redhat.io
         uses: docker/login-action@v1.8.0
         with:
