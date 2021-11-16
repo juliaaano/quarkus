@@ -14,4 +14,6 @@ APP_IMAGE=${1:-ghcr.io/juliaaano/quarkus:latest} docker-compose up --detach app
 
 docker-compose ps
 
+echo "Check this out: http://localhost:50101"
+
 echo "end of run.sh" > /dev/null
