@@ -32,11 +32,10 @@ jobs:
         with:
           java-version: "11"
           distribution: "adopt"
-      - name: GraalVM 21.0.0.2
-        uses: DeLaGuardo/setup-graalvm@4.0
+      - uses: ayltai/setup-graalvm@v1
         with:
-          graalvm: 21.0.0.2
-          java: java11
+          java-version: 11
+          graalvm-version: 21.2.0
       - name: gu install native-image
         run: gu install native-image
       - name: login registry.redhat.io
