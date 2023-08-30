@@ -27,7 +27,7 @@ class PetResourceIT extends PetResourceBase {
     protected String jwt(final String user) {
 
         var request = HttpRequest.newBuilder()
-            .uri(create("http://localhost:50102/auth/realms/quarkus/protocol/openid-connect/token"))
+            .uri(create("http://localhost:50102/realms/quarkus/protocol/openid-connect/token"))
             .timeout(ofSeconds(5))
             .header("Authorization", basicAuth("quarkus-api-test-client:''")) // Preemptive auth, otherwise could use built-in authenticator.
             .header("Accept", "application/json")

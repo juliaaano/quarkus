@@ -49,8 +49,8 @@ import app.UUID;
     description = "Authentication needed for this operation",
     flows = @OAuthFlows(
         authorizationCode = @OAuthFlow(
-            authorizationUrl = "http://localhost:50102/auth/realms/quarkus/protocol/openid-connect/auth",
-            tokenUrl = "http://localhost:50102/auth/realms/quarkus/protocol/openid-connect/token",
+            authorizationUrl = "http://localhost:50102/realms/quarkus/protocol/openid-connect/auth",
+            tokenUrl = "http://localhost:50102/realms/quarkus/protocol/openid-connect/token",
             scopes = {
                 @OAuthScope(name = "api.pets:read", description = "Allows to read pets."),
                 @OAuthScope(name = "api.pets:write", description = "Allows to create and modify pets."),

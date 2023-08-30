@@ -9,7 +9,7 @@ spec:
     spec:
       containers:
         - name: liquibase
-          image: docker.io/liquibase/liquibase:4.3.4
+          image: docker.io/liquibase/liquibase:4.23.1-alpine
           args:
             [
               "--url=jdbc:postgresql://postgresql:5432/quarkusdb1",
@@ -18,7 +18,7 @@ spec:
               "--defaultsFile=/liquibase/changelog/liquibase.properties",
               "--changeLogFile=db.changelog-master.xml",
               "--logLevel=info",
-              "update",
+              "update"
             ]
           volumeMounts:
             - name: liquibase

@@ -2,6 +2,7 @@ package app.pet.db;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import app.Entity;
 import app.pet.Pet;
 
 @javax.persistence.Entity

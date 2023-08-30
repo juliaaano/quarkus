@@ -9,5 +9,5 @@ data:
   QUARKUS_DATASOURCE_USERNAME: quarkus
   QUARKUS_DATASOURCE_PASSWORD: password
   QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://postgresql:5432/quarkusdb
-  MP_JWT_VERIFY_PUBLICKEY_LOCATION: https://keycloak:8080/auth/realms/quarkus/protocol/openid-connect/certs
-  MP_JWT_VERIFY_ISSUER: https://keycloak:8080/auth/realms/quarkus
+  MP_JWT_VERIFY_PUBLICKEY_LOCATION: https://keycloak:8080/realms/quarkus/protocol/openid-connect/certs
+  MP_JWT_VERIFY_ISSUER: https://keycloak:8080/realms/quarkus

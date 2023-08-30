@@ -53,14 +53,14 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: docker-compose version
-        run: docker-compose version
-      - name: docker-compose up keycloak postgresql
+      - name: docker compose version
+        run: docker compose version
+      - name: docker compose up keycloak postgresql
         run: |
-          docker-compose up --detach keycloak postgresql
+          docker compose up --detach keycloak postgresql
           sleep 15
-      - name: docker-compose run liquibase
-        run: docker-compose run --rm liquibase
+      - name: docker compose run liquibase
+        run: docker compose run --rm liquibase
       - name: mvn clean verify -Pnative
         run: $MVN clean verify -Pnative
   # Image push happens before native tests when running 'mvn clean verify -Pnative -Dquarkus.container-image.push=true', so decided to split.

@@ -10,20 +10,24 @@ services:
       QUARKUS_DATASOURCE_USERNAME: quarkus
       QUARKUS_DATASOURCE_PASSWORD: password
       QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://postgresql:5432/quarkusdb
-      MP_JWT_VERIFY_PUBLICKEY_LOCATION: http://keycloak:8080/auth/realms/quarkus/protocol/openid-connect/certs
+      MP_JWT_VERIFY_PUBLICKEY_LOCATION: http://keycloak:8080/realms/quarkus/protocol/openid-connect/certs
       PETS_API_MP_REST_URL: http://mockserver:1080/
   keycloak:
-    image: quay.io/keycloak/keycloak:15.0.2
+    image: quay.io/keycloak/keycloak:22.0.1
+    command:
+      [
+        "start-dev",
+        "--import-realm"
+      ]
     ports:
       - "50102:8080"
     environment:
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: admin
-      KEYCLOAK_IMPORT: /tmp/keycloak-realm.json
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
     volumes:
       - type: bind
         source: ./config/keycloak-realm.json
-        target: /tmp/keycloak-realm.json
+        target: /opt/keycloak/data/import/keycloak-realm.json
   postgresql:
     image: registry.redhat.io/rhel8/postgresql-13:1-26
     ports:
@@ -44,7 +48,7 @@ services:
         source: ./config/postgresql-servers.json
         target: /pgadmin4/servers.json
   liquibase:
-    image: docker.io/liquibase/liquibase:4.6.1
+    image: docker.io/liquibase/liquibase:4.23.1-alpine
     command:
       [
         "--url=jdbc:postgresql://postgresql:5432/quarkusdb",
@@ -53,7 +57,7 @@ services:
         "--defaultsFile=/liquibase/changelog/liquibase.properties",
         "--changeLogFile=db.changelog-master.xml",
         "--logLevel=info",
-        "update",
+        "update"
       ]
     volumes:
       - type: bind

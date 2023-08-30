@@ -2,11 +2,11 @@
 
 set -euxo pipefail
 
-docker-compose version
+docker compose version
 
-docker-compose up --detach keycloak postgresql
+docker compose up --detach keycloak postgresql
 sleep 9
-docker-compose run --rm liquibase
+docker compose run --rm liquibase
 
 mvn --show-version clean verify -Pnative
 

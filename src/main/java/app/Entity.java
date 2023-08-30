@@ -1,4 +1,4 @@
-package app.pet.db;
+package app;
 
 import static java.time.Instant.now;
 import java.time.Instant;
@@ -9,7 +9,7 @@ import javax.persistence.PreUpdate;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 @MappedSuperclass
-abstract class Entity extends PanacheEntityBase {
+public abstract class Entity extends PanacheEntityBase {
 
     @Column(name = "created_at")
     public Instant createdAt;
