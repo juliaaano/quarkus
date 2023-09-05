@@ -40,14 +40,14 @@ jobs:
           java-version: "17"
           distribution: "adopt"
       - name: login registry.redhat.io
-        uses: docker/login-action@v1.8.0
+        uses: docker/login-action@v2
         with:
           registry: registry.redhat.io
           username: ${{ secrets.REDHAT_USR }}
           password: ${{ secrets.REDHAT_PWD }}
           logout: true
       - name: login ghcr.io
-        uses: docker/login-action@v1.8.0
+        uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
