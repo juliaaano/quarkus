@@ -6,8 +6,8 @@ import static java.util.Collections.synchronizedMap;
 import java.util.LinkedHashMap;
 import java.util.Optional;
 import java.util.Set;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Alternative;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
 import app.pet.Pet;
 import app.pet.PetRepository;
 

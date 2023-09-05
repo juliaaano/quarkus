@@ -4,7 +4,7 @@ import static app.pet.Pet.pet;
 import static java.util.UUID.randomUUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 import app.pet.PetRepository;
 import io.quarkus.test.TestTransaction;

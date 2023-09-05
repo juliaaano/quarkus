@@ -11,7 +11,7 @@ import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.is;
 import java.util.Map;
 import java.util.Set;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
 import io.smallrye.jwt.build.Jwt;

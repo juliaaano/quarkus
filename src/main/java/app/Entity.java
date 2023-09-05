@@ -2,10 +2,10 @@ package app;
 
 import static java.time.Instant.now;
 import java.time.Instant;
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 @MappedSuperclass

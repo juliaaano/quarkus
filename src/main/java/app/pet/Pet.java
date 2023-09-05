@@ -1,8 +1,8 @@
 package app.pet;
 
 import static java.util.UUID.randomUUID;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Schema(description = "Pet details.")

@@ -1,11 +1,11 @@
 package app.pet.db;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import app.Entity;
 import app.pet.Pet;
 
-@javax.persistence.Entity
+@jakarta.persistence.Entity
 @Table(name = "pet")
 class PetEntity extends Entity {
 
