@@ -24,7 +24,7 @@ jobs:
           java-version: "17"
           distribution: "adopt"
       - name: codeql init
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: checkout
@@ -38,4 +38,4 @@ jobs:
       - name: mvn compile
         run: mvn --show-version --batch-mode compile
       - name: codeql analyze
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
