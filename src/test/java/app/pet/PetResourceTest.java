@@ -26,7 +26,7 @@ class PetResourceTest extends PetResourceBase {
             .audience("theaudience")
             .upn(user)
             .groups(roles(user))
-            .sign();
+            .sign("private-key.pem");
     }
 
     private Set<String> roles(final String user) {
