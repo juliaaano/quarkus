@@ -65,7 +65,7 @@ jobs:
           -Dquarkus.container-image.push=true
           -Dquarkus.container-image.username=${{ github.actor }}
           -Dquarkus.container-image.password=${{ secrets.GITHUB_TOKEN }}
-          -Dquarkus.container-image.image=ghcr.io/juliaaano/quarkus:latest
+          -Dquarkus.container-image.image=ghcr.io/${{ github.repository }}:latest
           '-Dquarkus.container-image.labels."org.opencontainers.image.revision"='$GITHUB_SHA
       - name: mvn package -DskipTests -Dquarkus.container-image.push=true snapshot
         if: github.ref != 'refs/heads/master'
@@ -74,5 +74,5 @@ jobs:
           -Dquarkus.container-image.push=true
           -Dquarkus.container-image.username=${{ github.actor }}
           -Dquarkus.container-image.password=${{ secrets.GITHUB_TOKEN }}
-          -Dquarkus.container-image.image=ghcr.io/juliaaano/quarkus:snapshot
+          -Dquarkus.container-image.image=ghcr.io/${{ github.repository }}:snapshot
           '-Dquarkus.container-image.labels."org.opencontainers.image.revision"='$GITHUB_SHA

@@ -82,7 +82,6 @@ jobs:
           registry: registry.redhat.io
           username: ${{ secrets.REDHAT_USR }}
           password: ${{ secrets.REDHAT_PWD }}
-          logout: true
       - name: checkout
         uses: actions/checkout@v3
       - name: cache ~/.m2
@@ -98,5 +97,5 @@ jobs:
           -Dquarkus.container-image.push=true
           -Dquarkus.container-image.username=${{ github.actor }}
           -Dquarkus.container-image.password=${{ secrets.GITHUB_TOKEN }}
-          -Dquarkus.container-image.image=ghcr.io/juliaaano/quarkus-native:latest
+          -Dquarkus.container-image.image=ghcr.io/${{ github.repository_owner }}/quarkus-native:latest
           '-Dquarkus.container-image.labels."org.opencontainers.image.revision"='$GITHUB_SHA
