@@ -83,13 +83,6 @@ jobs:
           username: ${{ secrets.REDHAT_USR }}
           password: ${{ secrets.REDHAT_PWD }}
           logout: true
-      - name: login ghcr.io
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          logout: true
       - name: checkout
         uses: actions/checkout@v3
       - name: cache ~/.m2
@@ -99,4 +92,11 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: mvn package -Pnative -DskipTests -Dquarkus.native.container-build=true -Dquarkus.container-image.push=true
-        run: $MVN package -Pnative -DskipTests -Dquarkus.native.container-build=true -Dquarkus.container-image.push=true -Dquarkus.container-image.image=ghcr.io/juliaaano/quarkus-native:latest '-Dquarkus.jib.labels."org.opencontainers.image.revision"='$GITHUB_SHA
+        run: >-
+          $MVN package -Pnative -DskipTests
+          -Dquarkus.native.container-build=true
+          -Dquarkus.container-image.push=true
+          -Dquarkus.container-image.username=${{ github.actor }}
+          -Dquarkus.container-image.password=${{ secrets.GITHUB_TOKEN }}
+          -Dquarkus.container-image.image=ghcr.io/juliaaano/quarkus-native:latest
+          '-Dquarkus.container-image.labels."org.opencontainers.image.revision"='$GITHUB_SHA
