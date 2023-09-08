@@ -3,14 +3,14 @@ package app.pet.ws;
 import static app.pet.Pet.pet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import jakarta.inject.Inject;
-import jakarta.ws.rs.ProcessingException;
-import jakarta.ws.rs.WebApplicationException;
 import org.junit.jupiter.api.Test;
 import app.pet.PetRepository;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.TestProfile;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.ProcessingException;
+import jakarta.ws.rs.WebApplicationException;
 
 @QuarkusTest
 @TestProfile(WebServiceTestProfile.class)
@@ -58,9 +58,10 @@ public class WebServicePetRepositoryTest {
     @Test
     void find_pet_timeout() {
 
-        assertThrows(ProcessingException.class, () -> {
+        var exception = assertThrows(ProcessingException.class, () -> {
             repository.find("timeout");
         });
+        assertThat(exception).hasMessageEndingWith("Read timed out");
     }
 
     @Test

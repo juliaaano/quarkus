@@ -90,10 +90,8 @@ These instructions are intended to be used in testing and development and not fo
 
 ### JVM build
 
-_**TODO:** Not working, fix the /.s2i script._
-
 ```
-oc new-build --binary=true --docker-image=registry.redhat.io/ubi8/openjdk-11 --name=quarkus --labels="app=quarkus-app"
+oc new-build --binary=true --image=registry.redhat.io/ubi9/openjdk-17 --name=quarkus --labels="app=quarkus-app"
 oc start-build quarkus --from-dir . --follow
 ```
 
@@ -101,7 +99,7 @@ oc start-build quarkus --from-dir . --follow
 
 ```
 mvn clean package -Pnative -Dquarkus.native.container-build=true
-oc new-build --binary=true --docker-image=quay.io/quarkus/ubi-quarkus-native-binary-s2i:1.0 --name=quarkus-native --labels="app=quarkus-app"
+oc new-build --binary=true --docker-image=quay.io/quarkus/ubi-quarkus-native-binary-s2i:2.0 --name=quarkus-native --labels="app=quarkus-app"
 oc start-build quarkus-native --from-file ./target/quarkus-app-1.0.1-runner --follow
 ```
 
@@ -110,7 +108,7 @@ oc start-build quarkus-native --from-file ./target/quarkus-app-1.0.1-runner --fo
 Once image is built and pushed to the registry, just set the image in the deployment:
 
 ```
-oc set image deployment quarkus app=$(oc get istag quarkus-native:latest -o jsonpath='{.image.dockerImageReference}')
+oc set image deployment quarkus app=$(oc get istag quarkus:latest -o jsonpath='{.image.dockerImageReference}')
 ```
 
 Review any steps above in [OpenShift](#OpenShift).
