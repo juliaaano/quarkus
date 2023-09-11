@@ -40,12 +40,11 @@ jobs:
           java-version: "17"
           distribution: "adopt"
       - name: login registry.redhat.io
-        uses: docker/login-action@v2
+        uses: redhat-actions/podman-login@v1
         with:
           registry: registry.redhat.io
           username: ${{ secrets.REDHAT_USR }}
           password: ${{ secrets.REDHAT_PWD }}
-          logout: true
       - name: checkout
         uses: actions/checkout@v3
       - name: cache ~/.m2
