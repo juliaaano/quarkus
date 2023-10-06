@@ -6,6 +6,7 @@ on:
   pull_request:
     branches: [master]
     paths:
+      - ".github/workflows/scanning.yml"
       - "src/**"
       - "pom.xml"
   schedule:
